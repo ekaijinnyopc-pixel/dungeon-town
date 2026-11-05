@@ -123,10 +123,50 @@
     ctx.fill();
   }
 
+  /* ---------- สไปรต์ PNG (assets/) : โหลดแบบ lazy + fallback เป็นรูปทรงเดิม ---------- */
+  function Spr() { return (root.DT && root.DT.Sprites) || null; }
+
+  /* วาดสไปรต์ยึด "กลางล่าง" ที่ (x,y) (หน่วย local px ตาม transform ปัจจุบัน)
+     flip = true -> พลิกแนวนอน (หันซ้าย) · tint = สีย้อม
+     คืน true ถ้าวาดได้ / false ถ้าภาพยังไม่โหลด (ให้ผู้เรียก fallback) */
+  function drawSprite(ctx, key, x, y, flip, tint, tintA, scaleMul) {
+    var S = Spr(); if (!S) return false;
+    return S.draw(ctx, key, x, y, flip, tint, tintA, scaleMul);
+  }
+
+  /* เรียงสไปรต์เป็นพื้นผิว (หลังคา/ผนัง) */
+  function tileSprite(ctx, key, x, y, w, h) {
+    var S = Spr(); if (!S) return false;
+    return S.tile(ctx, key, x, y, w, h);
+  }
+
+  /* เรียงสไปรต์แบบคูณสเกล z (สำหรับอาคารที่วาดด้วยพิกเซลจอจริง) */
+  function tileSpriteZ(ctx, key, x, y, w, h, z) {
+    if (!(w > 0) || !(h > 0)) return false;
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.scale(z, z);
+    var ok = tileSprite(ctx, key, 0, 0, w / z, h / z);
+    ctx.restore();
+    return ok;
+  }
+
   /* ================= ต้นไม้ (มุมมองจากบน) ================= */
   Art.tree = function (ctx, sx, sy, z, t, seed) {
     var v = Art.variant(seed || 0, 4);
     var sway = Math.sin(t * 1.1 + (seed || 0)) * 0.9;
+
+    /* --- สไปรต์ (ถ้าพร้อม) --- */
+    var treeKey = v === 0 ? 'objects/tree_green.png'
+      : v === 1 ? 'objects/tree_green_large.png'
+      : v === 2 ? 'objects/tree_gold_round.png'
+      : 'objects/tree_autumn.png';
+    ctx.save();
+    ctx.translate(sx, sy);
+    ctx.scale(z, z);
+    var treeDrew = drawSprite(ctx, treeKey, 0, 0, false, null, 0);
+    ctx.restore();
+    if (treeDrew) return;
 
     ctx.save();
     ctx.translate(sx, sy);
@@ -203,9 +243,42 @@
     ctx.restore();
   };
 
+  /* ผลึกแร่ทับก้อนหิน (ใช้ร่วมกันทั้งโหมดสไปรต์และโหมดรูปทรง) */
+  function drawOreGems(ctx) {
+    var gems = [
+      { x: -5, y: -3, s: 3.2, c: '#f0c04a' },
+      { x: 1.5, y: -6, s: 4, c: '#ffd76a' },
+      { x: 6, y: -1, s: 2.8, c: '#f0c04a' }
+    ];
+    for (var g = 0; g < gems.length; g++) {
+      var G = gems[g];
+      poly(ctx, [
+        [G.x, G.y - G.s], [G.x + G.s * 0.75, G.y], [G.x, G.y + G.s * 0.8], [G.x - G.s * 0.75, G.y]
+      ], G.c);
+      poly(ctx, [
+        [G.x, G.y - G.s], [G.x + G.s * 0.75, G.y], [G.x, G.y + G.s * 0.15]
+      ], '#ffe89a');
+    }
+    /* ประกายแสง */
+    ctx.fillStyle = 'rgba(255,215,106,0.18)';
+    ctx.beginPath(); ctx.arc(1, -3, 13, 0, Math.PI * 2); ctx.fill();
+  }
+
   /* ================= ก้อนหิน / แร่ (มุมมองจากบน) ================= */
   Art.rock = function (ctx, sx, sy, z, ore, seed) {
     var v = Art.variant((seed || 0) * 1.7, 3);
+
+    /* --- สไปรต์ (ถ้าพร้อม) --- */
+    ctx.save();
+    ctx.translate(sx, sy);
+    ctx.scale(z, z);
+    var rockKey = ore ? 'objects/rock_boulder.png'
+      : (v === 1 ? 'objects/rock_small.png' : 'objects/rock_boulder.png');
+    var rockDrew = drawSprite(ctx, rockKey, 0, 0, false, null, 0);
+    if (rockDrew && ore) drawOreGems(ctx);
+    ctx.restore();
+    if (rockDrew) return;
+
     ctx.save();
     ctx.translate(sx, sy);
     ctx.scale(z, z);
@@ -218,23 +291,7 @@
       poly(ctx, [[-11, 2], [-6, -8], [4, -11], [11, -2], [7, 7], [-6, 8]], '#6e6c78');
       poly(ctx, [[-6, -8], [4, -11], [6, -3], [-3, -2]], '#8f8d9a');
       poly(ctx, [[-11, 2], [-6, -8], [-3, -2], [-4, 5]], '#7b7986');
-      var gems = [
-        { x: -5, y: -3, s: 3.2, c: '#f0c04a' },
-        { x: 1.5, y: -6, s: 4, c: '#ffd76a' },
-        { x: 6, y: -1, s: 2.8, c: '#f0c04a' }
-      ];
-      for (var g = 0; g < gems.length; g++) {
-        var G = gems[g];
-        poly(ctx, [
-          [G.x, G.y - G.s], [G.x + G.s * 0.75, G.y], [G.x, G.y + G.s * 0.8], [G.x - G.s * 0.75, G.y]
-        ], G.c);
-        poly(ctx, [
-          [G.x, G.y - G.s], [G.x + G.s * 0.75, G.y], [G.x, G.y + G.s * 0.15]
-        ], '#ffe89a');
-      }
-      /* ประกายแสง */
-      ctx.fillStyle = 'rgba(255,215,106,0.18)';
-      ctx.beginPath(); ctx.arc(1, -3, 13, 0, Math.PI * 2); ctx.fill();
+      drawOreGems(ctx);
       ctx.restore();
       return;
     }
@@ -274,6 +331,17 @@
   Art.bush = function (ctx, sx, sy, z, t, seed) {
     var v = Art.variant((seed || 0) * 2.3, 3);
     var sway = Math.sin(t * 1.6 + (seed || 0)) * 0.7;
+
+    /* --- สไปรต์ (ถ้าพร้อม) --- */
+    var bushKey = v === 0 ? 'objects/bush.png'
+      : v === 1 ? 'objects/grass_flowers.png'
+      : 'objects/bush_cluster.png';
+    ctx.save();
+    ctx.translate(sx, sy);
+    ctx.scale(z, z);
+    var bushDrew = drawSprite(ctx, bushKey, 0, 0, false, null, 0);
+    ctx.restore();
+    if (bushDrew) return;
 
     ctx.save();
     ctx.translate(sx, sy);
@@ -341,9 +409,9 @@
 
   /* ================= ตัวละครผู้เล่น (4 ทิศ) ================= */
   var PROF_STYLE = {
-    miner:   { body: '#c98b3a', trim: '#8a5a1e', hair: '#4a3423', skin: '#f6dcc0', hat: 'helm' },
-    hunter:  { body: '#4aa3d8', trim: '#2b6f9e', hair: '#5a3a22', skin: '#f6dcc0', hat: 'hood' },
-    farmer:  { body: '#5fbf6a', trim: '#3d8a46', hair: '#3a2a1a', skin: '#f6dcc0', hat: 'straw' }
+    miner:   { body: '#c98b3a', trim: '#8a5a1e', hair: '#4a3423', skin: '#f6dcc0', hat: 'helm', tint: '#e0a63c' },
+    hunter:  { body: '#4aa3d8', trim: '#2b6f9e', hair: '#5a3a22', skin: '#f6dcc0', hat: 'hood', tint: '#5aa8e0' },
+    farmer:  { body: '#5fbf6a', trim: '#3d8a46', hair: '#3a2a1a', skin: '#f6dcc0', hat: 'straw', tint: '#6cc070' }
   };
 
   /* ---------- หัวถูกตามอาชีพ (วาดด้วย canvas, หน่วย = headR) ----------
@@ -540,8 +608,42 @@
     var swing = opts.swing || 0;
     var seed = opts.seed || 0;
 
-    /* จังหวะเดิน/วิ่ง (หน่วย local px) */
+    /* ---------- สไปรต์ (ถ้าพร้อม) : 4 ทิศ + idle/เดิน ---------- */
+    var charKey = dir === 'up' ? 'characters/player_up.png'
+      : (dir === 'left' || dir === 'right') ? 'characters/player_side.png'
+      : 'characters/player_down.png';
+    /* เดิน = ขึ้นลงตามจังหวะ · ยืนนิ่ง = หายใจเบาๆ */
     var freq = running ? 15 : 9.5;
+    var sprBob = moving ? Math.abs(Math.sin(t * freq)) * (running ? 2.4 : 1.6)
+      : Math.sin(t * 2.2) * 0.45;
+    ctx.save();
+    ctx.translate(sx, sy);
+    ctx.scale(z, z);
+    if (hurt > 0) ctx.globalAlpha = 0.55;
+    var charDrew = drawSprite(ctx, charKey, 0, sprBob, dir === 'left',
+      opts.tintSprite === false ? null : st.tint, 0.24);
+    if (charDrew) {
+      /* เครื่องมือในมือ (วาดทับสไปรต์) */
+      var wkind = weaponKind(opts.weapon);
+      if (wkind) {
+        var handX = dir === 'left' ? -4.6 : 4.6;
+        var handY = -16;
+        ctx.save();
+        ctx.translate(handX, handY);
+        var frontArm;
+        if (swing > 0) frontArm = -1.45 + swing * 2.5;
+        else if (waving) frontArm = -2.25 + Math.sin(t * 8) * 0.25;
+        else frontArm = 0.14 + (moving ? Math.sin(t * freq) * 0.35 : 0);
+        ctx.rotate(frontArm);
+        drawWeapon(ctx, wkind, swing);
+        ctx.restore();
+      }
+      ctx.restore();
+      return;
+    }
+    ctx.restore();
+
+    /* จังหวะเดิน/วิ่ง (หน่วย local px) */
     var step = t * freq;
     var lift = moving ? (running ? 2.2 : 1.1) : 0;      /* ขายกขึ้นลง */
     var bob = moving ? Math.abs(Math.sin(step)) * (running ? 2.0 : 1.1)
@@ -953,14 +1055,18 @@
     var wallY = y + roofH;
     ctx.fillStyle = '#8a6a45';
     ctx.fillRect(x, wallY, w, wallH);
-    /* ไฮไลต์ขอบบนผนัง */
-    ctx.fillStyle = 'rgba(255,236,190,0.18)';
-    ctx.fillRect(x, wallY, w, Math.max(1.5 * z, wallH * 0.22));
-    /* เนื้อไม้แนวตั้ง */
-    ctx.fillStyle = 'rgba(70,48,26,0.28)';
-    var planks = Math.max(2, Math.round(w / (9 * z)));
-    for (var i = 1; i < planks; i++) {
-      ctx.fillRect(x + (w / planks) * i - 0.6 * z, wallY + wallH * 0.25, 1.2 * z, wallH * 0.75);
+    /* ผนังจากภาพสไปรต์ (ถ้าพร้อม) */
+    var wallDrew = tileSpriteZ(ctx, 'objects/house_wall.png', x, wallY, w, wallH, z);
+    if (!wallDrew) {
+      /* ไฮไลต์ขอบบนผนัง */
+      ctx.fillStyle = 'rgba(255,236,190,0.18)';
+      ctx.fillRect(x, wallY, w, Math.max(1.5 * z, wallH * 0.22));
+      /* เนื้อไม้แนวตั้ง */
+      ctx.fillStyle = 'rgba(70,48,26,0.28)';
+      var planks = Math.max(2, Math.round(w / (9 * z)));
+      for (var i = 1; i < planks; i++) {
+        ctx.fillRect(x + (w / planks) * i - 0.6 * z, wallY + wallH * 0.25, 1.2 * z, wallH * 0.75);
+      }
     }
     /* ฐานเข้ม */
     ctx.fillStyle = 'rgba(50,34,16,0.35)';
@@ -992,22 +1098,29 @@
     /* ---- หลังคา (มองจากบน) ---- */
     ctx.fillStyle = pc[0];
     ctx.fillRect(x, y, w, roofH);
-    /* สันคา/เส้นแบ่งสองเชิง */
-    ctx.fillStyle = mix(pc[0], '#ffffff', 0.16);
-    ctx.fillRect(x, y, w, roofH * 0.5);
-    ctx.fillStyle = mix(pc[1], '#000000', 0.12);
-    ctx.fillRect(x, y + roofH * 0.5 - Math.max(1 * z, 2 * z), w, Math.max(1 * z, 2 * z));
+    var roofDrew = tileSpriteZ(ctx, 'objects/roof.png', x, y, w, roofH, z);
+    if (!roofDrew) {
+      /* สันคา/เส้นแบ่งสองเชิง */
+      ctx.fillStyle = mix(pc[0], '#ffffff', 0.16);
+      ctx.fillRect(x, y, w, roofH * 0.5);
+      ctx.fillStyle = mix(pc[1], '#000000', 0.12);
+      ctx.fillRect(x, y + roofH * 0.5 - Math.max(1 * z, 2 * z), w, Math.max(1 * z, 2 * z));
+    }
     /* สีเข้มชายล่างของหลังคา (ด้านใกล้ผู้ดู) */
     ctx.fillStyle = mix(pc[1], '#000000', 0.10);
     ctx.fillRect(x, y + roofH - Math.max(3 * z, roofH * 0.18), w, Math.max(3 * z, roofH * 0.18));
     /* มุงจั่วตรงกลาง */
-    ctx.fillStyle = mix(pc[0], '#ffffff', 0.08);
-    ctx.fillRect(x + w * 0.5 - Math.max(2 * z, w * 0.04), y, Math.max(4 * z, w * 0.08), roofH);
+    if (!roofDrew) {
+      ctx.fillStyle = mix(pc[0], '#ffffff', 0.08);
+      ctx.fillRect(x + w * 0.5 - Math.max(2 * z, w * 0.04), y, Math.max(4 * z, w * 0.08), roofH);
+    }
     /* เชิงชาย (eaves) */
     ctx.fillStyle = pc[1];
     ctx.fillRect(x - 2 * z, y + roofH - Math.max(3 * z, roofH * 0.18), w + 4 * z, Math.max(3 * z, roofH * 0.18));
-    ctx.fillStyle = 'rgba(255,214,180,0.28)';
-    ctx.fillRect(x, y, w, Math.max(1.5 * z, roofH * 0.12));
+    if (!roofDrew) {
+      ctx.fillStyle = 'rgba(255,214,180,0.28)';
+      ctx.fillRect(x, y, w, Math.max(1.5 * z, roofH * 0.12));
+    }
 
     /* ---- ป้ายชื่ออาคาร ---- */
     var label = (b.icon ? b.icon + ' ' : '') + (b.name || '');
@@ -1039,6 +1152,17 @@
     ctx.beginPath();
     ctx.ellipse(0, 0, 12, 5, 0, 0, Math.PI * 2);
     ctx.fill();
+
+    /* --- สไปรต์เฟอร์นิเจอร์ (ถ้าพร้อม) --- */
+    var fKey = type === 'barrel' ? 'objects/barrel_pot.png'
+      : type === 'chest' ? 'objects/crate.png'
+      : type === 'anvil' ? 'objects/dungeon_anvil.png'
+      : type === 'table' ? 'objects/dungeon_table.png'
+      : null;
+    if (fKey) {
+      var fDrew = drawSprite(ctx, fKey, 0, 2, false, null, 0, 0.7);
+      if (fDrew) { ctx.restore(); return; }
+    }
 
     if (type === 'bed') {
       /* เตียง (มองจากด้านข้างตรง) */

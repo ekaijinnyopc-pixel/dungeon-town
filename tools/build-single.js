@@ -19,6 +19,7 @@ const order = [
   'js/config.js',
   'js/path.js',
   'js/iso.js',
+  'js/sprites.js',
   'js/art.js',
   'js/audio.js',
   'js/fx.js',
@@ -51,8 +52,44 @@ for (const f of order) {
   }
   bundle += '\n/* ===== ' + f + ' ===== */\n' + code + '\n';
 }
+/* 3) ฝังภาพสไปรต์ (base64 data URL) ลงในไฟล์เดียว
+   - อ่านคีย์ที่ใช้จริงจากตาราง SPEC ใน js/sprites.js
+   - ถ้าไฟล์ภาพหาย -> ข้าม (เกมจะ fallback ไปใช้รูปทรงเดิม) */function collectSpriteKeys() {
+  const src = read('js/sprites.js');
+  const keys = [];
+  const re = /'((?:characters|objects)\/[A-Za-z0-9_.-]+\.png)'\s*:/g;
+  let m;
+  while ((m = re.exec(src))) {
+    if (keys.indexOf(m[1]) === -1) keys.push(m[1]);
+  }
+  return keys;
+}
+
+let spriteData = {};
+let spriteBytes = 0;
+for (const key of collectSpriteKeys()) {
+  const p = path.join(ROOT, 'assets', key);
+  if (!fs.existsSync(p)) {
+    console.warn('⚠️ ไม่พบภาพสไปรต์:', key);
+    continue;
+  }
+  const buf = fs.readFileSync(p);
+  spriteBytes += buf.length;
+  spriteData[key] = 'data:image/png;base64,' + buf.toString('base64');
+}
+const spriteJson = JSON.stringify(spriteData);
+console.log('ฝังสไปรต์:', Object.keys(spriteData).length, 'ไฟล์ (' +
+  Math.round(spriteBytes / 1024) + ' KB -> ' + Math.round(spriteJson.length / 1024) + ' KB base64)');
+
+/* 3b) แทรกข้อมูลสไปรต์ไว้ก่อนบันเดิล JS (เพื่อให้ __DT_SPRITE_DATA__ พร้อมใช้ตอนโหลด sprites.js) */
+html = html.replace('<script src="supabase.js', function () {
+  return '<script>window.__DT_SPRITE_DATA__ = ' + spriteJson + ';</script>\n<script src="supabase.js';
+});
+
+/* 4) ฝังบันเดิล JS (ต้องหลังฝังข้อมูลสไปรต์ เพื่อให้ __DT_SPRITE_DATA__ พร้อมก่อน) */
 html = html.replace(/<script src="supabase\.js(?:\?[^"]*)?"><\/script>[\s\S]*?<script src="js\/game\.js(?:\?[^"]*)?"><\/script>/,
   '<script>\n' + bundle + '\n</script>');
+
 const leftover = html.match(/<script src="[^"]+"><\/script>/g) || [];
 if (leftover.length) {
   console.warn('⚠️ ยังเหลือ script src ที่ไม่ได้ฝัง: ' + leftover.join(', '));

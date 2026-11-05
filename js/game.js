@@ -67,6 +67,8 @@
       this.world = DT.World.create();
       this.canvas = el('game');
       DT.Render.init(this.canvas, this.world);
+      /* โหลดสไปรต์ล่วงหน้าแบบไม่บล็อก (ถ้าโหลดไม่ได้ -> ใช้รูปทรงเดิม) */
+      if (DT.Sprites && DT.Sprites.preloadAll) DT.Sprites.preloadAll();
 
       var name = opts.name || ('ผู้เล่น' + Math.floor(Math.random() * 900 + 100));
       var prof = opts.prof || 'miner';
