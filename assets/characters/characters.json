@@ -1,0 +1,36 @@
+{
+  "player": {
+    "down": [
+      "player_down.png"
+    ],
+    "side": [
+      "player_side.png"
+    ],
+    "up": [
+      "player_up.png"
+    ]
+  },
+  "alternates": {
+    "down": [
+      "alt_down_6.png",
+      "alt_down_7.png",
+      "alt_down_10.png"
+    ]
+  },
+  "tile_size": 16,
+  "source_pack": "Roguelike Characters 2.0",
+  "source_sheet": "sheets/roguelikeChar_transparent.png",
+  "source_cell": {
+    "player_down": "r11c1",
+    "player_up": "r11c0",
+    "alt_down_6": "r6c1",
+    "alt_down_7": "r7c1",
+    "alt_down_10": "r10c1"
+  },
+  "sheet_grid_origin": {
+    "x": 6,
+    "y": 9,
+    "cell": 16
+  },
+  "note": "Kenney CC0. player_down=front, player_up=back of the same white-armour hero. player_side is a horizontal mirror of player_down (derived, not original art) because this CC0 pack ships no side-facing pose. Alternate heroes included for later swap."
+}

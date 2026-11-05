@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#10160f">
+<title>🏘️ เมืองดับดันเจียน — Dungeon Town</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='26'%3E%F0%9F%8F%B8%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css?v=20261105b">
+</head>
+<body>
+
+<!-- ================= หน้าเลือกอาชีพ ================= -->
+<div id="start" class="start">
+  <div class="start-box">
+    <h1>🏘️ เมืองดับดันเจียน</h1>
+    <p class="sub">เกม 2D isometric survival · 3 อาชีพ · เล่นด้วยกันได้</p>
+
+    <label class="field">
+      <span>ชื่อผู้เล่น</span>
+      <input id="pname" maxlength="16" placeholder="ตั้งชื่อของคุณ">
+    </label>
+
+    <div class="prof-grid">
+      <button class="prof" data-prof="miner">
+        <span class="ico">⛏️</span>
+        <span class="pn">คนเหมือง</span>
+        <span class="pd">ขุดแร่/หินเร็ว · คราฟต์เครื่องมือและดาบเหล็ก</span>
+      </button>
+      <button class="prof" data-prof="hunter">
+        <span class="ico">🏹</span>
+        <span class="pn">นักล่า</span>
+        <span class="pd">เก็บไม้/เนื้อเร็ว · คราฟต์ธนู ดาบไม้ เสื้อหนัง</span>
+      </button>
+      <button class="prof" data-prof="farmer">
+        <span class="ico">🌾</span>
+        <span class="pn">ช่างปลูก</span>
+        <span class="pd">เก็บผัก/สมุนไพรเร็ว · คราฟต์อาหารและยา</span>
+      </button>
+    </div>
+
+    <button id="go" class="go">🚪 เข้าเมือง</button>
+    <div class="howto">
+      <b>วิธีเล่น (เมาส์)</b> · <b>คลิกขวา</b> = เดินไป / โจมตี · <b>คลิกซ้าย</b> = เปิดเมนู (อาคาร/NPC) ·
+      <b>คลิกซ้าย</b> ที่ทรัพยากร = เก็บ · <b>ลากซ้าย</b> = เดิน
+      <br>คีย์บอร์ดยังใช้ได้: <b>WASD</b>/ลูกศร = เดิน · <b>E</b> = เก็บ/เข้าอาคาร ·
+      <b>Space</b> = โจมตี · <b>I</b> = กระเป๋า · <b>C</b> = คราฟต์ · <b>Q</b> = เควสต์ ·
+      <b>F</b> = ร้าน · <b>G</b> = กองไฟ · <b>Enter</b> = แชท
+    </div>
+  </div>
+</div>
+
+<!-- ================= เกม ================= -->
+<div id="app" class="app hidden">
+  <canvas id="game" tabindex="0"></canvas>
+
+  <div id="hud" class="hud"></div>
+
+  <div class="topright">
+    <button class="mini" data-act="toggle:quest">📜 <span class="kbd">Q</span></button>
+    <button class="mini" data-act="toggle:shop">🪙 <span class="kbd">F</span></button>
+    <button class="mini" data-act="toggle:inv">🎒 <span class="kbd">I</span></button>
+    <button class="mini" data-act="toggle:craft">🔨 <span class="kbd">C</span></button>
+    <button class="mini" data-act="toggle:party">👥 <span class="kbd">P</span></button>
+    <button class="mini" id="btn-sound" data-act="toggle:sound">🔊</button>
+    <button class="mini" data-act="zoom:out" aria-label="ซูมออก">🔍−</button>
+    <button class="mini" data-act="zoom:in" aria-label="ซูมเข้า">🔍+</button>
+    <button class="mini" data-act="toggle:fullscreen" aria-label="เต็มจอ">⛶</button>
+  </div>
+
+  <div id="panel" class="panel"></div>
+
+  <!-- popup เมนู (mouse-first) -->
+  <div id="popup" class="popup"></div>
+
+  <input id="chat-input" class="chat-input" maxlength="120" placeholder="พิมพ์ข้อความ… (Enter ส่ง)">
+  <div id="toast" class="toast"></div>
+
+  <!-- P4-D: ปุ่มมือถือแนว MOBA
+       ซ้ายล่าง = จอยอนาล็อค (ลากนิ้วควบคุมทิศทาง) · ขวาล่าง = ปุ่มสกิล/โจมตี
+       data-key = ปุ่มบน canvas, data-act = ผูกกับ doAction เดิม -->
+  <div class="mobile">
+    <!-- P4-E: แถบควบคุมบน (มือถือ) — เมนู / เต็มจอ / ย่อสถานะฮีโร่ -->
+    <div class="mtop">
+      <button class="mtool" data-act="toggle:menu" aria-label="เปิด/ปิดเมนู">☰</button>
+      <button class="mtool" data-act="toggle:fullscreen" aria-label="เปิด/ปิดเต็มจอ">⛶</button>
+      <button class="mtool" data-act="toggle:hud" aria-label="ย่อ/ขยายสถานะฮีโร่">👤</button>
+    </div>
+    <div class="mjoy" id="mjoy" aria-label="จอยเดิน">
+      <div class="mjoy-ring"></div>
+      <div class="mjoy-knob" id="mjoyKnob"></div>
+    </div>
+    <div class="mact">
+      <button class="pad act sk-attack" data-key="attack" aria-label="โจมตี">⚔️</button>
+      <button class="pad act sk-gather" data-key="gather" aria-label="เก็บของ">✋</button>
+      <button class="pad act sk-fire" data-key="fire" aria-label="กองไฟ">🔥</button>
+      <button class="pad act sk-shop" data-key="shop" aria-label="ร้านค้า">🪙</button>
+    </div>
+    <div class="mzoom">
+      <button class="mtool" data-act="zoom:in" aria-label="ซูมเข้า">🔍+</button>
+      <button class="mtool" data-act="zoom:out" aria-label="ซูมออก">🔍−</button>
+    </div>
+    <div class="mtools">
+      <button class="mtool" data-act="toggle:inv" aria-label="กระเป๋า">🎒</button>
+      <button class="mtool" data-act="toggle:craft" aria-label="คราฟต์">⚒️</button>
+      <button class="mtool" data-act="toggle:quest" aria-label="เควสต์">📜</button>
+      <button class="mtool" data-act="toggle:party" aria-label="ปาร์ตี้">👥</button>
+      <button class="mtool sound" data-act="toggle:sound" aria-label="เสียง">🔊</button>
+      <button class="mtool close" data-act="toggle:none" aria-label="ปิดเมนู">❌</button>
+    </div>
+  </div>
+</div>
+
+<script src="supabase.js?v=20261105a"></script>
+<script src="js/config.js?v=20261105a"></script>
+<script src="js/path.js?v=20261105a"></script>
+<script src="js/iso.js?v=20261105a"></script>
+<script src="js/art.js?v=20261105a"></script>
+<script src="js/audio.js?v=20261105a"></script>
+<script src="js/fx.js?v=20261105a"></script>
+<script src="js/interiors.js?v=20261105a"></script>
+<script src="js/world.js?v=20261105a"></script>
+<script src="js/refine.js?v=20261105a"></script>
+<script src="js/player.js?v=20261105a"></script>
+<script src="js/render.js?v=20261105a"></script>
+<script src="js/supabase-config.js?v=20261105a"></script>
+<script src="js/net.js?v=20261105a"></script>
+<script src="js/party.js?v=20261105a"></script>
+<script src="js/market.js?v=20261105a"></script>
+<script src="js/ui-popup.js?v=20261105a"></script>
+<script src="js/game.js?v=20261105a"></script>
+<script>
+(function () {
+  var chosen = 'miner';
+  var btns = document.querySelectorAll('.prof');
+  function mark(p) {
+    chosen = p;
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].classList.toggle('sel', btns[i].getAttribute('data-prof') === p);
+    }
+  }
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].addEventListener('click', function (e) { mark(e.currentTarget.getAttribute('data-prof')); });
+  }
+  mark('miner');
+
+  document.getElementById('go').addEventListener('click', function () {
+    var n = document.getElementById('pname').value.trim();
+    document.getElementById('start').classList.add('hidden');
+    document.getElementById('app').classList.remove('hidden');
+    DT.Game.start({ name: n, prof: chosen });
+  });
+
+  /* P4-C: ปุ่มมือถือผูกใน js/game.js (bindMobilePads + bindTouch) แล้ว
+     เพื่อให้ touchstart/touchend, กดค้าง และ touch บน canvas ทำงานครบ
+     ปุ่ม data-act ใช้ event delegation ของ DT.Game.doAction ที่เดียว
+     (ถ้า bind ซ้ำที่นี่ จะ toggle 2 ครั้ง = เปิดแล้วปิดทันที) */
+})();
+</script>
+</body>
+</html>

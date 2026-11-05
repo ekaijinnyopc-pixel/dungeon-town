@@ -1,0 +1,657 @@
+/* DUNGEON TOWN — style */
+:root {
+  /* โทนสีหลัก: เขียวอมทอง */
+  --dt-green-900: #0b1108;
+  --dt-green-800: #101a0c;
+  --dt-green-700: #16210f;
+  --dt-green-600: #1d2a13;
+  --dt-green-500: #2a3a1c;
+  --dt-green-400: #3d4f2c;
+  --dt-green-300: #4e6438;
+  --dt-line: #3d4f2c;
+  --dt-line-soft: #2f4023;
+  --dt-gold: #d9c063;
+  --dt-gold-bright: #f2e4b8;
+  --dt-gold-deep: #8a6a20;
+  --dt-text: #e8e8e0;
+  --dt-text-dim: #9fb48c;
+  --dt-text-soft: #7d8f72;
+  --dt-glass: rgba(12, 18, 10, 0.78);
+  --dt-glass-strong: rgba(12, 18, 10, 0.94);
+  --dt-radius: 12px;
+  --dt-radius-sm: 9px;
+  --dt-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  --dt-shadow-soft: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0; height: 100%;
+  background: var(--dt-green-900); color: var(--dt-text);
+  font-family: 'Noto Sans Thai', 'Sarabun', 'Segoe UI', Tahoma, sans-serif;
+  overflow: hidden;
+  -webkit-user-select: none; user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+.hidden { display: none !important; }
+
+/* scrollbar สวยงาม (webkit + firefox) */
+* { scrollbar-width: thin; scrollbar-color: #4a5c38 #16210f; }
+::-webkit-scrollbar { width: 9px; height: 9px; }
+::-webkit-scrollbar-track { background: #16210f; border-radius: 6px; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #4a5c38, #2f4023);
+  border-radius: 6px; border: 2px solid #16210f;
+}
+::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #6b8a4c, #3d4f2c); }
+
+/* ---------- หน้าเริ่ม ---------- */
+.start {
+  position: fixed; inset: 0; z-index: 50;
+  display: flex; align-items: center; justify-content: center;
+  background: radial-gradient(circle at 50% 30%, #2b3f24, #0d1209 70%);
+  padding: 16px; overflow: auto;
+}
+.start-box {
+  width: 100%; max-width: 620px;
+  background:
+    linear-gradient(180deg, rgba(30,42,20,0.96), rgba(16,24,12,0.96));
+  border: 1px solid #4a5f31; border-radius: 18px;
+  padding: 26px 22px; text-align: center;
+  box-shadow:
+    0 24px 70px rgba(0,0,0,0.65),
+    0 0 0 1px rgba(217,192,99,0.10),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+  position: relative;
+  overflow: hidden;
+  animation: dt-rise .45s cubic-bezier(.2,.9,.3,1) both;
+}
+.start-box::before {
+  content: ''; position: absolute; inset: 0 0 auto 0; height: 3px;
+  background: linear-gradient(90deg, transparent, var(--dt-gold), transparent);
+  opacity: .75;
+}
+@keyframes dt-rise {
+  from { opacity: 0; transform: translateY(18px) scale(.985); }
+  to   { opacity: 1; transform: none; }
+}
+.start-box h1 { margin: 0 0 4px; font-size: 30px; color: var(--dt-gold-bright); text-shadow: 0 2px 0 #3a2c14, 0 0 18px rgba(217,192,99,.25); }
+.start-box .sub { margin: 0 0 18px; color: var(--dt-text-dim); font-size: 14px; }
+.field { display: block; text-align: left; margin-bottom: 16px; }
+.field span { display: block; font-size: 13px; color: #a9bb96; margin-bottom: 5px; }
+.field input {
+  width: 100%; padding: 11px 13px; font-size: 15px;
+  background: rgba(10,16,8,0.85); color: var(--dt-text);
+  border: 1px solid var(--dt-line); border-radius: 10px; outline: none;
+  transition: border-color .18s, box-shadow .18s, background .18s;
+}
+.field input:hover { border-color: #4a5f31; }
+.field input:focus {
+  border-color: #7ea05a;
+  background: rgba(14,22,10,0.95);
+  box-shadow: 0 0 0 3px rgba(126,160,90,0.18);
+}
+.prof-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 18px; }
+.prof {
+  background: linear-gradient(180deg, #1d2a13, #16210f);
+  border: 2px solid var(--dt-line-soft); border-radius: var(--dt-radius);
+  padding: 14px 8px; cursor: pointer; color: var(--dt-text);
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
+  transition: transform .16s cubic-bezier(.2,.9,.3,1), border-color .16s, box-shadow .16s, background .16s;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+}
+.prof:hover {
+  transform: translateY(-3px);
+  border-color: #5c7a3e;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.42), inset 0 1px 0 rgba(255,255,255,0.09);
+}
+.prof:active { transform: translateY(-1px) scale(.99); }
+/* แถบอาชีพที่เลือกแล้ว — เรืองแสง */
+.prof.sel {
+  border-color: var(--dt-gold);
+  background: linear-gradient(180deg, #33431d, #22300f);
+  box-shadow:
+    0 0 0 2px rgba(217,192,99,.28),
+    0 0 22px rgba(217,192,99,.32),
+    inset 0 1px 0 rgba(255,236,170,.18);
+  animation: dt-glow 2.2s ease-in-out infinite;
+}
+@keyframes dt-glow {
+  0%, 100% { box-shadow: 0 0 0 2px rgba(217,192,99,.24), 0 0 16px rgba(217,192,99,.24), inset 0 1px 0 rgba(255,236,170,.16); }
+  50%      { box-shadow: 0 0 0 2px rgba(217,192,99,.38), 0 0 30px rgba(217,192,99,.44), inset 0 1px 0 rgba(255,236,170,.26); }
+}
+.prof .ico { font-size: 30px; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5)); transition: transform .2s; }
+.prof:hover .ico { transform: scale(1.12) translateY(-1px); }
+.prof.sel .ico { transform: scale(1.12); filter: drop-shadow(0 0 8px rgba(217,192,99,.55)); }
+.prof .pn { font-weight: 700; font-size: 15px; color: var(--dt-gold-bright); }
+.prof .pd { font-size: 11px; color: var(--dt-text-dim); line-height: 1.35; }
+.go {
+  width: 100%; padding: 14px; font-size: 17px; font-weight: 700;
+  background: linear-gradient(180deg, #5c9242, #3a6624);
+  color: #f6ffe9;
+  border: 1px solid #6ba048; border-radius: 12px; cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.20);
+  transition: transform .12s, box-shadow .18s, filter .18s;
+  letter-spacing: .3px;
+}
+.go:hover { filter: brightness(1.12); box-shadow: 0 8px 24px rgba(0,0,0,.5), 0 0 20px rgba(126,180,80,.30), inset 0 1px 0 rgba(255,255,255,.26); }
+.go:active { transform: translateY(2px); box-shadow: 0 3px 10px rgba(0,0,0,.5), inset 0 2px 6px rgba(0,0,0,.28); }
+.howto { margin-top: 14px; font-size: 12px; color: #8fa382; line-height: 1.7; }
+.howto b { color: #d9c063; }
+.kbd {
+  display: inline-block; padding: 1px 5px; font-size: 10px;
+  background: linear-gradient(180deg, #2f4023, #24331a);
+  border: 1px solid #4a5c38; border-radius: 5px;
+  box-shadow: 0 1px 0 rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.07);
+  color: #cfe0bb;
+}
+
+/* ---------- เกม ---------- */
+.app { position: fixed; inset: 0; }
+#game {
+  position: absolute; inset: 0; width: 100%; height: 100%; display: block;
+  /* retro pixel-art: canvas ความละเอียดต่ำถูกขยายแบบ pixelated */
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+.hud {
+  position: absolute; top: 10px; left: 10px; width: 230px;
+  pointer-events: none;   /* P4-C: HUD บังแตะ canvas ไม่ได้ (แตะผ่านไปเกม) */
+  background: var(--dt-glass); border: 1px solid var(--dt-line);
+  border-radius: var(--dt-radius); padding: 10px 11px; font-size: 12px;
+  backdrop-filter: blur(9px) saturate(1.15);
+  -webkit-backdrop-filter: blur(9px) saturate(1.15);
+  box-shadow: var(--dt-shadow), inset 0 1px 0 rgba(255,255,255,.07);
+}
+.stat { display: flex; align-items: center; gap: 6px; margin-bottom: 5px; }
+.stat .lbl { width: 52px; color: #b9c9a8; font-size: 11px; white-space: nowrap; }
+.stat .bar {
+  flex: 1; height: 10px; background: rgba(12,18,10,0.9);
+  border-radius: 6px; overflow: hidden;
+  border: 1px solid rgba(255,255,255,.07);
+  box-shadow: inset 0 1px 3px rgba(0,0,0,.55);
+  position: relative;
+}
+.stat .fill {
+  display: block; height: 100%; transition: width .25s cubic-bezier(.3,.8,.4,1);
+  border-radius: 6px;
+  box-shadow: 0 0 6px rgba(255,255,255,.22), inset 0 1px 0 rgba(255,255,255,.35);
+  position: relative;
+}
+.stat .num { width: 28px; text-align: right; font-variant-numeric: tabular-nums; color: #dfe9d2; }
+.hud-row { display: flex; justify-content: space-between; margin-top: 6px; color: #c6d5b6; font-size: 11px; }
+.hud-name { color: var(--dt-gold-bright); font-weight: 700; text-shadow: 0 1px 3px rgba(0,0,0,.6); }
+.hud-clock { color: #e8c063; }
+
+/* Phase 5: แถบปาร์ตี้ */
+.hud-party { flex-wrap: wrap; gap: 6px; justify-content: flex-start; align-items: center; }
+.hud-party > span:first-child { color: #9fd0ff; font-weight: 700; }
+.hud-party .pm {
+  background: rgba(90,140,200,.22); border: 1px solid rgba(140,190,255,.35);
+  border-radius: 999px; padding: 1px 8px; color: #dcebff; font-size: 10px;
+}
+
+.topright { position: absolute; top: 10px; right: 10px; display: flex; gap: 8px; }
+.mini {
+  padding: 8px 12px; font-size: 15px;
+  background: var(--dt-glass); color: var(--dt-text);
+  border: 1px solid var(--dt-line); border-radius: var(--dt-radius-sm); cursor: pointer;
+  backdrop-filter: blur(9px) saturate(1.15);
+  -webkit-backdrop-filter: blur(9px) saturate(1.15);
+  box-shadow: var(--dt-shadow-soft), inset 0 1px 0 rgba(255,255,255,.07);
+  transition: transform .13s cubic-bezier(.2,.9,.3,1), border-color .16s, box-shadow .16s, background .16s;
+}
+.mini:hover {
+  transform: translateY(-2px);
+  border-color: #6b8a4c;
+  background: rgba(26,38,16,0.9);
+  box-shadow: 0 8px 20px rgba(0,0,0,.45), 0 0 14px rgba(126,180,80,.20), inset 0 1px 0 rgba(255,255,255,.12);
+}
+.mini:active { transform: translateY(0) scale(.95); }
+
+.panel {
+  position: absolute; top: 56px; right: 10px; width: 330px; max-height: 74vh; overflow: auto;
+  background: var(--dt-glass-strong); border: 1px solid var(--dt-line); border-radius: var(--dt-radius);
+  padding: 14px; display: none;
+  backdrop-filter: blur(12px) saturate(1.2);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2);
+  box-shadow: var(--dt-shadow), inset 0 1px 0 rgba(255,255,255,.07);
+}
+.panel.open { display: block; animation: dt-panel-in .22s cubic-bezier(.2,.9,.3,1) both; }
+@keyframes dt-panel-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: none; }
+}
+.panel h3 { margin: 0 0 6px; font-size: 15px; color: var(--dt-gold-bright); text-shadow: 0 1px 3px rgba(0,0,0,.6); }
+.hint { font-size: 11px; color: #8fa382; margin-bottom: 8px; }
+
+.inv-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 7px; }
+.slot {
+  position: relative; display: flex; align-items: center; gap: 7px;
+  background: linear-gradient(180deg, #1a2413, #141d0e);
+  border: 1px solid var(--dt-line-soft); border-radius: 9px; padding: 7px 8px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.05);
+  transition: border-color .16s, box-shadow .16s, transform .16s;
+}
+.slot:hover {
+  border-color: #55683c;
+  box-shadow: 0 4px 12px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.09);
+  transform: translateY(-1px);
+}
+.slot .ico { font-size: 18px; filter: drop-shadow(0 1px 2px rgba(0,0,0,.5)); }
+.slot .nm { flex: 1; font-size: 12px; }
+.slot .ct { font-size: 12px; color: var(--dt-gold); font-weight: 700; }
+.slot .use {
+  font-size: 10px; padding: 2px 6px; cursor: pointer;
+  background: linear-gradient(180deg, #3d5c2c, #2b4420); color: #dff0cf;
+  border: 1px solid #4e7340; border-radius: 6px;
+  transition: filter .14s, transform .12s, box-shadow .14s;
+}
+.slot .use:hover { filter: brightness(1.2); box-shadow: 0 0 10px rgba(126,180,80,.35); }
+.slot .use:active { transform: scale(.93); }
+.empty { color: var(--dt-text-soft); font-size: 12px; padding: 10px; }
+
+.craft-list { display: flex; flex-direction: column; gap: 6px; }
+.craft-row {
+  display: flex; align-items: center; gap: 7px;
+  background: linear-gradient(180deg, #1a2413, #141d0e);
+  border: 1px solid var(--dt-line-soft); border-radius: 9px; padding: 7px 8px;
+  transition: border-color .16s, box-shadow .16s;
+}
+.craft-row:hover { border-color: #4e6238; box-shadow: 0 4px 12px rgba(0,0,0,.36); }
+.craft-row.ok {
+  border-color: #5b8f45;
+  box-shadow: 0 0 0 1px rgba(91,143,69,.22), 0 4px 14px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.07);
+}
+.craft-row .ico { font-size: 17px; filter: drop-shadow(0 1px 2px rgba(0,0,0,.5)); }
+.craft-row .nm { font-size: 12px; width: 78px; }
+.craft-row .need { flex: 1; display: flex; flex-wrap: wrap; gap: 4px; }
+.chip {
+  font-size: 10px; padding: 2px 6px; border-radius: 5px;
+  background: #222c16; color: #a9bb96; border: 1px solid #33441f;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.05);
+}
+.craft-row button {
+  font-size: 11px; padding: 4px 9px; cursor: pointer;
+  background: linear-gradient(180deg, #4c7c33, #37601f); color: #eafbe0;
+  border: 1px solid #5b8f45; border-radius: 7px;
+  transition: filter .14s, transform .12s, box-shadow .14s;
+}
+.craft-row button:hover:not([disabled]) { filter: brightness(1.15); box-shadow: 0 0 12px rgba(126,180,80,.35); }
+.craft-row button:active:not([disabled]) { transform: scale(.94); }
+.craft-row button[disabled] {
+  background: #2a3320; color: #6c7a63; cursor: not-allowed;
+  border-color: #33441f; box-shadow: none; filter: none;
+}
+
+.chat-input {
+  position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%);
+  width: min(520px, 88vw); padding: 10px 13px; font-size: 14px;
+  background: var(--dt-glass-strong); color: var(--dt-text);
+  border: 1px solid var(--dt-line); border-radius: 11px; outline: none;
+  display: none;
+  backdrop-filter: blur(10px) saturate(1.15);
+  -webkit-backdrop-filter: blur(10px) saturate(1.15);
+  box-shadow: var(--dt-shadow), inset 0 1px 0 rgba(255,255,255,.07);
+  transition: border-color .18s, box-shadow .18s;
+}
+.chat-input:focus {
+  border-color: #6b8a4c;
+  box-shadow: 0 0 0 3px rgba(126,160,90,.16), var(--dt-shadow);
+}
+.chat-input.open { display: block; animation: dt-panel-in .2s ease both; }
+
+.toast {
+  position: absolute; bottom: 76px; left: 50%; transform: translateX(-50%) translateY(8px);
+  padding: 9px 18px; font-size: 13px;
+  background: linear-gradient(180deg, rgba(28,40,18,0.96), rgba(18,26,12,0.96));
+  border: 1px solid #5b7040; border-radius: 11px;
+  color: var(--dt-gold-bright);
+  box-shadow: var(--dt-shadow), 0 0 20px rgba(217,192,99,.14), inset 0 1px 0 rgba(255,255,255,.08);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  opacity: 0; pointer-events: none; transition: opacity .22s, transform .22s cubic-bezier(.2,.9,.3,1);
+  max-width: 80vw; text-align: center;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* P4-D: layout มือถือทั้งหมดถูกย้ายไปที่ block หลัง (MOBA joystick + action buttons)
+   บล็อก legacy ของ D-pad 4 ทิศถูกลบแล้ว เพราะจะชนกับ .mact แบบ 2x2 */
+
+/* ================= Phase 2 : ร้านค้า / เควสต์ / HUD ใหม่ ================= */
+.hud-top { margin: 0 0 7px; }
+.hud-lv {
+  background: linear-gradient(180deg, rgba(138,96,224,0.55), rgba(96,62,176,0.55));
+  border: 1px solid #7d5cc0;
+  border-radius: 7px; padding: 1px 8px; font-size: 11px; font-weight: 700; color: #efe4ff;
+  box-shadow: 0 0 10px rgba(140,100,225,.35), inset 0 1px 0 rgba(255,255,255,.18);
+}
+.coins {
+  background: linear-gradient(180deg, rgba(32,42,20,0.95), rgba(22,30,14,0.95));
+  border: 1px solid #4a5f31; border-radius: 9px;
+  padding: 6px 10px; font-size: 12px; margin-bottom: 8px; color: #cbd8b8;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+}
+.coins b { color: #f0c95a; font-size: 14px; text-shadow: 0 0 10px rgba(240,201,90,.35); }
+.shop-tabs { display: flex; gap: 6px; margin-bottom: 7px; }
+.shop-tabs .tab {
+  font-size: 11px; padding: 3px 10px; border-radius: 7px;
+  background: #222c16; color: #9fb48c; border: 1px solid #33441f;
+  transition: background .15s, color .15s, border-color .15s;
+}
+.shop-tabs .tab:hover { background: #2e3d1c; color: #d8e8c4; }
+.shop-tabs .tab.on {
+  background: linear-gradient(180deg, #4c7c33, #37601f); color: #eafbe0; border-color: #6b9c4f;
+  box-shadow: 0 0 12px rgba(126,180,80,.28), inset 0 1px 0 rgba(255,255,255,.16);
+}
+.shop-list { display: flex; flex-direction: column; gap: 5px; max-height: 210px; overflow: auto; }
+.shop-row {
+  display: flex; align-items: center; gap: 7px;
+  background: linear-gradient(180deg, #1a2413, #141d0e);
+  border: 1px solid var(--dt-line-soft); border-radius: 8px; padding: 6px 8px;
+  transition: border-color .16s, box-shadow .16s;
+}
+.shop-row:hover { border-color: #4e6238; box-shadow: 0 4px 12px rgba(0,0,0,.36); }
+.shop-row .ico { font-size: 16px; filter: drop-shadow(0 1px 2px rgba(0,0,0,.5)); }
+.shop-row .nm { flex: 1; font-size: 12px; }
+.shop-row .price { font-size: 12px; color: #f0c95a; font-weight: 700; }
+.shop-row button {
+  font-size: 11px; padding: 3px 9px; cursor: pointer; white-space: nowrap;
+  background: linear-gradient(180deg, #4c7c33, #37601f); color: #eafbe0;
+  border: 1px solid #5b8f45; border-radius: 6px;
+  transition: filter .14s, transform .12s, box-shadow .14s;
+}
+.shop-row button:hover:not([disabled]) { filter: brightness(1.15); box-shadow: 0 0 12px rgba(126,180,80,.35); }
+.shop-row button:active:not([disabled]) { transform: scale(.94); }
+.shop-row button[disabled] {
+  background: #2a3320; color: #6c7a63; cursor: not-allowed; border-color: #33441f; box-shadow: none;
+}
+h3.mt { margin-top: 14px; border-top: 1px solid var(--dt-line-soft); padding-top: 10px; }
+
+.quest-list { display: flex; flex-direction: column; gap: 7px; max-height: 60vh; overflow: auto; }
+.quest-row {
+  background: linear-gradient(180deg, #1a2413, #141d0e);
+  border: 1px solid var(--dt-line-soft); border-radius: 9px; padding: 8px 9px;
+  transition: border-color .16s, box-shadow .16s;
+}
+.quest-row:hover { border-color: #4e6238; }
+.quest-row.ready {
+  border-color: var(--dt-gold); background: linear-gradient(180deg, #2e2c12, #201f0d);
+  box-shadow: 0 0 14px rgba(217,192,99,.20), inset 0 1px 0 rgba(255,236,170,.14);
+}
+.quest-row.done { opacity: 0.55; }
+.quest-row .qn { font-size: 13px; font-weight: 700; color: var(--dt-gold-bright); }
+.quest-row .qd { font-size: 11px; color: var(--dt-text-dim); margin: 2px 0 4px; }
+.quest-row .qp { font-size: 11px; color: #cbd8b8; }
+.quest-row button {
+  margin-top: 6px; font-size: 11px; padding: 4px 10px; cursor: pointer;
+  background: linear-gradient(180deg, #dcb84a, #b8902e); color: #2a2208;
+  border: 1px solid #8a6a20; border-radius: 7px; font-weight: 700;
+  box-shadow: 0 3px 10px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.28);
+  transition: filter .14s, transform .12s, box-shadow .14s;
+}
+.quest-row button:hover { filter: brightness(1.12); box-shadow: 0 0 16px rgba(217,192,99,.45), inset 0 1px 0 rgba(255,255,255,.32); }
+.quest-row button:active { transform: translateY(1px) scale(.97); }
+
+/* ================= Mouse-first : popup เมนู ================= */
+.popup {
+  position: absolute; inset: 0; z-index: 40;
+  display: none; align-items: center; justify-content: center;
+  background: radial-gradient(ellipse at 50% 40%, rgba(8,14,6,0.55), rgba(3,6,3,0.78));
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+.popup.open { display: flex; animation: dt-fade .2s ease both; }
+@keyframes dt-fade { from { opacity: 0; } to { opacity: 1; } }
+.popup-box {
+  width: min(720px, 94vw); max-height: 86vh;
+  display: flex; flex-direction: column;
+  background: linear-gradient(180deg, rgba(18,26,13,0.97), rgba(10,15,8,0.98));
+  border: 1px solid #55683c; border-radius: 16px;
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.72),
+    0 0 0 1px rgba(217,192,99,0.08),
+    inset 0 1px 0 rgba(255,255,255,0.07);
+  overflow: hidden;
+  animation: dt-pop-in .26s cubic-bezier(.2,.9,.3,1) both;
+  backdrop-filter: blur(14px) saturate(1.2);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+}
+@keyframes dt-pop-in {
+  from { opacity: 0; transform: translateY(14px) scale(.97); }
+  to   { opacity: 1; transform: none; }
+}
+.popup-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 11px 14px;
+  background: linear-gradient(180deg, #1e2a14, #18210f);
+  border-bottom: 1px solid #33441f;
+  box-shadow: 0 2px 10px rgba(0,0,0,.35);
+}
+.popup-title { font-size: 16px; color: var(--dt-gold-bright); font-weight: 700; text-shadow: 0 1px 3px rgba(0,0,0,.6); }
+.popup-x {
+  background: #2a3320; color: #d8e2c8; border: 1px solid #47693a;
+  border-radius: 8px; width: 28px; height: 28px; cursor: pointer; font-size: 14px;
+  transition: background .15s, transform .12s, box-shadow .15s, color .15s;
+}
+.popup-x:hover { background: #3f6a2c; color: #fff; box-shadow: 0 0 12px rgba(126,180,80,.4); }
+.popup-x:active { transform: scale(.9); }
+.popup-tabs {
+  display: flex; flex-wrap: wrap; gap: 5px;
+  padding: 9px 12px; background: rgba(18,25,12,0.85); border-bottom: 1px solid #2f4023;
+}
+.popup-tabs .ptab {
+  font-size: 12px; padding: 5px 12px; cursor: pointer; white-space: nowrap;
+  background: #222c16; color: #9fb48c; border: 1px solid #33441f; border-radius: 8px;
+  transition: background .15s, color .15s, border-color .15s, box-shadow .15s, transform .12s;
+}
+.popup-tabs .ptab:hover { background: #2e3d1c; color: #d8e8c4; transform: translateY(-1px); }
+.popup-tabs .ptab:active { transform: translateY(0) scale(.97); }
+.popup-tabs .ptab.on {
+  background: linear-gradient(180deg, #4c7c33, #37601f); color: #eafbe0;
+  border-color: #6b9c4f; font-weight: 700;
+  box-shadow: 0 0 14px rgba(126,180,80,.32), inset 0 1px 0 rgba(255,255,255,.18);
+}
+.popup-body { padding: 13px 14px; overflow: auto; }
+.popup-body .shop-list { max-height: none; }
+.popup-body .shop-row .stat { font-size: 10px; color: #8fa382; }
+.popup-body .shop-row .eq { font-size: 10px; color: #ffd166; }
+
+/* ================= P4-C : รองรับมือถือเต็มรูปแบบ ================= */
+/* P4-C: กัน pinch-zoom / double-tap zoom / เลื่อนหน้า (overscroll) */
+html, body {
+  overscroll-behavior: none;
+  touch-action: manipulation;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+/* P4-C: canvas รับ touch ได้โดยตรง ไม่ให้เบราว์เซอร์แทรกพฤติกรรม zoom/scroll */
+#game { touch-action: none; }
+
+/* P4-C: ปุ่มมือถือ — ครอบทั้งจอแต่ปล่อย touch ผ่านถึง canvas */
+.mobile { display: none; }
+@media (pointer: coarse), (max-width: 860px) {
+  .mobile {
+    display: block; position: absolute; inset: 0; z-index: 30;
+    pointer-events: none;
+    font-size: 16px;               /* กัน iOS auto-zoom เวลาแตะ input */
+  }
+  .mobile .mjoy, .mobile .mact, .mobile .mzoom, .mobile .mtools, .mobile .mtop { pointer-events: auto; }
+
+  /* P4-E: แถบควบคุมบน (มือถือ) — ☰ เมนู · ⛶ เต็มจอ · 👤 ย่อสถานะฮีโร่ */
+  .mobile .mtop {
+    position: absolute;
+    top: calc(6px + env(safe-area-inset-top, 0px));
+    right: calc(8px + env(safe-area-inset-right, 0px));
+    display: grid; grid-template-columns: repeat(3, 46px); gap: 6px;
+    z-index: 32;
+  }
+
+  /* P4-D: จอยอนาล็อคแนว MOBA (ซ้ายล่าง) — ลากนิ้วได้ ได้ความเร็วตามระยะ */
+  .mobile .mjoy {
+    position: absolute;
+    left: calc(10px + env(safe-area-inset-left, 0px));
+    bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+    width: 118px; height: 118px;
+    border-radius: 50%;
+    touch-action: none; -webkit-user-select: none; user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    background: radial-gradient(circle at 50% 50%,
+      rgba(28,40,20,0.34) 0%, rgba(18,26,12,0.46) 62%, rgba(12,18,8,0.30) 100%);
+    border: 2px solid rgba(93,112,64,0.55);
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.35), 0 6px 20px rgba(0,0,0,0.45),
+                inset 0 0 22px rgba(0,0,0,0.35);
+    opacity: 0.82;
+    transition: opacity .15s ease;
+  }
+  .mobile .mjoy.on { opacity: 1; border-color: rgba(217,192,99,0.75); }
+  .mobile .mjoy-ring {
+    position: absolute; inset: 12px;
+    border-radius: 50%;
+    border: 1px dashed rgba(217,192,99,0.28);
+    pointer-events: none;
+  }
+  .mobile .mjoy-knob {
+    position: absolute; left: 50%; top: 50%;
+    width: 54px; height: 54px; margin: -27px 0 0 -27px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 38% 32%,
+      #9db46e 0%, #6f8a4a 52%, #47632e 100%);
+    border: 2px solid rgba(217,192,99,0.85);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.35);
+    pointer-events: none;
+    will-change: transform;
+  }
+  .mobile .mjoy.on .mjoy-knob { border-color: #ffe9a8; }
+
+  /* P4-D: ปุ่ม action (ขวาล่าง) — MOBA: โจมตีใหญ่สุดอยู่มุมขวาล่าง */
+  .mobile .mact {
+    position: absolute;
+    right: calc(10px + env(safe-area-inset-right, 0px));
+    bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+    display: grid;
+    grid-template-columns: 50px 50px 58px;
+    grid-template-rows: 50px 50px;
+    gap: 5px;
+  }
+  .mobile .mact .pad {
+    width: 50px; height: 50px; min-width: 50px; min-height: 50px; font-size: 20px;
+  }
+  .mobile .mact .sk-gather { grid-column: 1; grid-row: 1; }
+  .mobile .mact .sk-shop   { grid-column: 2; grid-row: 1; }
+  .mobile .mact .sk-fire   { grid-column: 1; grid-row: 2; }
+  .mobile .mact .sk-attack {
+    grid-column: 3; grid-row: 1 / span 2;
+    width: 58px; height: 105px; min-width: 58px; min-height: 105px; font-size: 25px;
+    background: rgba(96,38,26,0.86); border-color: #8a4430;
+  }
+  .mobile .mact .sk-attack.on { background: rgba(140,52,34,0.92); }
+
+  /* P4-D: ปุ่มซูม (ขวาเหนือปุ่ม action) */
+  .mobile .mzoom {
+    position: absolute;
+    right: calc(10px + env(safe-area-inset-right, 0px));
+    bottom: calc(123px + env(safe-area-inset-bottom, 0px));
+    display: grid; grid-template-columns: 46px; gap: 5px;
+  }
+  .mobile .mzoom .mtool { width: 46px; height: 46px; min-width: 46px; min-height: 46px; font-size: 18px; }
+
+  /* P4-C: ปุ่มเครื่องมือ 🎒 ⚒️ 📜 👥 🔊 ❌ (มุมขวาบน — ชุดเดียวบนมือถือ)
+     ย้ายจากแถวล่างใต้ .topright มาเป็นกริด 3x2 มุมขวาบน
+     เพื่อไม่ให้ซ้อน/ทับ HUD (ซ้ายบน) และไม่ให้มีปุ่ม action ซ้ำ 2 ชุด */
+  /* P4-E: เมนูเครื่องมือย่อได้ — ซ่อนไว้ก่อน กด ☰ ค่อยกาง (เพื่อไม่กินพื้นที่เล่น) */
+  .mobile .mtools {
+    position: absolute;
+    top: calc(58px + env(safe-area-inset-top, 0px));
+    right: calc(8px + env(safe-area-inset-right, 0px));
+    display: none;
+    grid-template-columns: repeat(3, 46px); gap: 6px;
+    z-index: 32;
+  }
+  .mobile .mtools.open { display: grid; }
+  .mobile .mtool {
+    width: 46px; height: 46px; min-width: 46px; min-height: 46px;
+    font-size: 19px; line-height: 1; color: #e8e8e0;
+    background: rgba(20,28,16,0.8); border: 1px solid #3d4f2c;
+    border-radius: 11px; touch-action: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .mobile .mtool.close { background: rgba(70,30,24,0.85); border-color: #6b3a2a; }
+
+  /* P4-C: ปุ่ม .pad — แตะง่าย >= 44px, ไม่มี highlight, กดค้างเดินต่อเนื่อง */
+  .mobile .pad {
+    min-width: 54px; min-height: 54px;
+    display: flex; align-items: center; justify-content: center;
+    color: #e8e8e0; background: rgba(20,28,16,0.75);
+    border: 1px solid #3d4f2c; border-radius: 12px;
+    touch-action: none; -webkit-user-select: none; user-select: none;
+    -webkit-tap-highlight-color: transparent; cursor: pointer;
+  }
+  .mobile .pad.act { background: rgba(60,44,20,0.8); }
+  .mobile .pad.on, .mobile .mtool.on { filter: brightness(1.45); border-color: #d9c063; }
+
+  /* P4-C: บนมือถือใช้ .mtools ชุดเดียว → ซ่อน .topright (เดสก์ท็อปยังใช้ .topright ตามปกติ)
+     ปุ่มที่หายจาก .topright ถูกย้ายไป .mtools แล้ว: 🎒 ⚒️ 📜 👥 🔊 ❌
+     (🪙 ร้านค้าใช้ปุ่ม .mact ล่างขวาแทน) */
+  .topright { display: none; }
+
+  /* P4-C: HUD บนมือถือ — บางลง ไม่กินพื้นที่เล่น */
+  .hud {
+    top: calc(6px + env(safe-area-inset-top, 0px));
+    left: calc(6px + env(safe-area-inset-left, 0px));
+    width: 168px; max-width: calc(100vw - 172px); padding: 7px 8px; font-size: 11px;
+  }
+  .hud .stat { margin-bottom: 3px; }
+
+  /* P4-E: ย่อสถานะฮีโร่ — เหลือแถวเดียว (ชื่อ + Lv) คืนพื้นที่เล่น */
+  .hud.hud-mini { width: auto; min-width: 0; padding: 5px 9px; font-size: 11px; }
+  .hud.hud-mini .stat,
+  .hud.hud-mini .hud-row:not(.hud-top) { display: none; }
+  .hud.hud-mini .hud-top { margin: 0; }
+
+  /* P4-C: แผงข้าง — เลื่อนได้ ไม่ล้นจอ ไม่โดนปุ่มมือถือทับ */
+  .panel {
+    z-index: 35;
+    top: calc(165px + env(safe-area-inset-top, 0px));
+    right: calc(8px + env(safe-area-inset-right, 0px));
+    width: min(330px, calc(100vw - 16px));
+    max-height: calc(100dvh - 320px - env(safe-area-inset-bottom, 0px));
+    min-height: 120px;
+    overflow: auto; -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+  }
+
+  /* P4-C: popup — เลื่อนได้ ไม่ล้นจอแนวตั้ง */
+  .popup-box {
+    width: min(720px, calc(100vw - 16px));
+    max-height: calc(100dvh - 24px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+  }
+  .popup-body {
+    max-height: calc(100dvh - 150px);
+    overflow: auto; -webkit-overflow-scrolling: touch; touch-action: pan-y;
+  }
+  .popup-x { width: 40px; height: 40px; font-size: 17px; }
+  .popup-tabs .ptab { padding: 9px 13px; font-size: 13px; }
+}
+
+/* P4-D: แนวนอน (เตี้ย) — ย่อจอย/ปุ่มลง เพื่อไม่บังฉาก */
+@media (pointer: coarse) and (orientation: landscape) {
+  .mobile .mjoy { width: 96px; height: 96px; left: calc(8px + env(safe-area-inset-left, 0px)); bottom: calc(8px + env(safe-area-inset-bottom, 0px)); }
+  .mobile .mjoy-knob { width: 46px; height: 46px; margin: -23px 0 0 -23px; }
+  .mobile .mjoy-ring { inset: 10px; }
+  .mobile .mact {
+    grid-template-columns: 46px 46px 52px;
+    grid-template-rows: 46px 46px; gap: 4px;
+    right: calc(8px + env(safe-area-inset-right, 0px));
+    bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+  }
+  .mobile .mact .pad { width: 46px; height: 46px; min-width: 46px; min-height: 46px; font-size: 19px; }
+  .mobile .mact .sk-attack { width: 52px; height: 96px; min-width: 52px; min-height: 96px; font-size: 23px; }
+  .mobile .mzoom { bottom: calc(110px + env(safe-area-inset-bottom, 0px)); right: calc(8px + env(safe-area-inset-right, 0px)); }
+  .mobile .mzoom .mtool { width: 44px; height: 44px; min-width: 44px; min-height: 44px; font-size: 17px; }
+  .mobile .mtop { grid-template-columns: repeat(3, 44px); gap: 4px; top: calc(4px + env(safe-area-inset-top, 0px)); }
+  .mobile .mtools { top: calc(52px + env(safe-area-inset-top, 0px)); grid-template-columns: repeat(3, 44px); gap: 4px; }
+  .mobile .mtool { width: 44px; height: 44px; min-width: 44px; min-height: 44px; font-size: 17px; }
+  .hud { width: 150px; font-size: 10px; }
+  .panel { top: calc(96px + env(safe-area-inset-top, 0px)); max-height: calc(100dvh - 190px); }
+}

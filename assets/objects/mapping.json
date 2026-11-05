@@ -1,0 +1,1001 @@
+{
+  "axe": {
+    "file": "objects/axe.png",
+    "note": "axe",
+    "source_index": 127,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0127.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "barrel_pot": {
+    "file": "objects/barrel_pot.png",
+    "note": "clay pot",
+    "source_index": 107,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0107.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "beehive": {
+    "file": "objects/beehive.png",
+    "note": "beehive",
+    "source_index": 94,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0094.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "brick_wall": {
+    "file": "objects/brick_wall.png",
+    "note": "red brick wall",
+    "source_index": 53,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0053.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "brick_wall_dark": {
+    "file": "objects/brick_wall_dark.png",
+    "note": "dark red brick wall",
+    "source_index": 54,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0054.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "bush": {
+    "file": "objects/bush.png",
+    "note": "green bush clump",
+    "source_index": 6,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0006.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "bush_cluster": {
+    "file": "objects/bush_cluster.png",
+    "note": "green tree/bush cluster",
+    "source_index": 19,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0019.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "city_brick_wall": {
+    "file": "objects/city_brick_wall.png",
+    "note": "red brick wall",
+    "source_index": 37,
+    "source_pack": "Tiny City",
+    "source_path": "tiles/city/tile_0037.png",
+    "source_sheet": "ct_city",
+    "tile_size": "16x16"
+  },
+  "city_building_brown": {
+    "file": "objects/city_building_brown.png",
+    "note": "brown building",
+    "source_index": 105,
+    "source_pack": "Tiny City",
+    "source_path": "tiles/city/tile_0105.png",
+    "source_sheet": "ct_city",
+    "tile_size": "16x16"
+  },
+  "city_bush_planter": {
+    "file": "objects/city_bush_planter.png",
+    "note": "green bush in planter",
+    "source_index": 81,
+    "source_pack": "Tiny City",
+    "source_path": "tiles/city/tile_0081.png",
+    "source_sheet": "ct_city",
+    "tile_size": "16x16"
+  },
+  "city_fence_chainlink": {
+    "file": "objects/city_fence_chainlink.png",
+    "note": "chain-link fence",
+    "source_index": 126,
+    "source_pack": "Tiny City",
+    "source_path": "tiles/city/tile_0126.png",
+    "source_sheet": "ct_city",
+    "tile_size": "16x16"
+  },
+  "city_ground_dirt": {
+    "file": "objects/city_ground_dirt.png",
+    "note": "plain brown ground",
+    "source_index": 1,
+    "source_pack": "Tiny City",
+    "source_path": "tiles/city/tile_0001.png",
+    "source_sheet": "ct_city",
+    "tile_size": "16x16"
+  },
+  "city_lamp_post": {
+    "file": "objects/city_lamp_post.png",
+    "note": "lamp post",
+    "source_index": 103,
+    "source_pack": "Tiny City",
+    "source_path": "tiles/city/tile_0103.png",
+    "source_sheet": "ct_city",
+    "tile_size": "16x16"
+  },
+  "city_planter": {
+    "file": "objects/city_planter.png",
+    "note": "planter",
+    "source_index": 69,
+    "source_pack": "Tiny City",
+    "source_path": "tiles/city/tile_0069.png",
+    "source_sheet": "ct_city",
+    "tile_size": "16x16"
+  },
+  "city_road_asphalt": {
+    "file": "objects/city_road_asphalt.png",
+    "note": "plain asphalt road",
+    "source_index": 7,
+    "source_pack": "Tiny City",
+    "source_path": "tiles/city/tile_0007.png",
+    "source_sheet": "ct_city",
+    "tile_size": "16x16"
+  },
+  "city_rock": {
+    "file": "objects/city_rock.png",
+    "note": "grey boulder",
+    "source_index": 102,
+    "source_pack": "Tiny City",
+    "source_path": "tiles/city/tile_0102.png",
+    "source_sheet": "ct_city",
+    "tile_size": "16x16"
+  },
+  "city_sidewalk": {
+    "file": "objects/city_sidewalk.png",
+    "note": "framed pavement slab",
+    "source_index": 4,
+    "source_pack": "Tiny City",
+    "source_path": "tiles/city/tile_0004.png",
+    "source_sheet": "ct_city",
+    "tile_size": "16x16"
+  },
+  "city_storefront": {
+    "file": "objects/city_storefront.png",
+    "note": "storefront window/door",
+    "source_index": 50,
+    "source_pack": "Tiny City",
+    "source_path": "tiles/city/tile_0050.png",
+    "source_sheet": "ct_city",
+    "tile_size": "16x16"
+  },
+  "city_tree_gold": {
+    "file": "objects/city_tree_gold.png",
+    "note": "gold conifer tree",
+    "source_index": 67,
+    "source_pack": "Tiny City",
+    "source_path": "tiles/city/tile_0067.png",
+    "source_sheet": "ct_city",
+    "tile_size": "16x16"
+  },
+  "city_tree_green": {
+    "file": "objects/city_tree_green.png",
+    "note": "green conifer tree",
+    "source_index": 68,
+    "source_pack": "Tiny City",
+    "source_path": "tiles/city/tile_0068.png",
+    "source_sheet": "ct_city",
+    "tile_size": "16x16"
+  },
+  "crate": {
+    "file": "objects/crate.png",
+    "note": "wooden crate",
+    "source_index": 75,
+    "source_pack": "Tiny Dungeon",
+    "source_path": "tiles/dungeon/tile_0075.png",
+    "source_sheet": "ct_dungeon",
+    "tile_size": "16x16"
+  },
+  "dirt_mound": {
+    "file": "objects/dirt_mound.png",
+    "note": "brown dirt mound",
+    "source_index": 92,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0092.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "dirt_path": {
+    "file": "objects/dirt_path.png",
+    "note": "plain tan dirt road",
+    "source_index": 25,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0025.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "dirt_path_edge": {
+    "file": "objects/dirt_path_edge.png",
+    "note": "dirt road with grass edge",
+    "source_index": 13,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0013.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "dirt_path_pebbles": {
+    "file": "objects/dirt_path_pebbles.png",
+    "note": "dirt road with pebbles",
+    "source_index": 40,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0040.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "door_wood": {
+    "file": "objects/door_wood.png",
+    "note": "wooden door",
+    "source_index": 74,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0074.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "doorway": {
+    "file": "objects/doorway.png",
+    "note": "doorway opening",
+    "source_index": 78,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0078.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "dungeon_anvil": {
+    "file": "objects/dungeon_anvil.png",
+    "note": "anvil",
+    "source_index": 74,
+    "source_pack": "Tiny Dungeon",
+    "source_path": "tiles/dungeon/tile_0074.png",
+    "source_sheet": "ct_dungeon",
+    "tile_size": "16x16"
+  },
+  "dungeon_arch_door": {
+    "file": "objects/dungeon_arch_door.png",
+    "note": "arched doorway with brown door",
+    "source_index": 21,
+    "source_pack": "Tiny Dungeon",
+    "source_path": "tiles/dungeon/tile_0021.png",
+    "source_sheet": "ct_dungeon",
+    "tile_size": "16x16"
+  },
+  "dungeon_bars": {
+    "file": "objects/dungeon_bars.png",
+    "note": "metal prison bars",
+    "source_index": 67,
+    "source_pack": "Tiny Dungeon",
+    "source_path": "tiles/dungeon/tile_0067.png",
+    "source_sheet": "ct_dungeon",
+    "tile_size": "16x16"
+  },
+  "dungeon_door_stone": {
+    "file": "objects/dungeon_door_stone.png",
+    "note": "stone door",
+    "source_index": 6,
+    "source_pack": "Tiny Dungeon",
+    "source_path": "tiles/dungeon/tile_0006.png",
+    "source_sheet": "ct_dungeon",
+    "tile_size": "16x16"
+  },
+  "dungeon_door_wood": {
+    "file": "objects/dungeon_door_wood.png",
+    "note": "wood door",
+    "source_index": 45,
+    "source_pack": "Tiny Dungeon",
+    "source_path": "tiles/dungeon/tile_0045.png",
+    "source_sheet": "ct_dungeon",
+    "tile_size": "16x16"
+  },
+  "dungeon_floor_dirt": {
+    "file": "objects/dungeon_floor_dirt.png",
+    "note": "dark earth floor",
+    "source_index": 0,
+    "source_pack": "Tiny Dungeon",
+    "source_path": "tiles/dungeon/tile_0000.png",
+    "source_sheet": "ct_dungeon",
+    "tile_size": "16x16"
+  },
+  "dungeon_floor_sand": {
+    "file": "objects/dungeon_floor_sand.png",
+    "note": "plain sand floor",
+    "source_index": 48,
+    "source_pack": "Tiny Dungeon",
+    "source_path": "tiles/dungeon/tile_0048.png",
+    "source_sheet": "ct_dungeon",
+    "tile_size": "16x16"
+  },
+  "dungeon_floor_stone": {
+    "file": "objects/dungeon_floor_stone.png",
+    "note": "grey brick wall/floor",
+    "source_index": 14,
+    "source_pack": "Tiny Dungeon",
+    "source_path": "tiles/dungeon/tile_0014.png",
+    "source_sheet": "ct_dungeon",
+    "tile_size": "16x16"
+  },
+  "dungeon_grate": {
+    "file": "objects/dungeon_grate.png",
+    "note": "metal grate",
+    "source_index": 55,
+    "source_pack": "Tiny Dungeon",
+    "source_path": "tiles/dungeon/tile_0055.png",
+    "source_sheet": "ct_dungeon",
+    "tile_size": "16x16"
+  },
+  "dungeon_pillar": {
+    "file": "objects/dungeon_pillar.png",
+    "note": "stone pillar",
+    "source_index": 18,
+    "source_pack": "Tiny Dungeon",
+    "source_path": "tiles/dungeon/tile_0018.png",
+    "source_sheet": "ct_dungeon",
+    "tile_size": "16x16"
+  },
+  "dungeon_pool": {
+    "file": "objects/dungeon_pool.png",
+    "note": "green liquid pool in basin",
+    "source_index": 32,
+    "source_pack": "Tiny Dungeon",
+    "source_path": "tiles/dungeon/tile_0032.png",
+    "source_sheet": "ct_dungeon",
+    "tile_size": "16x16"
+  },
+  "dungeon_portcullis": {
+    "file": "objects/dungeon_portcullis.png",
+    "note": "stone arch with grate",
+    "source_index": 41,
+    "source_pack": "Tiny Dungeon",
+    "source_path": "tiles/dungeon/tile_0041.png",
+    "source_sheet": "ct_dungeon",
+    "tile_size": "16x16"
+  },
+  "dungeon_potion": {
+    "file": "objects/dungeon_potion.png",
+    "note": "potion flask",
+    "source_index": 113,
+    "source_pack": "Tiny Dungeon",
+    "source_path": "tiles/dungeon/tile_0113.png",
+    "source_sheet": "ct_dungeon",
+    "tile_size": "16x16"
+  },
+  "dungeon_rubble": {
+    "file": "objects/dungeon_rubble.png",
+    "note": "rubble on earth floor",
+    "source_index": 12,
+    "source_pack": "Tiny Dungeon",
+    "source_path": "tiles/dungeon/tile_0012.png",
+    "source_sheet": "ct_dungeon",
+    "tile_size": "16x16"
+  },
+  "dungeon_table": {
+    "file": "objects/dungeon_table.png",
+    "note": "wooden table",
+    "source_index": 72,
+    "source_pack": "Tiny Dungeon",
+    "source_path": "tiles/dungeon/tile_0072.png",
+    "source_sheet": "ct_dungeon",
+    "tile_size": "16x16"
+  },
+  "dungeon_torch": {
+    "file": "objects/dungeon_torch.png",
+    "note": "wall torch flame",
+    "source_index": 29,
+    "source_pack": "Tiny Dungeon",
+    "source_path": "tiles/dungeon/tile_0029.png",
+    "source_sheet": "ct_dungeon",
+    "tile_size": "16x16"
+  },
+  "dungeon_wall": {
+    "file": "objects/dungeon_wall.png",
+    "note": "grey brick wall",
+    "source_index": 57,
+    "source_pack": "Tiny Dungeon",
+    "source_path": "tiles/dungeon/tile_0057.png",
+    "source_sheet": "ct_dungeon",
+    "tile_size": "16x16"
+  },
+  "dungeon_wall_slab": {
+    "file": "objects/dungeon_wall_slab.png",
+    "note": "grey horizontal-slab wall",
+    "source_index": 37,
+    "source_pack": "Tiny Dungeon",
+    "source_path": "tiles/dungeon/tile_0037.png",
+    "source_sheet": "ct_dungeon",
+    "tile_size": "16x16"
+  },
+  "fence": {
+    "file": "objects/fence.png",
+    "note": "wooden fence",
+    "source_index": 45,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0045.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "fence_corner": {
+    "file": "objects/fence_corner.png",
+    "note": "fence corner",
+    "source_index": 47,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0047.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "fence_vertical": {
+    "file": "objects/fence_vertical.png",
+    "note": "wooden fence post",
+    "source_index": 44,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0044.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "grass_flowers": {
+    "file": "objects/grass_flowers.png",
+    "note": "grass with flowers",
+    "source_index": 2,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0002.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "grass_plain": {
+    "file": "objects/grass_plain.png",
+    "note": "solid green grass",
+    "source_index": 0,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0000.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "grass_tufts": {
+    "file": "objects/grass_tufts.png",
+    "note": "grass with tufts",
+    "source_index": 1,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0001.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "hedge": {
+    "file": "objects/hedge.png",
+    "note": "green hedge/canopy strip",
+    "source_index": 20,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0020.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "house_door": {
+    "file": "objects/house_door.png",
+    "note": "house door",
+    "source_index": 85,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0085.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "house_wall": {
+    "file": "objects/house_wall.png",
+    "note": "plain light stone wall",
+    "source_index": 108,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0108.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "house_wall_brick": {
+    "file": "objects/house_wall_brick.png",
+    "note": "red brick house wall",
+    "source_index": 53,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0053.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "house_wall_castle": {
+    "file": "objects/house_wall_castle.png",
+    "note": "castle stone wall",
+    "source_index": 96,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0096.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "house_window": {
+    "file": "objects/house_window.png",
+    "note": "house window",
+    "source_index": 84,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0084.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "key": {
+    "file": "objects/key.png",
+    "note": "key",
+    "source_index": 117,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0117.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "lamp_street": {
+    "file": "objects/lamp_street.png",
+    "note": "street lamp",
+    "source_index": 86,
+    "source_pack": "Tiny City",
+    "source_path": "tiles/city/tile_0086.png",
+    "source_sheet": "ct_city",
+    "tile_size": "16x16"
+  },
+  "mushrooms": {
+    "file": "objects/mushrooms.png",
+    "note": "red mushrooms",
+    "source_index": 29,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0029.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "pickaxe": {
+    "file": "objects/pickaxe.png",
+    "note": "pickaxe",
+    "source_index": 119,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0119.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "pot": {
+    "file": "objects/pot.png",
+    "note": "large pot",
+    "source_index": 130,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0130.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "rock_boulder": {
+    "file": "objects/rock_boulder.png",
+    "note": "dark boulder",
+    "source_index": 105,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0105.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "rock_small": {
+    "file": "objects/rock_small.png",
+    "note": "brown boulder",
+    "source_index": 106,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0106.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "roof": {
+    "file": "objects/roof.png",
+    "note": "orange roof",
+    "source_index": 67,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0067.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "roof_grey": {
+    "file": "objects/roof_grey.png",
+    "note": "grey roof",
+    "source_index": 63,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0063.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "shop_blue_window": {
+    "file": "objects/shop_blue_window.png",
+    "note": "shop with blue window",
+    "source_index": 104,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0104.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "shovel": {
+    "file": "objects/shovel.png",
+    "note": "shovel",
+    "source_index": 128,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0128.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "sign": {
+    "file": "objects/sign.png",
+    "note": "red sign",
+    "source_index": 95,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0095.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "signboard": {
+    "file": "objects/signboard.png",
+    "note": "wooden signboard",
+    "source_index": 57,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0057.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "signpost": {
+    "file": "objects/signpost.png",
+    "note": "signpost",
+    "source_index": 115,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0115.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "stairs": {
+    "file": "objects/stairs.png",
+    "note": "stairs",
+    "source_index": 168,
+    "source_pack": "Roguelike Modern City",
+    "source_path": "tiles/urban/tile_0168.png",
+    "source_sheet": "ct_urban1",
+    "tile_size": "16x16"
+  },
+  "stairs_wide": {
+    "file": "objects/stairs_wide.png",
+    "note": "wide stairs",
+    "source_index": 600,
+    "source_pack": "Roguelike Modern City",
+    "source_path": "tiles/urban/tile_0600.png",
+    "source_sheet": "ct_urban4",
+    "tile_size": "16x16"
+  },
+  "stone_floor": {
+    "file": "objects/stone_floor.png",
+    "note": "rocky grey ground",
+    "source_index": 49,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0049.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "stone_floor_dark": {
+    "file": "objects/stone_floor_dark.png",
+    "note": "dark rocky grey ground",
+    "source_index": 50,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0050.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "stone_path": {
+    "file": "objects/stone_path.png",
+    "note": "cobble stones set in grass",
+    "source_index": 43,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0043.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "street_lamp_arm": {
+    "file": "objects/street_lamp_arm.png",
+    "note": "street lamp arm",
+    "source_index": 85,
+    "source_pack": "Tiny City",
+    "source_path": "tiles/city/tile_0085.png",
+    "source_sheet": "ct_city",
+    "tile_size": "16x16"
+  },
+  "tree_autumn": {
+    "file": "objects/tree_autumn.png",
+    "note": "gold conifer tree",
+    "source_index": 3,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0003.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "tree_gold_round": {
+    "file": "objects/tree_gold_round.png",
+    "note": "gold round tree",
+    "source_index": 15,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0015.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "tree_green": {
+    "file": "objects/tree_green.png",
+    "note": "green conifer tree",
+    "source_index": 4,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0004.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "tree_green_large": {
+    "file": "objects/tree_green_large.png",
+    "note": "green round-canopy tree",
+    "source_index": 5,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0005.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "urban_awning_orange": {
+    "file": "objects/urban_awning_orange.png",
+    "note": "orange/white awning",
+    "source_index": 357,
+    "source_pack": "Roguelike Modern City",
+    "source_path": "tiles/urban/tile_0357.png",
+    "source_sheet": "ct_urban3",
+    "tile_size": "16x16"
+  },
+  "urban_bush": {
+    "file": "objects/urban_bush.png",
+    "note": "bush canopy, no trunk",
+    "source_index": 403,
+    "source_pack": "Roguelike Modern City",
+    "source_path": "tiles/urban/tile_0403.png",
+    "source_sheet": "ct_urban3",
+    "tile_size": "16x16"
+  },
+  "urban_bush_dark": {
+    "file": "objects/urban_bush_dark.png",
+    "note": "dark bush canopy",
+    "source_index": 406,
+    "source_pack": "Roguelike Modern City",
+    "source_path": "tiles/urban/tile_0406.png",
+    "source_sheet": "ct_urban3",
+    "tile_size": "16x16"
+  },
+  "urban_concrete_floor": {
+    "file": "objects/urban_concrete_floor.png",
+    "note": "plain light-grey concrete slab",
+    "source_index": 133,
+    "source_pack": "Roguelike Modern City",
+    "source_path": "tiles/urban/tile_0133.png",
+    "source_sheet": "ct_urban1",
+    "tile_size": "16x16"
+  },
+  "urban_door": {
+    "file": "objects/urban_door.png",
+    "note": "brown door",
+    "source_index": 143,
+    "source_pack": "Roguelike Modern City",
+    "source_path": "tiles/urban/tile_0143.png",
+    "source_sheet": "ct_urban1",
+    "tile_size": "16x16"
+  },
+  "urban_door_panes": {
+    "file": "objects/urban_door_panes.png",
+    "note": "brown 4-pane door",
+    "source_index": 617,
+    "source_pack": "Roguelike Modern City",
+    "source_path": "tiles/urban/tile_0617.png",
+    "source_sheet": "ct_urban4",
+    "tile_size": "16x16"
+  },
+  "urban_fence": {
+    "file": "objects/urban_fence.png",
+    "note": "urban fence",
+    "source_index": 539,
+    "source_pack": "Roguelike Modern City",
+    "source_path": "tiles/urban/tile_0539.png",
+    "source_sheet": "ct_urban4",
+    "tile_size": "16x16"
+  },
+  "urban_grass": {
+    "file": "objects/urban_grass.png",
+    "note": "grass tile",
+    "source_index": 173,
+    "source_pack": "Roguelike Modern City",
+    "source_path": "tiles/urban/tile_0173.png",
+    "source_sheet": "ct_urban1",
+    "tile_size": "16x16"
+  },
+  "urban_lamp_post": {
+    "file": "objects/urban_lamp_post.png",
+    "note": "lamp post",
+    "source_index": 482,
+    "source_pack": "Roguelike Modern City",
+    "source_path": "tiles/urban/tile_0482.png",
+    "source_sheet": "ct_urban3",
+    "tile_size": "16x16"
+  },
+  "urban_lamp_street": {
+    "file": "objects/urban_lamp_street.png",
+    "note": "street lamp",
+    "source_index": 481,
+    "source_pack": "Roguelike Modern City",
+    "source_path": "tiles/urban/tile_0481.png",
+    "source_sheet": "ct_urban3",
+    "tile_size": "16x16"
+  },
+  "urban_lamp_wall": {
+    "file": "objects/urban_lamp_wall.png",
+    "note": "wall lamp",
+    "source_index": 519,
+    "source_pack": "Roguelike Modern City",
+    "source_path": "tiles/urban/tile_0519.png",
+    "source_sheet": "ct_urban3",
+    "tile_size": "16x16"
+  },
+  "urban_rock": {
+    "file": "objects/urban_rock.png",
+    "note": "grey boulder",
+    "source_index": 493,
+    "source_pack": "Roguelike Modern City",
+    "source_path": "tiles/urban/tile_0493.png",
+    "source_sheet": "ct_urban3",
+    "tile_size": "16x16"
+  },
+  "urban_shop_awning": {
+    "file": "objects/urban_shop_awning.png",
+    "note": "green/white shop awning",
+    "source_index": 278,
+    "source_pack": "Roguelike Modern City",
+    "source_path": "tiles/urban/tile_0278.png",
+    "source_sheet": "ct_urban2",
+    "tile_size": "16x16"
+  },
+  "urban_shop_sign": {
+    "file": "objects/urban_shop_sign.png",
+    "note": "orange shop sign",
+    "source_index": 291,
+    "source_pack": "Roguelike Modern City",
+    "source_path": "tiles/urban/tile_0291.png",
+    "source_sheet": "ct_urban2",
+    "tile_size": "16x16"
+  },
+  "urban_traffic_light": {
+    "file": "objects/urban_traffic_light.png",
+    "note": "traffic light",
+    "source_index": 483,
+    "source_pack": "Roguelike Modern City",
+    "source_path": "tiles/urban/tile_0483.png",
+    "source_sheet": "ct_urban3",
+    "tile_size": "16x16"
+  },
+  "urban_tree": {
+    "file": "objects/urban_tree.png",
+    "note": "tree with trunk",
+    "source_index": 440,
+    "source_pack": "Roguelike Modern City",
+    "source_path": "tiles/urban/tile_0440.png",
+    "source_sheet": "ct_urban3",
+    "tile_size": "16x16"
+  },
+  "urban_tree_planter": {
+    "file": "objects/urban_tree_planter.png",
+    "note": "tree in planter",
+    "source_index": 477,
+    "source_pack": "Roguelike Modern City",
+    "source_path": "tiles/urban/tile_0477.png",
+    "source_sheet": "ct_urban3",
+    "tile_size": "16x16"
+  },
+  "urban_water": {
+    "file": "objects/urban_water.png",
+    "note": "pool water, flat",
+    "source_index": 211,
+    "source_pack": "Roguelike Modern City",
+    "source_path": "tiles/urban/tile_0211.png",
+    "source_sheet": "ct_urban1",
+    "tile_size": "16x16"
+  },
+  "urban_water_over_brick": {
+    "file": "objects/urban_water_over_brick.png",
+    "note": "water over brick wall",
+    "source_index": 248,
+    "source_pack": "Roguelike Modern City",
+    "source_path": "tiles/urban/tile_0248.png",
+    "source_sheet": "ct_urban2",
+    "tile_size": "16x16"
+  },
+  "urban_water_rim": {
+    "file": "objects/urban_water_rim.png",
+    "note": "pool water with stone rim",
+    "source_index": 174,
+    "source_pack": "Roguelike Modern City",
+    "source_path": "tiles/urban/tile_0174.png",
+    "source_sheet": "ct_urban1",
+    "tile_size": "16x16"
+  },
+  "urban_window_green": {
+    "file": "objects/urban_window_green.png",
+    "note": "green glass window",
+    "source_index": 160,
+    "source_pack": "Roguelike Modern City",
+    "source_path": "tiles/urban/tile_0160.png",
+    "source_sheet": "ct_urban1",
+    "tile_size": "16x16"
+  },
+  "urban_window_teal": {
+    "file": "objects/urban_window_teal.png",
+    "note": "teal glass window",
+    "source_index": 198,
+    "source_pack": "Roguelike Modern City",
+    "source_path": "tiles/urban/tile_0198.png",
+    "source_sheet": "ct_urban1",
+    "tile_size": "16x16"
+  },
+  "urban_wood_boards": {
+    "file": "objects/urban_wood_boards.png",
+    "note": "brown boards",
+    "source_index": 607,
+    "source_pack": "Roguelike Modern City",
+    "source_path": "tiles/urban/tile_0607.png",
+    "source_sheet": "ct_urban4",
+    "tile_size": "16x16"
+  },
+  "urban_wood_floor": {
+    "file": "objects/urban_wood_floor.png",
+    "note": "light beige plank floor (horizontal)",
+    "source_index": 170,
+    "source_pack": "Roguelike Modern City",
+    "source_path": "tiles/urban/tile_0170.png",
+    "source_sheet": "ct_urban1",
+    "tile_size": "16x16"
+  },
+  "urban_wood_floor_vertical": {
+    "file": "objects/urban_wood_floor_vertical.png",
+    "note": "light beige plank floor (vertical)",
+    "source_index": 202,
+    "source_pack": "Roguelike Modern City",
+    "source_path": "tiles/urban/tile_0202.png",
+    "source_sheet": "ct_urban1",
+    "tile_size": "16x16"
+  },
+  "water": {
+    "file": "objects/water.png",
+    "note": "solid blue water",
+    "source_index": 253,
+    "source_pack": "1-Bit Pack",
+    "source_path": "tiles/1bit/1bit_0253.png",
+    "source_sheet": "1bit",
+    "tile_size": "16x16"
+  },
+  "water_edge": {
+    "file": "objects/water_edge.png",
+    "note": "water with shore edge",
+    "source_index": 256,
+    "source_pack": "1-Bit Pack",
+    "source_path": "tiles/1bit/1bit_0256.png",
+    "source_sheet": "1bit",
+    "tile_size": "16x16"
+  },
+  "water_shore": {
+    "file": "objects/water_shore.png",
+    "note": "water meeting shore",
+    "source_index": 254,
+    "source_pack": "1-Bit Pack",
+    "source_path": "tiles/1bit/1bit_0254.png",
+    "source_sheet": "1bit",
+    "tile_size": "16x16"
+  },
+  "wood_planks": {
+    "file": "objects/wood_planks.png",
+    "note": "brown plank wall/floor",
+    "source_index": 73,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0073.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "wood_wall": {
+    "file": "objects/wood_wall.png",
+    "note": "brown plank wall variant",
+    "source_index": 75,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0075.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  }
+}
