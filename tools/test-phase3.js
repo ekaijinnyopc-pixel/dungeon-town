@@ -8,6 +8,16 @@ function killChrome(ch) {
   try { ch.kill('SIGKILL'); } catch (e) {}
 }
 
+/* wait until game booted (DT.Game.local ready) — กัน race ตอนเครื่องช้า */
+async function waitGameStart(ev, timeoutMs = 15000) {
+  const t0 = Date.now();
+  while (Date.now() - t0 < timeoutMs) {
+    try { if (await ev("!!(DT.Game && DT.Game.local)")) return true; } catch (e) {}
+    await sleep(200);
+  }
+  return false;
+}
+
 const URL = process.argv[2] || 'http://127.0.0.1:8931/index.html';
 const PORT = 9361;
 const sleep = ms => new Promise(r => setTimeout(r, ms));
@@ -70,7 +80,7 @@ function ok(c, m) { if (c) { pass++; console.log('  ✅ ' + m); } else { fail++;
 
   console.log('\n== เริ่มเกม ==');
   await ev("(function(){document.getElementById('pname').value='พี่เอ';document.getElementById('go').click();})()");
-  await sleep(2500);
+  await waitGameStart(ev);
   ok(await ev("!!(DT.Game&&DT.Game.local)"), 'เข้าเกมได้');
   ok(await ev("DT.Audio.isReady()"), 'AudioContext พร้อมใช้งาน');
 

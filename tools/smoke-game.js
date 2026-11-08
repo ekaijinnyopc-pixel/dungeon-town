@@ -16,6 +16,16 @@ function killChrome(ch) {
   try { ch.kill('SIGKILL'); } catch (e) {}
 }
 
+/* wait until game booted - race guard for slow machines */
+async function waitGameStart(evaluate, timeoutMs = 15000) {
+  const t0 = Date.now();
+  while (Date.now() - t0 < timeoutMs) {
+    try { if (await evaluate("!!(DT.Game && DT.Game.local)")) return true; } catch (e) {}
+    await sleep(200);
+  }
+  return false;
+}
+
 
 const ROOT = path.join(__dirname, '..');
 const PORT = 9333;
@@ -130,7 +140,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 
   /* เลือกช่างปลูก + ตั้งชื่อ */
   await evaluate("(function(){document.getElementById('pname').value='พี่เอ';var b=document.querySelector('.prof[data-prof=farmer]');b.click();document.getElementById('go').click();})()");
-  await sleep(1200);
+  await waitGameStart(evaluate);
   ok(await evaluate("!document.getElementById('app').classList.contains('hidden')"), 'เข้าเมืองแล้ว (หน้าเกมแสดง)');
   ok(await evaluate("!!window.DT && !!DT.Game && !!DT.Game.local"), 'DT.Game ทำงาน');
   ok(await evaluate("DT.Game.local.prof") === 'farmer', 'เลือกอาชีพช่างปลูกสำเร็จ');

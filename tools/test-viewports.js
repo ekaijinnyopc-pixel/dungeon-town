@@ -10,6 +10,16 @@ function killChrome(ch) {
   try { ch.kill('SIGKILL'); } catch (e) {}
 }
 
+/* wait until game booted - race guard for slow machines */
+async function waitGameStart(ev, timeoutMs = 15000) {
+  const t0 = Date.now();
+  while (Date.now() - t0 < timeoutMs) {
+    try { if (await ev("!!(DT.Game && DT.Game.local)")) return true; } catch (e) {}
+    await sleep(200);
+  }
+  return false;
+}
+
 const ROOT = path.join(__dirname, '..');
 const URL = process.argv[2] || ('file://' + path.join(ROOT, 'index.html'));
 const PORT = 9363;
@@ -102,7 +112,7 @@ const PROBE = `(function(){
     await send('Page.navigate', { url: URL + '?vp=' + c.w + 'x' + c.h });
     await sleep(2600);
     await ev("(function(){var i=document.getElementById('pname');if(i)i.value='sweep';if(document.getElementById('go'))document.getElementById('go').click();})()");
-    await sleep(1800);
+    await waitGameStart(ev);
 
     const info = JSON.parse(await ev(PROBE));
 

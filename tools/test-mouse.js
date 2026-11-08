@@ -13,6 +13,16 @@ function killChrome(ch) {
   try { ch.kill('SIGKILL'); } catch (e) {}
 }
 
+/* wait until game booted (DT.Game.local ready) — กัน race ตอนเครื่องช้า */
+async function waitGameStart(ev, timeoutMs = 15000) {
+  const t0 = Date.now();
+  while (Date.now() - t0 < timeoutMs) {
+    try { if (await ev("!!(DT.Game && DT.Game.local)")) return true; } catch (e) {}
+    await sleep(200);
+  }
+  return false;
+}
+
 const ROOT = path.join(__dirname, '..');
 const URL = process.argv[2] || ('file://' + path.join(ROOT, 'index.html'));
 const PORT = 9359;
@@ -92,7 +102,7 @@ function ok(c, m) { if (c) { pass++; console.log('  ✅ ' + m); } else { fail++;
   await send('Page.navigate', { url: URL });
   await sleep(4000);
   await ev("document.getElementById('go').click()");
-  await sleep(2500);
+  await waitGameStart(ev);
   ok(await ev("!!(DT.Game&&DT.Game.local)"), 'เข้าเกมได้');
   /* เก็บ rect ของ canvas (viewport coords = canvas CSS px + rect) */
   const rect = await ev("JSON.stringify(document.getElementById('game').getBoundingClientRect())");
