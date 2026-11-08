@@ -15,6 +15,20 @@ function killChrome(ch) {
   try { ch.kill('SIGKILL'); } catch (e) {}
 }
 
+/* ---- global cleanup net (module scope: visible to .catch + process handlers) ----
+   ถ้าสคริปต์ crash กลางทาง (uncaught / unhandled rejection) ให้ฆ่า chromium ด้วยเสมอ
+   ไม่งั้นจะเหลือ orphan chromium process ค้างในเครื่อง */
+let __child = null;
+let __cleaned = false;
+function __cleanup() {
+  if (__cleaned) return; __cleaned = true;
+  if (__child) { try { killChrome(__child); } catch (e) {} }
+}
+process.on('exit', __cleanup);
+process.on('uncaughtException', (e) => { console.error('UNCAUGHT: ' + (e && e.stack || e)); __cleanup(); process.exit(1); });
+process.on('unhandledRejection', (e) => { console.error('UNHANDLED REJECTION: ' + (e && e.stack || e)); __cleanup(); process.exit(1); });
+
+
 /* wait until game booted (DT.Game.local ready) — กัน race ตอนเครื่องช้า */
 async function waitGameStart(ev, timeoutMs = 15000) {
   const t0 = Date.now();
@@ -48,7 +62,9 @@ function ok(c, m) { if (c) { pass++; console.log('  ✅ ' + m); } else { fail++;
       if (p) wsUrl = p.webSocketDebuggerUrl;
     } catch (e) { }
   }
-  if (!wsUrl) { console.log('❌ เชื่อม CDP ไม่ได้'); process.exit(1); }
+    __child = ch;
+
+if (!wsUrl) { console.log('❌ เชื่อม CDP ไม่ได้'); process.exit(1); }
 
   const sk = new WebSocket(wsUrl);
   let id = 0; const pend = new Map(); const errors = []; const m = { started: false };
@@ -76,7 +92,15 @@ function ok(c, m) { if (c) { pass++; console.log('  ✅ ' + m); } else { fail++;
       errors.push('LOG: ' + m.params.entry.text + ' ' + (m.params.entry.url || ''));
     }
   });
-  await new Promise(r => sk.addEventListener('open', r));
+  /* CDP socket died -> reject every pending promise so the script fails fast
+     instead of waiting forever for a reply that will never arrive */
+  const __die = (why) => {
+    for (const [, __p] of pend) { try { __p.reject(new Error(why)); } catch (e) {} }
+    pend.clear();
+  };
+  sk.addEventListener('close', () => __die('CDP socket closed unexpectedly'));
+  sk.addEventListener('error', () => __die('CDP socket error'));
+  await new Promise((res, rej) => { sk.addEventListener('open', res); sk.addEventListener('error', () => rej(new Error('CDP connect failed'))); });
   const send = (method, params) => new Promise((res, rej) => {
     const i = ++id;
     const to = setTimeout(() => {
@@ -426,4 +450,8 @@ function ok(c, m) { if (c) { pass++; console.log('  ✅ ' + m); } else { fail++;
   sk.close(); killChrome(ch);
   try { fs.rmSync(ud, { recursive: true, force: true }); } catch (e) { }
   process.exit(fail ? 1 : 0);
-})();
+})().catch(e => {
+  console.log('❌ ระหว่างรัน: ' + (e && e.message || e));
+  __cleanup();
+  process.exit(1);
+});

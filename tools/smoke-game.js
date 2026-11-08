@@ -16,6 +16,20 @@ function killChrome(ch) {
   try { ch.kill('SIGKILL'); } catch (e) {}
 }
 
+/* ---- global cleanup net (module scope: visible to .catch + process handlers) ----
+   ถ้าสคริปต์ crash กลางทาง (uncaught / unhandled rejection) ให้ฆ่า chromium ด้วยเสมอ
+   ไม่งั้นจะเหลือ orphan chromium process ค้างในเครื่อง */
+let __child = null;
+let __cleaned = false;
+function __cleanup() {
+  if (__cleaned) return; __cleaned = true;
+  if (__child) { try { killChrome(__child); } catch (e) {} }
+}
+process.on('exit', __cleanup);
+process.on('uncaughtException', (e) => { console.error('UNCAUGHT: ' + (e && e.stack || e)); __cleanup(); process.exit(1); });
+process.on('unhandledRejection', (e) => { console.error('UNHANDLED REJECTION: ' + (e && e.stack || e)); __cleanup(); process.exit(1); });
+
+
 /* wait until game booted - race guard for slow machines */
 async function waitGameStart(evaluate, timeoutMs = 15000) {
   const t0 = Date.now();
@@ -57,7 +71,9 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
       if (page) wsUrl = page.webSocketDebuggerUrl;
     } catch (e) { /* ยังไม่พร้อม */ }
   }
-  if (!wsUrl) {
+    __child = chrome;
+
+if (!wsUrl) {
     console.log('❌ เปิด Chromium/CDP ไม่ได้\n' + chromeErr.slice(-800));
     killChrome(chrome); process.exit(1);
   }
@@ -103,6 +119,14 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
     }
   });
 
+  /* CDP socket died -> reject every pending promise so the script fails fast
+     instead of waiting forever for a reply that will never arrive */
+  const __die = (why) => {
+    for (const [, __p] of pending) { try { __p.reject(new Error(why)); } catch (e) {} }
+    pending.clear();
+  };
+  ws.addEventListener('close', () => __die('CDP socket closed unexpectedly'));
+  ws.addEventListener('error', () => __die('CDP socket error'));
   await new Promise((res, rej) => {
     ws.addEventListener('open', res);
     ws.addEventListener('error', rej);
@@ -258,6 +282,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
   try { fs.rmSync(userDir, { recursive: true, force: true }); } catch (e) {}
   process.exit(fail ? 1 : 0);
 })().catch(e => {
-  console.log('❌ ระหว่างรัน: ' + e.message);
+  console.log('❌ ระหว่างรัน: ' + (e && e.message || e));
+  __cleanup();
   process.exit(1);
 });
