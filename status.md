@@ -50,6 +50,8 @@
 
 ### Deploy
 - commit `c3c1520` push ขึ้น `origin/main` แล้ว · workflow `.github/workflows/pages.yml` deploy อัตโนมัติ
+- `df54acb` — แก้เทสต์ค้าง chromium process (spawn `detached:true` + `process.kill(-pid)`) · deploy success
+- `a96b948` — แก้ race condition เทสต์ (`waitGameStart()` poll แทน sleep ตาย) · deploy success
 - ลิงก์: https://ekaijinnyopc-pixel.github.io/dungeon-town/index.html
   และ https://ekaijinnyopc-pixel.github.io/dungeon-town/dist/dungeon-town.html
 
@@ -57,6 +59,10 @@
 - `tools/measure-art.js` (port 9380), `tools/calibrate.js` (port 9381)
 
 ## หมายเหตุ
+- เทสต์เบราว์เซอร์: ห้ามใช้ `sleep()` ตายเพื่อรอสถานะเกม — ใช้ `waitGameStart()` (poll 200ms, timeout 15s) แทน
+  เคยเจอ `Cannot read properties of null (reading 'dir')` เพราะ `DT.Game.local` ยังไม่พร้อมตอนเครื่องช้า
+- ฆ่า chromium ต้องฆ่าทั้ง process group: `process.kill(-ch.pid, 'SIGKILL')` (ไม่ใช่ `ch.kill()`)
+  ระวัง `pkill` pattern ที่ match shell ตัวเอง → ใช้ bracket เช่น `pkill -f "user-data-dir=/tmp/d[t]"`
 - `js/render.js` วาด `Art.groundShadow` แยก จึงเทียบ silhouette ไม่รวมเงา
 - รันเทสต์ผ่าน URL `http://127.0.0.1:8931/dungeon-town/index.html` (root ถูกต้อง)
   ถ้าใช้ `http://127.0.0.1:8931/index.html` จะหา `pname` ไม่เจอ → เทสต์ fail ทั้งชุด (ไม่ใช่ regression)
