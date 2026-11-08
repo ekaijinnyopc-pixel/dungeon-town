@@ -176,12 +176,15 @@ function ok(c, m) { if (c) { pass++; console.log('  ✅ ' + m); } else { fail++;
   console.log('\n== popup ไม่ทะลุลง canvas ==');
   const posBefore = await ev("[DT.Game.local.x, DT.Game.local.y]");
   /* คลิกที่กลาง popup (บน popup-box) — ต้องไม่ทำให้ตัวละครขยับ */
-  const popRect = JSON.parse(await ev("JSON.stringify(document.querySelector('#popup .popup-box').getBoundingClientRect())"));
-  await leftClick(popRect.left + popRect.width / 2, popRect.top + 8);
-  await sleep(400);
-  const posAfter = await ev("[DT.Game.local.x, DT.Game.local.y]");
-  ok(Math.abs(posAfter[0] - posBefore[0]) < 0.01 && Math.abs(posAfter[1] - posBefore[1]) < 0.01,
-    'คลิกใน popup แล้วตัวละครไม่ขยับ');
+  const popRect = JSON.parse(await ev("(function(){var b=document.querySelector('#popup .popup-box'); if(!b) return '{}'; var r=b.getBoundingClientRect(); return JSON.stringify({left:r.left,top:r.top,width:r.width,height:r.height});})()"));
+  if (!popRect.left && popRect.left !== 0) { ok(false, 'หา popup-box ไม่เจอ'); }
+  else {
+    await leftClick(popRect.left + popRect.width / 2, popRect.top + 8);
+    await sleep(400);
+    const posAfter = await ev("[DT.Game.local.x, DT.Game.local.y]");
+    ok(Math.abs(posAfter[0] - posBefore[0]) < 0.01 && Math.abs(posAfter[1] - posBefore[1]) < 0.01,
+      'คลิกใน popup แล้วตัวละครไม่ขยับ');
+  }
 
   console.log('\n== ปิด popup ==');
   await ev("(function(){var bs=document.querySelectorAll('#popup .popup-x');if(bs[0])bs[0].click();})()");
