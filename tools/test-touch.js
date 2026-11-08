@@ -297,8 +297,11 @@ function ok(c, m) { if (c) { pass++; console.log('  ✅ ' + m); } else { fail++;
     ok(popupOpen, 'แตะอาคารแล้วเปิด popup (' + B.name + ')');
     if (popupOpen) {
       const pb = JSON.parse(await ev("JSON.stringify(document.querySelector('#popup .popup-box').getBoundingClientRect())"));
-      ok(pb.left >= -1 && pb.top >= -1 && pb.right <= W + 1 && pb.bottom <= H + 1,
-        'popup ไม่ล้นจอมือถือ (' + Math.round(pb.width) + 'x' + Math.round(pb.height) + ')');
+      /* วัดกับ viewport จริงของหน้าจอ ไม่ใช่ค่าคงที่ — กัน false fail/false pass */
+      const vw = await ev("window.innerWidth");
+      const vh = await ev("window.innerHeight");
+      ok(pb.left >= -1 && pb.top >= -1 && pb.right <= vw + 1 && pb.bottom <= vh + 1,
+        'popup ไม่ล้นจอมือถือ (' + Math.round(pb.width) + 'x' + Math.round(pb.height) + ' บนจอ ' + vw + 'x' + vh + ')');
       ok(await ev("getComputedStyle(document.querySelector('#popup .popup-body')).overflowY") === 'auto',
         'เนื้อหา popup เลื่อนได้');
       await ev("(function(){var b=document.querySelector('#popup .popup-x'); if(b) b.click();})()");
