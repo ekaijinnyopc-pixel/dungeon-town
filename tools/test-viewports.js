@@ -3,6 +3,13 @@
 */
 const { spawn } = require('child_process');
 const fs = require('fs'), path = require('path'), os = require('os');
+
+/* cleanup: kill chromium process group (parent + children) */
+function killChrome(ch) {
+  try { process.kill(-ch.pid, 'SIGKILL'); } catch (e) {}
+  try { ch.kill('SIGKILL'); } catch (e) {}
+}
+
 const ROOT = path.join(__dirname, '..');
 const URL = process.argv[2] || ('file://' + path.join(ROOT, 'index.html'));
 const PORT = 9363;
@@ -49,7 +56,7 @@ const PROBE = `(function(){
   const ud = fs.mkdtempSync(path.join(os.tmpdir(), 'dt-vp-'));
   const ch = spawn('/usr/bin/chromium', ['--headless=new', '--no-sandbox', '--disable-gpu',
     '--disable-dev-shm-usage', '--allow-file-access-from-files', '--hide-scrollbars',
-    '--remote-debugging-port=' + PORT, '--user-data-dir=' + ud, 'about:blank'], { stdio: 'ignore' });
+    '--remote-debugging-port=' + PORT, '--user-data-dir=' + ud, 'about:blank'], { stdio: 'ignore', detached: true });
 
   let wsUrl = null;
   for (let i = 0; i < 80 && !wsUrl; i++) {
@@ -109,6 +116,6 @@ const PROBE = `(function(){
   }
 
   console.log('\n———— ผล: ' + pass + ' ผ่าน / ' + fail + ' ล้มเหลว ————');
-  ch.kill();
+  killChrome(ch);
   process.exit(fail ? 1 : 0);
 })();

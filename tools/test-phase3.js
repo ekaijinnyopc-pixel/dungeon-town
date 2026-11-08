@@ -1,6 +1,13 @@
 /* เทสต์ Phase 3 — เสียง / เอฟเฟกต์ / เข้าอาคาร + เฟอร์นิเจอร์ + จุดใช้งาน */
 const { spawn } = require('child_process');
 const fs = require('fs'), path = require('path'), os = require('os');
+
+/* cleanup: kill chromium process group (parent + children) */
+function killChrome(ch) {
+  try { process.kill(-ch.pid, 'SIGKILL'); } catch (e) {}
+  try { ch.kill('SIGKILL'); } catch (e) {}
+}
+
 const URL = process.argv[2] || 'http://127.0.0.1:8931/index.html';
 const PORT = 9361;
 const sleep = ms => new Promise(r => setTimeout(r, ms));
@@ -11,7 +18,7 @@ function ok(c, m) { if (c) { pass++; console.log('  ✅ ' + m); } else { fail++;
   const ud = fs.mkdtempSync(path.join(os.tmpdir(), 'dt-p3-'));
   const ch = spawn('/usr/bin/chromium', ['--headless=new', '--no-sandbox', '--disable-gpu',
     '--autoplay-policy=no-user-gesture-required',
-    '--remote-debugging-port=' + PORT, '--user-data-dir=' + ud, 'about:blank'], { stdio: 'ignore' });
+    '--remote-debugging-port=' + PORT, '--user-data-dir=' + ud, 'about:blank'], { stdio: 'ignore', detached: true });
 
   let wsUrl = null;
   for (let i = 0; i < 80 && !wsUrl; i++) {
@@ -156,7 +163,7 @@ function ok(c, m) { if (c) { pass++; console.log('  ✅ ' + m); } else { fail++;
   ok(errors.length === 0, 'ไม่มี JS error (' + errors.length + ')' + (errors.length ? ' → ' + errors.slice(0, 3).join(' | ') : ''));
 
   console.log('\n———— ผล: ' + pass + ' ผ่าน / ' + fail + ' ล้มเหลว ————');
-  sk.close(); ch.kill();
+  sk.close(); killChrome(ch);
   try { fs.rmSync(ud, { recursive: true, force: true }); } catch (e) { }
   process.exit(fail ? 1 : 0);
 })();

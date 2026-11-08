@@ -10,6 +10,13 @@ const fs = require('fs');
 const path = require('path');
 const os = require('os');
 
+/* cleanup: kill chromium process group (parent + children) */
+function killChrome(ch) {
+  try { process.kill(-ch.pid, 'SIGKILL'); } catch (e) {}
+  try { ch.kill('SIGKILL'); } catch (e) {}
+}
+
+
 const ROOT = path.join(__dirname, '..');
 const PORT = 9333;
 const URL_FILE = 'file://' + path.join(ROOT, 'index.html');
@@ -25,7 +32,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
     '--window-size=1100,780', '--allow-file-access-from-files',
     '--remote-debugging-port=' + PORT, '--user-data-dir=' + userDir,
     'about:blank'
-  ], { stdio: ['ignore', 'ignore', 'pipe'] });
+  ], { stdio: ['ignore', 'ignore', 'pipe'], detached: true });
 
   let chromeErr = '';
   chrome.stderr.on('data', d => { chromeErr += d.toString(); });
@@ -42,7 +49,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
   }
   if (!wsUrl) {
     console.log('❌ เปิด Chromium/CDP ไม่ได้\n' + chromeErr.slice(-800));
-    chrome.kill(); process.exit(1);
+    killChrome(chrome); process.exit(1);
   }
 
   const ws = new WebSocket(wsUrl);
@@ -237,7 +244,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 
   console.log('\n———— ผล: ' + pass + ' ผ่าน / ' + fail + ' ล้มเหลว ————');
   ws.close();
-  chrome.kill();
+  killChrome(chrome);
   try { fs.rmSync(userDir, { recursive: true, force: true }); } catch (e) {}
   process.exit(fail ? 1 : 0);
 })().catch(e => {

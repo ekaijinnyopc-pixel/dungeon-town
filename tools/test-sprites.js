@@ -2,6 +2,13 @@
    ใช้: node tools/test-sprites.js [url] */
 const { spawn } = require('child_process');
 const fs = require('fs'), path = require('path'), os = require('os');
+
+/* cleanup: kill chromium process group (parent + children) */
+function killChrome(ch) {
+  try { process.kill(-ch.pid, 'SIGKILL'); } catch (e) {}
+  try { ch.kill('SIGKILL'); } catch (e) {}
+}
+
 const ROOT = path.join(__dirname, '..');
 const URL = process.argv[2] || ('file://' + path.join(ROOT, 'index.html'));
 const PORT = 9377;
@@ -13,7 +20,7 @@ function ok(c, m) { if (c) { pass++; console.log('  ✅ ' + m); } else { fail++;
   const ud = fs.mkdtempSync(path.join(os.tmpdir(), 'dt-spr-'));
   const ch = spawn('/usr/bin/chromium', ['--headless=new', '--no-sandbox', '--disable-gpu',
     '--disable-dev-shm-usage', '--window-size=1280,800', '--allow-file-access-from-files',
-    '--remote-debugging-port=' + PORT, '--user-data-dir=' + ud, 'about:blank'], { stdio: 'ignore' });
+    '--remote-debugging-port=' + PORT, '--user-data-dir=' + ud, 'about:blank'], { stdio: 'ignore', detached: true });
   let wsUrl = null;
   for (let i = 0; i < 80 && !wsUrl; i++) {
     await sleep(250);
@@ -113,7 +120,7 @@ function ok(c, m) { if (c) { pass++; console.log('  ✅ ' + m); } else { fail++;
   ok(errors.length === 0, 'ไม่มี JS error (' + errors.length + ')' + (errors.length ? ' → ' + errors.slice(0, 3).join(' | ') : ''));
 
   console.log('\n———— ผล: ' + pass + ' ผ่าน / ' + fail + ' ล้มเหลว ————');
-  sk.close(); ch.kill();
+  sk.close(); killChrome(ch);
   try { fs.rmSync(ud, { recursive: true, force: true }); } catch (e) { }
   process.exit(fail ? 1 : 0);
 })();
