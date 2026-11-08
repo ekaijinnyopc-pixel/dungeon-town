@@ -127,9 +127,12 @@ if (!wsUrl) {
   };
   ws.addEventListener('close', () => __die('CDP socket closed unexpectedly'));
   ws.addEventListener('error', () => __die('CDP socket error'));
+  /* timeout ด้วย: ถ้า socket ค้าง (ไม่ยิงทั้ง open และ error) ให้ fail เร็ว
+     แทนการรอ forever (เคยทำให้สคริปต์ 'ดันไม่จบ') */
   await new Promise((res, rej) => {
-    ws.addEventListener('open', res);
-    ws.addEventListener('error', rej);
+    const __t = setTimeout(() => rej(new Error('CDP connect timeout (15s)')), 15000);
+    ws.addEventListener('open', () => { clearTimeout(__t); res(); });
+    ws.addEventListener('error', () => { clearTimeout(__t); rej(new Error('CDP connect failed')); });
   });
 
   function send(method, params) {

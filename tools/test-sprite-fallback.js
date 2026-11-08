@@ -74,7 +74,13 @@ if (!wsUrl) { console.log('❌ เชื่อม CDP ไม่ได้'); proc
   };
   sk.addEventListener('close', () => __die('CDP socket closed unexpectedly'));
   sk.addEventListener('error', () => __die('CDP socket error'));
-  await new Promise((res, rej) => { sk.addEventListener('open', res); sk.addEventListener('error', () => rej(new Error('CDP connect failed'))); });
+  /* timeout ด้วย: ถ้า socket ค้าง (ไม่ยิงทั้ง open และ error) ให้ fail เร็ว
+     แทนการรอ forever (เคยทำให้สคริปต์ 'ดันไม่จบ') */
+  await new Promise((res, rej) => {
+    const __t = setTimeout(() => rej(new Error('CDP connect timeout (15s)')), 15000);
+    sk.addEventListener('open', () => { clearTimeout(__t); res(); });
+    sk.addEventListener('error', () => { clearTimeout(__t); rej(new Error('CDP connect failed')); });
+  });
   const send = (method, params) => new Promise((res, rej) => {
     const i = ++id;
     const to = setTimeout(() => { if (pend.has(i)) { pend.delete(i); rej(new Error('TIMEOUT ' + method)); } }, 20000);
