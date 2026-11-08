@@ -176,7 +176,8 @@
           hp: pl.hp, hunger: pl.hunger, stamina: pl.stamina, inv: pl.inv,
           weapon: pl.weapon || null,
           armorId: pl.armorId || null,
-          accessoryId: pl.accessoryId || null
+          accessoryId: pl.accessoryId || null,
+          sprite: pl.sprite || null
         }));
       } catch (e) {}
     },

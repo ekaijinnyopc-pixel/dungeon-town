@@ -438,10 +438,13 @@
       var p = this.toScreen(n.x, n.y);
       var z = this.zoom;
       Art.groundShadow(ctx, p.sx, p.sy, 10, z, 0.25, this.hour);
-      /* ตัว NPC = ผู้เล่นสีเทาอมชมพู */
-      Art.player(ctx, p.sx, p.sy, z, {
-        prof: n.prof === 'merchant' ? 'hunter' : (n.prof === 'blacksmith' ? 'miner' : 'farmer'),
-        t: this.t + n.x, moving: false, hurt: 0, swing: 0, weapon: null,
+      /* ตัว NPC = สไปรต์ตัวละครย้อมสี (fallback = Art.player shape) */
+      Art.npc(ctx, p.sx, p.sy, z, {
+        sprite: n.sprite,
+        prof: n.prof,
+        tint: n.tint || '#9aa66a',
+        t: this.t + n.x,
+        seed: n.x,
         dir: n.dir || 'down'
       });
       /* ป้าย */

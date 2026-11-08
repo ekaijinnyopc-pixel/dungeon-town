@@ -2,8 +2,9 @@
 
 ชุดภาพทั้งหมดดาวน์โหลดจาก **Kenney** (kenney.nl) ใบอนุญาต **CC0 1.0 (Public Domain)** — ใช้ค้า ดัดแปลง แจกต่อ ได้โดยไม่ต้องขออนุญาต
 
-> ข้อควรรู้: ภาพชุดนี้ **ยังไม่ถูก wire เข้าเกม** — `js/art.js` ยังวาดกราฟิกแบบ shape-based อยู่
-> โครงสร้างนี้เตรียมไว้ให้พร้อมต่อ
+> ข้อควรรู้: ภาพชุดนี้ **wire เข้าเกมแล้ว** — `js/sprites.js` (ตัวโหลดแบบ lazy + fallback) และ `js/art.js`
+> (ผูกสไปรต์เข้ากับ tree / rock / ore / bush / player / บ้าน / prop) ถ้าโหลดสไปรต์ไม่ได้จะวาดรูปทรงเดิมแบบ shape art ทันที
+> ค่าตัดภาพ (`src`) / สเกล (`sc`) / จุดยึด (`dy`) อยู่ใน `js/sprites.js` ตาราง `S.SPEC` — ดูหัวข้อ 6 เรื่องคาลิเบรต
 
 ---
 
@@ -72,14 +73,14 @@ mapping.json แต่ละรายการมี: `file`, `source_pack`, `so
 - **บันได/รั้ว** — `stairs` (urban 0168), `stairs_wide`, `fence`, `fence_corner`, `fence_vertical`, `urban_fence`, `city_fence_chainlink`
 - **ไฟ/ป้าย** — `lamp_street`, `street_lamp_arm`, `city_lamp_post`, `urban_lamp_post`, `urban_lamp_street`, `urban_lamp_wall`, `urban_traffic_light`, `sign`, `signboard`, `signpost`, `urban_shop_sign`, `urban_shop_awning`, `urban_awning_orange`
 - **ของเก็บ/ใช้** — `axe`, `pickaxe`, `shovel`, `key`, `pot`, `barrel_pot`, `crate`, `dungeon_potion`, `beehive`, `mushrooms`
-- **หิน** — `rock_boulder`, `rock_small`, `urban_rock`, `city_rock`
+- **หิน** — `urban_rock`, `city_rock` (เดิมมี `rock_boulder`/`rock_small` แต่ **ถอดออก** เพราะเป็น tile ที่ภาพชนขอบเซลล์ = edge bleed ทำให้ก้อนหินดูเหมือนถูกตัดขาด)
 - **อื่น ๆ** — `urban_window_green`, `urban_window_teal`, `city_sidewalk`, `city_road_asphalt`, `city_ground_dirt`, `city_planter`
 
 ### mapping ที่เคยผิดและแก้แล้ว (ยืนยันจากภาพจริง)
 
 | ชื่อ | เดิม (ผิด) | ใหม่ (ถูก) |
 |---|---|---|
-| `bush` | town 0016 (ต้นไม้) | **town 0006** (พุ่มจริง) |
+| `bush` | town 0016 (ต้นไม้) | **town 0007** (พุ่มจริง — tile 0006 เป็น tile พื้นแบบเฉียง ไม่ใช่พุ่ม) |
 | `stairs` | dungeon 0037 (ผนัง) | **urban 0168** (บันไดจริง) |
 | `house_wall` | city 0084 (หน้าต่าง) | **town 0108** (ผนังจริง) |
 
@@ -150,7 +151,36 @@ cd dungeon-town && python3 tools/make_objects.py
 
 ---
 
-## 5. License
+## 5. คาลิเบรตสไปรต์ ↔ shape art (ผลล่าสุด)
+
+วัดด้วย `node tools/calibrate.js` (เปิดเกมแบบ headless แล้ววัด bbox ของ shape art ทุก variant
+เทียบกับ bbox ที่วาดจริงผ่าน `DT.Sprites.draw`) — จุดยึดของทุกวัตถุคือ "กลางล่าง" ของภาพ
+(`relBot = dy - 1`)
+
+| วัตถุ | shape art (เป้าหมาย) | สไปรต์ (ผลจริง) | หมายเหตุ |
+|---|---|---|---|
+| ต้นไม้ v0 | w33 h29 relTop-24 relBot4 | w32 h32 relTop-27 relBot4 | `tree_green_large` (Tiny Town 0005) |
+| ต้นไม้ v1 | w31 h26 relTop-19 relBot6 | w26 h32 relTop-25 relBot6 | `tree_green` (Tiny Town 0004) |
+| ต้นไม้ v2 | w33 h29 relTop-24 relBot4 | w30 h30 relTop-25 relBot4 | `tree_gold_round` (Tiny Town 0015) |
+| ต้นไม้ v3 | w33 h29 relTop-24 relBot4 | w26 h30 relTop-25 relBot4 | `tree_autumn` (Tiny Town 0003) |
+| หิน v0 / แร่ | w26 h22 relTop-11 relBot10 | w24 h22 relTop-11 relBot10 | `urban_rock` (Urban 0493) |
+| หิน v1 | w28 h21 relTop-10 relBot10 | w20 h22 relTop-11 relBot10 | `city_rock` (Tiny City 0102) |
+| หิน v2 | w27 h23 relTop-12 relBot10 | w24 h22 relTop-11 relBot10 | `urban_rock` |
+| พุ่ม v0 | w22 h18 relTop-12 relBot5 | w24 h18 relTop-12 relBot5 | `bush` (Tiny Town 0007) |
+| พุ่ม v1 | w21 h20 relTop-14 relBot5 | w20 h26 relTop-20 relBot5 | `urban_bush` (Urban 0403) — พุ่มพุ่งสูง |
+| พุ่ม v2 | w22 h19 relTop-13 relBot5 | w24 h18 relTop-12 relBot5 | `bush_gold` (Tiny Town 0010) |
+| ผู้เล่น down | w14 h30 relTop-30 relBot-1 | w22 h28 relTop-28 relBot-1 | `player_down.png` (r11c1) |
+| ผู้เล่น up | w14 h30 relTop-30 relBot-1 | w20 h28 relTop-28 relBot-1 | `player_up.png` (r11c0) |
+| ผู้เล่น side | w15 h30 relTop-30 relBot-1 | w22 h28 relTop-28 relBot-1 | mirror ของ `player_down` (ไม่มีท่า side ใน pack) |
+
+- **relBot ตรงกันหมดทุกตัว** = วัตถุ/ตัวละคร "ยืน" ที่ระดับเดียวกับ shape art เดิม (ไม่ลอย/ไม่จม)
+- ความกว้าง/ส่วนสูงต่างกันเล็กน้อยเพราะภาพ CC0 ขนาด 16×16 ต่อภาพ
+  (ฮีโร่กว้าง 11 px = 22 หน่วย จึงกว้างกว่า shape art ที่กว้าง 14 หน่วย — ไม่มีภาพที่แคบกว่านี้ใน pack)
+- ห้ามตัดภาพต้นฉบับ: ทุก `src` ถูกตัดเฉพาะขอบโปร่งใส/ภาพของเซลล์ข้างเคียงที่ปนอยู่เท่านั้น
+
+---
+
+## 6. License
 
 ทุกชุดเป็น **Kenney CC0 1.0** — ไฟล์ license ต้นฉบับอยู่ใน `licenses/`
 ถ้าจะเผยแพร่เกม ควรใส่เครดิต "Art by Kenney (kenney.nl) — CC0" ในหน้า About/Credits

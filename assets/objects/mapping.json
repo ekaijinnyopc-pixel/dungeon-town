@@ -46,10 +46,10 @@
   },
   "bush": {
     "file": "objects/bush.png",
-    "note": "green bush clump",
-    "source_index": 6,
+    "note": "isolated green bush mound on ground",
+    "source_index": 7,
     "source_pack": "Tiny Town",
-    "source_path": "tiles/town/tile_0006.png",
+    "source_path": "tiles/town/tile_0007.png",
     "source_sheet": "ct_town",
     "tile_size": "16x16"
   },
@@ -59,6 +59,15 @@
     "source_index": 19,
     "source_pack": "Tiny Town",
     "source_path": "tiles/town/tile_0019.png",
+    "source_sheet": "ct_town",
+    "tile_size": "16x16"
+  },
+  "bush_gold": {
+    "file": "objects/bush_gold.png",
+    "note": "isolated gold bush mound on ground",
+    "source_index": 10,
+    "source_pack": "Tiny Town",
+    "source_path": "tiles/town/tile_0010.png",
     "source_sheet": "ct_town",
     "tile_size": "16x16"
   },
@@ -554,24 +563,6 @@
     "source_index": 130,
     "source_pack": "Tiny Town",
     "source_path": "tiles/town/tile_0130.png",
-    "source_sheet": "ct_town",
-    "tile_size": "16x16"
-  },
-  "rock_boulder": {
-    "file": "objects/rock_boulder.png",
-    "note": "dark boulder",
-    "source_index": 105,
-    "source_pack": "Tiny Town",
-    "source_path": "tiles/town/tile_0105.png",
-    "source_sheet": "ct_town",
-    "tile_size": "16x16"
-  },
-  "rock_small": {
-    "file": "objects/rock_small.png",
-    "note": "brown boulder",
-    "source_index": 106,
-    "source_pack": "Tiny Town",
-    "source_path": "tiles/town/tile_0106.png",
     "source_sheet": "ct_town",
     "tile_size": "16x16"
   },

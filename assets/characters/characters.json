@@ -32,5 +32,56 @@
     "y": 9,
     "cell": 16
   },
-  "note": "Kenney CC0. player_down=front, player_up=back of the same white-armour hero. player_side is a horizontal mirror of player_down (derived, not original art) because this CC0 pack ships no side-facing pose. Alternate heroes included for later swap."
+  "note": "Kenney CC0. player_down=front (sheet cell r11c1), player_up=back (r11c0) ของฮีโร่ชุดเกราะขาว. player_side เป็นภาพ mirror แนวนอนของ player_down (derived, ไม่ใช่ภาพต้นฉบับ) เพราะ pack CC0 ชุดนี้ไม่มีท่าหันข้างจริง — ตรวจครบทุกเซลล์ของ sheet แล้ว (roguelikeChar_transparent.png, grid origin x=6 y=9 cell=16) ไม่พบท่า side ที่เป็นตัวละครเต็มตัว. Alternate heroes (alt_down_6/7/10) รวมไว้สำหรับสลับใช้ภายหลัง.",
+  "calibration": {
+    "note": "ค่าคาลิเบรตจาก tools/calibrate.js: วาดสไปรต์ผ่าน DT.Sprites.draw แล้ววัด bbox เทียบ shape art (relTop/relBot วัดจากจุดยึดกลางล่างของวัตถุ; relBot = dy - 1)",
+    "player_down": {
+      "src": [
+        0,
+        2,
+        11,
+        14
+      ],
+      "sc": 2,
+      "dy": 0,
+      "visible": "22x28",
+      "relTop": -28,
+      "relBot": -1,
+      "shape": "14x30 relTop-30 relBot-1"
+    },
+    "player_up": {
+      "src": [
+        0,
+        2,
+        10,
+        14
+      ],
+      "sc": 2,
+      "dy": 0,
+      "visible": "20x28",
+      "relTop": -28,
+      "relBot": -1,
+      "shape": "14x30 relTop-30 relBot-1"
+    },
+    "player_side": {
+      "src": [
+        5,
+        2,
+        11,
+        14
+      ],
+      "sc": 2,
+      "dy": 0,
+      "visible": "22x28",
+      "relTop": -28,
+      "relBot": -1,
+      "shape": "15x30 relTop-30 relBot-1",
+      "derived": "mirror ของ player_down"
+    },
+    "notes": [
+      "ฮีโร่ในชุด CC0 กว้าง 11 px (22 หน่วยที่ sc=2) จึงกว้างกว่า shape art (14 หน่วย) — ไม่มีภาพฮีโร่แคบกว่านี้ใน pack",
+      "relBot ของทั้งสามทิศตรงกับ shape art เป๊ะ (-1) = สุดท้ายของตัวละครอยู่ที่ระดับเท้าเหมือนเดิม",
+      "crop ตัดเฉพาะภาพของตัวละคร ตัดภาพของเซลล์ข้างเคียงที่ปนอยู่ใน sheet ออกแล้ว"
+    ]
+  }
 }

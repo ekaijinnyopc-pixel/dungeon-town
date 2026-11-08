@@ -70,7 +70,10 @@ ENTRIES = [
     ("tree_green_large",         "Tiny Town", "ct_town", 5, "green round-canopy tree"),
     ("tree_autumn",              "Tiny Town", "ct_town", 3, "gold conifer tree"),
     ("tree_gold_round",          "Tiny Town", "ct_town", 15, "gold round tree"),
-    ("bush",                     "Tiny Town", "ct_town", 6, "green bush clump"),
+    # NOTE: ct_town tile 6 is a diagonal-edge GROUND tile (grass + edge), not a bush.
+    # Use tile 7 (isolated green bush mound) and tile 10 (same shape, gold) instead.
+    ("bush",                     "Tiny Town", "ct_town", 7, "isolated green bush mound on ground"),
+    ("bush_gold",                "Tiny Town", "ct_town", 10, "isolated gold bush mound on ground"),
     ("bush_cluster",             "Tiny Town", "ct_town", 19, "green tree/bush cluster"),
     ("hedge",                    "Tiny Town", "ct_town", 20, "green hedge/canopy strip"),
     ("city_tree_green",          "Tiny City", "ct_city", 68, "green conifer tree"),
@@ -82,8 +85,8 @@ ENTRIES = [
     ("urban_bush_dark",          "Roguelike Modern City", "ct_urban3", 406, "dark bush canopy"),
 
     # ---------------- rocks ----------------
-    ("rock_boulder",             "Tiny Town", "ct_town", 105, "dark boulder"),
-    ("rock_small",               "Tiny Town", "ct_town", 106, "brown boulder"),
+    # NOTE: ct_town tiles 105/106 bleed into the image edges (not isolated objects).
+    # Use the isolated city/urban boulders instead (see urban_rock / city_rock).
     ("dirt_mound",               "Tiny Town", "ct_town", 92, "brown dirt mound"),
     ("city_rock",                "Tiny City", "ct_city", 102, "grey boulder"),
     ("urban_rock",               "Roguelike Modern City", "ct_urban3", 493, "grey boulder"),

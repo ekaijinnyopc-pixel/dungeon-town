@@ -292,10 +292,13 @@
   /* ---------- NPC ในเมือง ---------- */
   DT.NPCS = [
     { id: 'merchant', name: 'พ่อค้าเมือง', icon: '🧑‍🌾', x: 29.5, y: 21.5, prof: 'merchant',
+      sprite: 'characters/alt_down_6.png',
       greeting: 'ยินดีต้อนรับนักเดินทาง! สินค้ามีขายนะ' },
     { id: 'blacksmith', name: 'ตาลึง', icon: '👨‍🔧', x: 20.5, y: 20.5, prof: 'blacksmith',
+      sprite: 'characters/alt_down_7.png',
       greeting: 'ต้องการให้ตีอะไร? แต่งเครื่องดีๆ ได้ที่นี่' },
     { id: 'guide', name: 'ผู้กำกับเมือง', icon: '🧙', x: 24.5, y: 27.5, prof: 'guide',
+      sprite: 'characters/alt_down_10.png',
       greeting: 'รับใช้! มีเควสต์ให้ทำตลอดเวลา' }
   ];
 
@@ -311,6 +314,14 @@
     { id: 'q_wood', name: 'เติมไม้ให้เมือง', desc: 'เก็บไม้มาให้เมือง 10 ไม้', goal: 10, type: 'gather', target: 'wood', reward: 60, xp: 30 },
     { id: 'q_ore', name: 'แร่สำหรับตาลึง', desc: 'ขุดแร่มาให้ตาลึง 8 แร่', goal: 8, type: 'gather', target: 'ore', reward: 110, xp: 55 },
     { id: 'q_boar', name: 'ปัญหาหมูป่า', desc: 'กำจัดหมูป่าเผือก 3 ตัว', goal: 3, type: 'kill', target: 'boar', reward: 170, xp: 90 }
+  ];
+
+  /* ---------- ตัวละครที่ผู้เล่นเลือกได้ ---------- */
+  DT.CHARACTERS = [
+    { id: 'hero',    name: 'ฮีโร่',          sprite: 'characters/player_down.png' },
+    { id: 'trav_a',  name: 'นักเดินทาง A',   sprite: 'characters/alt_down_6.png' },
+    { id: 'trav_b',  name: 'นักเดินทาง B',   sprite: 'characters/alt_down_7.png' },
+    { id: 'trav_c',  name: 'นักเดินทาง C',   sprite: 'characters/alt_down_10.png' }
   ];
 
   /* ---------- จุด spawn ---------- */

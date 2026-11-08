@@ -68,7 +68,7 @@ function ok(c, m) { if (c) { pass++; console.log('  ✅ ' + m); } else { fail++;
     var out={};
     out.playerSprite = opaque(snap(function(x){ DT.Sprites.draw(x,'characters/player_down.png',32,50,false,null,0); }));
     out.treeSprite  = opaque(snap(function(x){ DT.Sprites.draw(x,'objects/tree_green.png',32,50,false,null,0); }));
-    out.rockSprite  = opaque(snap(function(x){ DT.Sprites.draw(x,'objects/rock_boulder.png',32,50,false,null,0); }));
+    out.rockSprite  = opaque(snap(function(x){ DT.Sprites.draw(x,'objects/urban_rock.png',32,50,false,null,0); }));
     out.bushSprite  = opaque(snap(function(x){ DT.Sprites.draw(x,'objects/bush.png',32,50,false,null,0); }));
     /* player 4 ทิศ */
     out.dirs = {

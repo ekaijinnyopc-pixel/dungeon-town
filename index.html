@@ -13,8 +13,51 @@
 </head>
 <body>
 
+<!-- ================= หน้าแรก / แลนด์ดิ้ง ================= -->
+<div id="landing" class="landing">
+  <div class="landing-hero">
+    <div class="landing-logo">🏘️</div>
+    <h1>เมืองดับดันเจียน</h1>
+    <p class="landing-sub">Dungeon Town · 2D top-down survival RPG · เล่นด้วยกันได้</p>
+    <button id="play-now" class="play-now">▶ เข้าเล่นทันที</button>
+    <p class="landing-note">กดแล้วเข้าเกมทันที · เลือกอาชีพและชื่อผู้เล่นได้ในเกม</p>
+  </div>
+
+  <div class="landing-games">
+    <h2>🎮 เกมอื่นของพี่เอ</h2>
+    <div class="landing-grid">
+      <a class="game-card" href="https://ekaijinnyopc-pixel.github.io/dummy-rummy/" target="_blank" rel="noopener">
+        <span class="gc-ico">🃏</span>
+        <span class="gc-name">Dummy Rummy</span>
+        <span class="gc-desc">เกมไพ่รัมมี่</span>
+      </a>
+      <a class="game-card" href="https://ekaijinnyopc-pixel.github.io/slave-card-game/" target="_blank" rel="noopener">
+        <span class="gc-ico">🃏</span>
+        <span class="gc-name">Slave Card Game</span>
+        <span class="gc-desc">เกมการ์ดแข่งขัน</span>
+      </a>
+      <a class="game-card" href="dist/dungeon-town.html" target="_blank" rel="noopener">
+        <span class="gc-ico">📦</span>
+        <span class="gc-name">Dungeon Town (ไฟล์เดียว)</span>
+        <span class="gc-desc">เล่นออฟไลน์ได้ ไม่ต้องต่อเน็ต</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="landing-how">
+    <h3>🕹️ วิธีเล่น</h3>
+    <div class="how-grid">
+      <div><b>เมาส์</b><br>คลิกขวา = เดิน/โจมตี · คลิกซ้าย = เปิดเมนู · ลากซ้าย = เดิน</div>
+      <div><b>คีย์บอร์ด</b><br>WASD/ลูกศร = เดิน · E = เก็บ/เข้าอาคาร · Space = โจมตี</div>
+      <div><b>เมนู</b><br>I = กระเป๋า · C = คราฟต์ · Q = เควสต์ · F = ร้าน · G = กองไฟ · Enter = แชท</div>
+      <div><b>มือถือ</b><br>ใช้จอยเดินมุมซ้ายล่าง + ปุ่มโจมตี/เก็บ/ร้าน/กองไฟ</div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= หน้าเลือกอาชีพ (หลังจากกด "เข้าเล่นทันที") ================= -->
 <!-- ================= หน้าเลือกอาชีพ ================= -->
-<div id="start" class="start">
+<div id="start" class="start hidden">
   <div class="start-box">
     <h1>🏘️ เมืองดับดันเจียน</h1>
     <p class="sub">เกม 2D isometric survival · 3 อาชีพ · เล่นด้วยกันได้</p>
@@ -42,6 +85,31 @@
       </button>
     </div>
 
+    <div class="char-pick">
+      <div class="cp-head">
+        <span class="cp-title">🧙 เลือกตัวละคร</span>
+        <span class="cp-hint">เลือกได้ตอนเข้าเกม แล้วเปลี่ยนได้ภายหลัง</span>
+      </div>
+      <div class="cp-grid" id="charGrid">
+        <button class="cp-item sel" data-char="characters/player_down.png">
+          <span class="cp-name">ฮีโร่</span>
+          <img src="assets/characters/player_down.png" alt="ฮีโร่">
+        </button>
+        <button class="cp-item" data-char="characters/alt_down_6.png">
+          <span class="cp-name">นักเดินทาง A</span>
+          <img src="assets/characters/alt_down_6.png" alt="นักเดินทาง A">
+        </button>
+        <button class="cp-item" data-char="characters/alt_down_7.png">
+          <span class="cp-name">นักเดินทาง B</span>
+          <img src="assets/characters/alt_down_7.png" alt="นักเดินทาง B">
+        </button>
+        <button class="cp-item" data-char="characters/alt_down_10.png">
+          <span class="cp-name">นักเดินทาง C</span>
+          <img src="assets/characters/alt_down_10.png" alt="นักเดินทาง C">
+        </button>
+      </div>
+    </div>
+
     <button id="go" class="go">🚪 เข้าเมือง</button>
     <div class="howto">
       <b>วิธีเล่น (เมาส์)</b> · <b>คลิกขวา</b> = เดินไป / โจมตี · <b>คลิกซ้าย</b> = เปิดเมนู (อาคาร/NPC) ·
@@ -65,6 +133,8 @@
     <button class="mini" data-act="toggle:inv">🎒 <span class="kbd">I</span></button>
     <button class="mini" data-act="toggle:craft">🔨 <span class="kbd">C</span></button>
     <button class="mini" data-act="toggle:party">👥 <span class="kbd">P</span></button>
+    <button class="mini" id="btn-savepos" data-act="save:pos" aria-label="บันทึกตำแหน่ง">📍</button>
+    <button class="mini" id="btn-resetpos" data-act="reset:pos" aria-label="คืนตำแหน่ง">🏠</button>
     <button class="mini" id="btn-sound" data-act="toggle:sound">🔊</button>
     <button class="mini" data-act="zoom:out" aria-label="ซูมออก">🔍−</button>
     <button class="mini" data-act="zoom:in" aria-label="ซูมเข้า">🔍+</button>
@@ -135,6 +205,16 @@
 <script src="js/game.js?v=20261105a"></script>
 <script>
 (function () {
+  /* ---------- ข้อ 1: หน้าแรก/แลนด์ดิ้ง ---------- */
+  var landing = document.getElementById('landing');
+  var playNow = document.getElementById('play-now');
+  function openStart() {
+    if (landing) landing.classList.add('hidden');
+    document.getElementById('start').classList.remove('hidden');
+    try { window.scrollTo(0, 0); } catch (e) {}
+  }
+  if (playNow) playNow.addEventListener('click', openStart);
+
   var chosen = 'miner';
   var btns = document.querySelectorAll('.prof');
   function mark(p) {
@@ -148,11 +228,26 @@
   }
   mark('miner');
 
+  /* ---------- ข้อ 4: เลือกตัวละคร ---------- */
+  var chosenChar = 'characters/player_down.png';
+  var charItems = document.querySelectorAll('.cp-item');
+  for (var ci = 0; ci < charItems.length; ci++) {
+    (function (btn) {
+      btn.addEventListener('click', function () {
+        chosenChar = btn.getAttribute('data-char');
+        for (var cj = 0; cj < charItems.length; cj++) {
+          charItems[cj].classList.toggle('sel', charItems[cj] === btn);
+        }
+      });
+    })(charItems[ci]);
+  }
+
   document.getElementById('go').addEventListener('click', function () {
     var n = document.getElementById('pname').value.trim();
     document.getElementById('start').classList.add('hidden');
+    if (landing) landing.classList.add('hidden');
     document.getElementById('app').classList.remove('hidden');
-    DT.Game.start({ name: n, prof: chosen });
+    DT.Game.start({ name: n, prof: chosen, sprite: chosenChar });
   });
 
   /* P4-C: ปุ่มมือถือผูกใน js/game.js (bindMobilePads + bindTouch) แล้ว

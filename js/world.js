@@ -58,8 +58,8 @@
     }
     /* โรงตีเหล็ก (ซ้ายบน) */
     building(19, 19, 3, 3, 20, 19);
-    /* ตลาด (ขวาบน) */
-    building(28, 19, 3, 2, 29, 19);
+    /* ตลาด (ขวาบน) — ลดขนาดให้เล็กลง เหลือ 2x2 (footprint 3x3) */
+    building(28, 19, 2, 2, 29, 19);
     /* บ้านนักล่า */
     building(18, 29, 3, 2, 19, 29);
     /* บ้านช่างปลูก */
@@ -79,7 +79,8 @@
       w: w, h: h, grid: g,
       buildings: [
         { x: 19, y: 19, w: 4, h: 4, name: 'โรงตีเหล็ก', icon: '🔨', work: true, door: { x: 20, y: 19 } },
-        { x: 28, y: 19, w: 4, h: 3, name: 'ตลาด', icon: '🏪', door: { x: 29, y: 19 } },
+        { x: 28, y: 19, w: 3, h: 3, name: 'ตลาด', icon: '🏪', door: { x: 29, y: 19 },
+          sign: 'objects/urban_shop_sign.png', awning: 'objects/urban_shop_awning.png' },
         { x: 18, y: 29, w: 4, h: 3, name: 'บ้านนักล่า', icon: '🏹', door: { x: 19, y: 29 } },
         { x: 28, y: 29, w: 4, h: 3, name: 'บ้านช่างปลูก', icon: '🌾', door: { x: 29, y: 29 } },
         { x: 23, y: 32, w: 4, h: 3, name: 'บ้านคนเหมือง', icon: '⛏️', door: { x: 24, y: 32 } }

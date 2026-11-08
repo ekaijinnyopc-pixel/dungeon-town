@@ -74,6 +74,8 @@
       var prof = opts.prof || 'miner';
       this.local = DT.Player(DT.Net.clientId, name, prof, true);
       this.players = [this.local];
+      /* ข้อ 4: ตัวละครที่เลือกได้ (สไปรต์สำรอง) */
+      this.local.sprite = opts.sprite || 'characters/player_down.png';
       this.local.equipBest();
 
       DT.Net.boot();
@@ -127,6 +129,18 @@
       };
       /* โหลดเซฟ (localStorage ก่อน, ถ้ามีตาราง Supabase ค่อยทับ) */
       DT.Net.load(function (row) {
+        if (row) {
+          /* ข้อ 4: คืนตำแหน่งผู้เล่นหลังรีเฟรช */
+          if (row.x !== undefined && row.x !== null && row.y !== undefined && row.y !== null) {
+            var sx = Number(row.x), sy = Number(row.y);
+            if (isFinite(sx) && isFinite(sy)) {
+              self.local.x = sx;
+              self.local.y = sy;
+            }
+          }
+          /* คืนตัวละครที่เลือกไว้ */
+          if (row.sprite) self.local.sprite = row.sprite;
+        }
         if (row && row.inv) {
           self.local.inv = row.inv;
           self.local.hp = row.hp || 100;
@@ -793,6 +807,26 @@
         this.toast('ซูม ' + Math.round((DT.Render.zoomMul || 1) * 100) + '%');
         return;
       }
+      /* --- ข้อ 4: บันทึก / คืนตำแหน่งผู้เล่น --- */
+      if (act === 'save:pos') {
+        var L = this.local;
+        if (!L) return;
+        DT.Net.saveLocal(L);
+        if (DT.Net.save) DT.Net.save(L);
+        this.toast('บันทึกตำแหน่งแล้ว (' + Math.round(L.x) + ', ' + Math.round(L.y) + ')');
+        return;
+      }
+      if (act === 'reset:pos') {
+        var L2 = this.local;
+        if (!L2) return;
+        L2.x = DT.SPAWNS.player.x;
+        L2.y = DT.SPAWNS.player.y;
+        DT.Net.saveLocal(L2);
+        if (DT.Net.save) DT.Net.save(L2);
+        this.toast('คืนตำแหน่งเริ่มต้นแล้ว');
+        return;
+      }
+
       /* --- toggle: เปิด/ปิดแผง (ปุ่มมุมขวาบน) --- */
       if (act && act.indexOf('toggle:') === 0) {
         var what = act.slice(7);

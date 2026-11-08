@@ -157,8 +157,12 @@
     var sway = Math.sin(t * 1.1 + (seed || 0)) * 0.9;
 
     /* --- สไปรต์ (ถ้าพร้อม) --- */
-    var treeKey = v === 0 ? 'objects/tree_green.png'
-      : v === 1 ? 'objects/tree_green_large.png'
+    /* variant 0 = ทรงพุ่มใบกลม (shape 33x29) -> tree_green_large (ใบกลม)
+       variant 1 = ทรงพุ่มใบแฉก (shape 31x26) -> tree_green (ต้นสน)
+       variant 2 = ทรงพุ่มใบกลม + ผลไม้        -> tree_gold_round
+       variant 3 = ทรงพุ่มใบกลม โทนเข้ม       -> tree_autumn */
+    var treeKey = v === 0 ? 'objects/tree_green_large.png'
+      : v === 1 ? 'objects/tree_green.png'
       : v === 2 ? 'objects/tree_gold_round.png'
       : 'objects/tree_autumn.png';
     ctx.save();
@@ -272,8 +276,11 @@
     ctx.save();
     ctx.translate(sx, sy);
     ctx.scale(z, z);
-    var rockKey = ore ? 'objects/rock_boulder.png'
-      : (v === 1 ? 'objects/rock_small.png' : 'objects/rock_boulder.png');
+    /* หิน: ใช้ก้อนที่แยกเป็นวัตถุเดี่ยว (isolated) เท่านั้น
+       - objects/rock_boulder / rock_small ถูกถอดออกเพราะเป็น tile ที่ภาพ
+         ชนขอบ (edge bleed) ทำให้ก้อนหินดูเหมือนถูกตัดขาด */
+    var rockKey = ore ? 'objects/urban_rock.png'
+      : (v === 1 ? 'objects/city_rock.png' : 'objects/urban_rock.png');
     var rockDrew = drawSprite(ctx, rockKey, 0, 0, false, null, 0);
     if (rockDrew && ore) drawOreGems(ctx);
     ctx.restore();
@@ -333,9 +340,19 @@
     var sway = Math.sin(t * 1.6 + (seed || 0)) * 0.7;
 
     /* --- สไปรต์ (ถ้าพร้อม) --- */
+    /* พุ่ม: ใช้เฉพาะภาพที่เป็น "พุ่มเดี่ยว" ไม่ใช่ tile พื้น
+       - objects/grass_flowers เป็น tile พื้นที่มีดอกไม้ (ห้ามใช้เป็นวัตถุลอย)
+       - objects/bush_cluster เป็น tile ที่เต็มเฟรม (ห้ามใช้เป็นวัตถุลอย)
+       ที่ใช้จริง:
+       - objects/bush.png      = Tiny Town 0007 (กอพุ่มเขียวแยกเดี่ยว ตัดขอบสะอาด)
+       - objects/bush_gold.png = Tiny Town 0010 (กอพุ่มทอง แยกเดี่ยว)
+       - objects/urban_bush.png = Urban 0403 (พุ่มพุ่งสูง ไม่มีลำต้น) */
+    /* variant 0 = พุ่มกลมมีผลไม้ (shape 22x18) -> bush (กอพุ่มเตี้ย)
+       variant 1 = กอหญ้าสูง      (shape 21x20) -> urban_bush (พุ่มพุ่งสูง)
+       variant 2 = พุ่มดอกไม้      (shape 22x19) -> bush_gold */
     var bushKey = v === 0 ? 'objects/bush.png'
-      : v === 1 ? 'objects/grass_flowers.png'
-      : 'objects/bush_cluster.png';
+      : v === 1 ? 'objects/urban_bush.png'
+      : 'objects/bush_gold.png';
     ctx.save();
     ctx.translate(sx, sy);
     ctx.scale(z, z);
@@ -609,9 +626,14 @@
     var seed = opts.seed || 0;
 
     /* ---------- สไปรต์ (ถ้าพร้อม) : 4 ทิศ + idle/เดิน ---------- */
-    var charKey = dir === 'up' ? 'characters/player_up.png'
-      : (dir === 'left' || dir === 'right') ? 'characters/player_side.png'
-      : 'characters/player_down.png';
+    var custom = opts.sprite;
+    var charKey = custom
+      ? (dir === 'up' ? 'characters/player_up.png'
+        : (dir === 'left' || dir === 'right') ? 'characters/player_side.png'
+        : custom)
+      : (dir === 'up' ? 'characters/player_up.png'
+        : (dir === 'left' || dir === 'right') ? 'characters/player_side.png'
+        : 'characters/player_down.png');
     /* เดิน = ขึ้นลงตามจังหวะ · ยืนนิ่ง = หายใจเบาๆ */
     var freq = running ? 15 : 9.5;
     var sprBob = moving ? Math.abs(Math.sin(t * freq)) * (running ? 2.4 : 1.6)
@@ -830,6 +852,12 @@
     /* หันหลัง = พลิกแนวตั้ง (หัวไปด้านบน) */
     if (!face) { ctx.translate(0, -11); ctx.scale(1, -1); ctx.translate(0, 11); }
 
+    /* ---------- สไปรต์มอนส์จริง (ถ้าพร้อม) ---------- */
+    var mobKey = 'mobs/' + type + '.png';
+    var mobBob = Math.sin(t * 4 + (opts.seed || 0)) * 0.8;
+    var mobDrew = drawSprite(ctx, mobKey, 0, mobBob, false, null, 0);
+    if (mobDrew) { ctx.restore(); return; }
+
     if (type === 'slime') {
       var squash = 1 + Math.sin(t * 5) * 0.10;
       ell(ctx, 0, -9, 11 / squash, 9 * squash, st.c);
@@ -1007,6 +1035,27 @@
     ctx.restore();
   };
 
+  /* ================= NPC (สไปรต์ตัวละครย้อมสี) ================= */
+  Art.npc = function (ctx, sx, sy, z, opts) {
+    opts = opts || {};
+    var key = opts.sprite || 'characters/player_down.png';
+    var t = opts.t || 0;
+    ctx.save();
+    ctx.translate(sx, sy);
+    ctx.scale(z, z);
+    var bob = Math.sin(t * 2.4 + (opts.seed || 0)) * 0.6;
+    var drew = drawSprite(ctx, key, 0, bob, false,
+      opts.tint || '#8fa05a', 0.30);
+    ctx.restore();
+    if (drew) return true;
+    /* fallback: ใช้ Art.player แบบ shape */
+    Art.player(ctx, sx, sy, z, {
+      prof: opts.prof === 'merchant' ? 'hunter' : (opts.prof === 'blacksmith' ? 'miner' : 'farmer'),
+      t: t, moving: false, hurt: 0, swing: 0, weapon: null, dir: opts.dir || 'down'
+    });
+    return false;
+  };
+
   /* ================= อาคาร (top-down) =================
      b    = ข้อมูลอาคาร { x, y, w, h, name, icon }
      rect = { x, y, w, h } พิกัด pixel ของ footprint บนจอ
@@ -1120,6 +1169,43 @@
     if (!roofDrew) {
       ctx.fillStyle = 'rgba(255,214,180,0.28)';
       ctx.fillRect(x, y, w, Math.max(1.5 * z, roofH * 0.12));
+    }
+
+    /* ---- สัญญาลักษณ์ร้านค้า (ป้าย + มลน้ำ) ---- */
+    if (b.sign) {
+      var sw = 16 * z, sh = 16 * z;
+      var signX = x + w / 2 - sw / 2;
+      var signY = wallY - sh * 0.55;
+      ctx.save();
+      ctx.globalAlpha = 0.98;
+      var signDrew = drawSprite(ctx, b.sign, signX + sw / 2, signY + sh, false, null, 0);
+      if (!signDrew) {
+        /* fallback: ป้ายไม้ + หมวดค้าสีส้ม */
+        ctx.fillStyle = '#7a5230';
+        ctx.fillRect(signX, signY + sh * 0.2, sw, sh * 0.55);
+        ctx.fillStyle = '#e08a3c';
+        ctx.fillRect(signX + sw * 0.1, signY + sh * 0.3, sw * 0.8, sh * 0.35);
+      }
+      ctx.restore();
+      /* มลน้ำ (awning) ใต้ป้าย ยื่นออกมาด้านหน้า */
+      if (b.awning) {
+        var aw = 16 * z, ah = 10 * z;
+        var awX = x + w / 2 - aw / 2;
+        var awY = wallY + wallH * 0.15;
+        ctx.save();
+        var awDrew = drawSprite(ctx, b.awning, awX + aw / 2, awY + ah, false, null, 0);
+        if (!awDrew) {
+          ctx.fillStyle = '#e8e2d0';
+          ctx.fillRect(awX, awY, aw, ah);
+          ctx.fillStyle = '#4f9f52';
+          for (var ai = 0; ai < 4; ai++) {
+            ctx.fillRect(awX + ai * (aw / 4), awY, aw / 8, ah);
+          }
+          ctx.fillStyle = 'rgba(0,0,0,0.18)';
+          ctx.fillRect(awX, awY + ah - 2 * z, aw, 2 * z);
+        }
+        ctx.restore();
+      }
     }
 
     /* ---- ป้ายชื่ออาคาร ---- */

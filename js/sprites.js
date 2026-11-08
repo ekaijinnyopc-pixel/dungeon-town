@@ -36,20 +36,31 @@
      ------------------------------------------------------------ */
   S.SPEC = {
     /* --- ตัวละคร (ผู้เล่น) --- */
-    'characters/player_down.png': { src: [0, 0, 11, 16], sc: 2, dy: 0 },
-    'characters/player_up.png':   { src: [0, 0, 10, 16], sc: 2, dy: 0 },
-    'characters/player_side.png': { src: [5, 0, 11, 16], sc: 2, dy: 0 },
+    /* ตัดแถวบน (y=0..1) ทิ้ง เพราะเป็นภาพเศษของตัวละครในเซลล์ข้างเคียง
+       (มีสีน้ำตาลคนละตัวปนอยู่) -> เหลือแค่ตัวฮีโร่ y=2..15
+       ฝั่งข้าง = mirror ของ player_down (ชุด CC0 นี้ไม่มีท่า side จริง) */
+    'characters/player_down.png': { src: [0, 2, 11, 14], sc: 2, dy: 0 },
+    'characters/player_up.png':   { src: [0, 2, 10, 14], sc: 2, dy: 0 },
+    'characters/player_side.png': { src: [5, 2, 11, 14], sc: 2, dy: 0 },
 
     /* --- ต้นไม้/พุ่ม/หิน --- */
-    'objects/tree_green.png':      { src: [0, 0, 16, 16], sc: 2, dy: 10 },
-    'objects/tree_green_large.png': { src: [0, 0, 16, 16], sc: 2, dy: 12 },
-    'objects/tree_gold_round.png': { src: [0, 0, 16, 16], sc: 2, dy: 10 },
-    'objects/tree_autumn.png':     { src: [0, 0, 16, 16], sc: 2, dy: 10 },
-    'objects/rock_boulder.png':    { src: [0, 2, 16, 14], sc: 2, dy: 6 },
-    'objects/rock_small.png':      { src: [0, 4, 16, 12], sc: 2, dy: 4 },
-    'objects/bush.png':            { src: [0, 0, 16, 16], sc: 2, dy: 6 },
-    'objects/bush_cluster.png':    { src: [0, 0, 16, 16], sc: 2, dy: 8 },
-    'objects/grass_flowers.png':   { src: [0, 0, 16, 16], sc: 2, dy: 6 },
+    /* ต้นไม้: ตัดเฉพาะกรอบที่มีภาพจริง (ไม่ตัดตัวต้นไม้ขาด)
+       dy ถูกเทียบกับ shape art: relBot = dy - 1
+         variant 0 (ทรงพุ่มใบกลมใหญ่) -> relBot 4  -> dy 5
+         variant 1 (ทรงพุ่มใบแฉก)      -> relBot 6  -> dy 7 */
+    'objects/tree_green_large.png': { src: [0, 0, 16, 16], sc: 2, dy: 5 },
+    'objects/tree_green.png':      { src: [2, 0, 13, 16], sc: 2, dy: 7 },
+    'objects/tree_gold_round.png': { src: [0, 0, 15, 15], sc: 2, dy: 5 },
+    'objects/tree_autumn.png':     { src: [2, 1, 13, 15], sc: 2, dy: 5 },
+    /* หิน: ใช้เฉพาะก้อนที่แยกเป็นวัตถุเดี่ยว
+       (rock_boulder/rock_small ถูกถอดเพราะเป็น tile ที่ภาพชนขอบ) */
+    'objects/urban_rock.png':      { src: [2, 3, 12, 11], sc: 2, dy: 11 },
+    'objects/city_rock.png':       { src: [3, 2, 10, 11], sc: 2, dy: 11 },
+    /* พุ่ม urban เป็นพุ่มสูง (พุ่งขึ้น) จึงตัดเต็มความสูง ไม่ตัดใบทิ้ง */
+    /* พุ่ม: bush/bush_gold = กอพุ่มเตี้ยบนพื้น, urban_bush = พุ่มพุ่งสูง */
+    'objects/bush.png':            { src: [2, 7, 12, 9],  sc: 2, dy: 6 },
+    'objects/bush_gold.png':       { src: [2, 7, 12, 9],  sc: 2, dy: 6 },
+    'objects/urban_bush.png':      { src: [3, 3, 10, 13], sc: 2, dy: 6 },
     'objects/mushrooms.png':       { src: [0, 4, 16, 9],  sc: 2, dy: 3 },
 
     /* --- ของในบ้าน/ดันเจอ --- */
@@ -59,6 +70,28 @@
     'objects/dungeon_anvil.png':   { src: [2, 4, 12, 11], sc: 2, dy: 2 },
     'objects/dungeon_table.png':   { src: [0, 0, 16, 16], sc: 2, dy: 4 },
     'objects/pot.png':             { src: [0, 0, 16, 16], sc: 2, dy: 4 },
+
+    /* --- มอนส์ (ตัดจาก Kenney CC0 → 16x16 RGBA) --- */
+    'mobs/slime.png':   { src: [0, 0, 16, 16], sc: 2, dy: 0 },
+    'mobs/wolf.png':    { src: [0, 0, 16, 16], sc: 2, dy: 0 },
+    'mobs/goblin.png':  { src: [0, 0, 16, 16], sc: 2, dy: 0 },
+    'mobs/boar.png':    { src: [0, 0, 16, 16], sc: 2, dy: 0 },
+    'mobs/wraith.png':  { src: [0, 0, 16, 16], sc: 2, dy: 0 },
+
+    /* --- NPC (ตัวละครชุดเดียวกับผู้เล่น แต่ย้อมสี) --- */
+    'characters/alt_down_6.png':  { src: [0, 0, 16, 16], sc: 2, dy: 0 },
+    'characters/alt_down_7.png':  { src: [0, 0, 16, 16], sc: 2, dy: 0 },
+    'characters/alt_down_10.png': { src: [0, 0, 16, 16], sc: 2, dy: 0 },
+
+    /* --- ป้าย/สัญญาลักษณ์ร้านค้า + มลน้ำ --- */
+    'objects/urban_shop_sign.png':  { src: [0, 0, 16, 16], sc: 2, dy: 0 },
+    'objects/urban_shop_awning.png':{ src: [0, 0, 16, 16], sc: 2, dy: 0 },
+    'objects/urban_awning_orange.png': { src: [0, 0, 16, 16], sc: 2, dy: 0 },
+    'objects/shop_blue_window.png': { src: [0, 0, 16,  16], sc: 2, dy: 0 },
+    'objects/city_storefront.png':  { src: [0, 0, 16, 16], sc: 2, dy: 0 },
+    'objects/signboard.png':        { src: [0, 0, 16, 16], sc: 2, dy: 0 },
+    'objects/signpost.png':         { src: [0, 0, 16, 16], sc: 2, dy: 0 },
+    'objects/sign.png':             { src: [0, 0, 16, 16], sc: 2, dy: 0 },
 
     /* --- เนื้ออาคาร (ใช้เรียงซ้อน) --- */
     'objects/roof.png':            { src: [0, 0, 16, 16], sc: 3, tile: 1 },

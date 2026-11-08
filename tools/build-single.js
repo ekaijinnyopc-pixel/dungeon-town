@@ -55,12 +55,20 @@ for (const f of order) {
 /* 3) ฝังภาพสไปรต์ (base64 data URL) ลงในไฟล์เดียว
    - อ่านคีย์ที่ใช้จริงจากตาราง SPEC ใน js/sprites.js
    - ถ้าไฟล์ภาพหาย -> ข้าม (เกมจะ fallback ไปใช้รูปทรงเดิม) */function collectSpriteKeys() {
-  const src = read('js/sprites.js');
   const keys = [];
-  const re = /'((?:characters|objects)\/[A-Za-z0-9_.-]+\.png)'\s*:/g;
+  const push = k => { if (k && keys.indexOf(k) === -1) keys.push(k); };
+  /* 1) คีย์สไปรต์ใน SPEC ของ js/sprites.js (characters/, objects/, mobs/) */
+  const re = /'((?:characters|objects|mobs)\/[A-Za-z0-9_.-]+\.png)'\s*:/g;
   let m;
-  while ((m = re.exec(src))) {
-    if (keys.indexOf(m[1]) === -1) keys.push(m[1]);
+  const src = read('js/sprites.js');
+  while ((m = re.exec(src))) push(m[1]);
+  /* 2) คีย์สไปรต์ที่อ้างถึงในไฟล์อื่น (เช่น NPC ใน js/config.js, ตัวละครใน index.html) */
+  const others = ['js/config.js', 'js/art.js', 'js/game.js', 'js/render.js'];
+  const re2 = /'((?:characters|objects|mobs)\/[A-Za-z0-9_.-]+\.png)'/g;
+  for (const f of others) {
+    let t;
+    try { t = read(f); } catch (e) { continue; }
+    while ((m = re2.exec(t))) push(m[1]);
   }
   return keys;
 }

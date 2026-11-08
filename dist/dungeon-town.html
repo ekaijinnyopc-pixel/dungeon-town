@@ -634,8 +634,13 @@ html, body {
   }
 
   /* P4-C: popup — เลื่อนได้ ไม่ล้นจอแนวตั้ง */
+  .popup {
+    align-items: flex-end;
+    padding: 0 8px calc(8px + env(safe-area-inset-bottom, 0px));
+  }
   .popup-box {
     width: min(720px, calc(100vw - 16px));
+    max-width: calc(100vw - 16px);
     max-height: calc(100dvh - 24px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
   }
   .popup-body {
@@ -668,12 +673,163 @@ html, body {
   .panel { top: calc(96px + env(safe-area-inset-top, 0px)); max-height: calc(100dvh - 190px); }
 }
 
+/* =========================================================
+   ข้อ 1: หน้าแรก / แลนด์ดิ้ง
+   ========================================================= */
+.landing {
+  position: fixed; inset: 0; z-index: 60;
+  overflow-y: auto;
+  background:
+    radial-gradient(circle at 50% 12%, rgba(90,130,70,.30), transparent 58%),
+    radial-gradient(circle at 15% 85%, rgba(60,90,140,.18), transparent 55%),
+    linear-gradient(180deg, #16210f 0%, #0d1209 100%);
+  padding: 28px 16px 40px;
+  color: var(--dt-text);
+}
+.landing.hidden { display: none; }
+.landing-hero { text-align: center; max-width: 640px; margin: 0 auto 26px; }
+.landing-logo {
+  font-size: 64px; line-height: 1; filter: drop-shadow(0 6px 10px rgba(0,0,0,.6));
+  animation: dt-rise .5s cubic-bezier(.2,.9,.3,1) both;
+}
+.landing-hero h1 {
+  margin: 8px 0 4px; font-size: 34px; color: var(--dt-gold-bright);
+  text-shadow: 0 2px 0 #3a2c14, 0 0 22px rgba(217,192,99,.28);
+}
+.landing-sub { margin: 0 0 20px; color: var(--dt-text-dim); font-size: 14px; }
+.play-now {
+  padding: 15px 34px; font-size: 19px; font-weight: 800;
+  background: linear-gradient(180deg, #5c9242, #3a6624);
+  color: #f6ffe9; border: 1px solid #6ba048; border-radius: 14px; cursor: pointer;
+  box-shadow: 0 8px 22px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.22);
+  transition: transform .14s, filter .18s, box-shadow .18s;
+  letter-spacing: .5px;
+}
+.play-now:hover { filter: brightness(1.12); box-shadow: 0 10px 28px rgba(0,0,0,.55), 0 0 24px rgba(126,180,80,.34); }
+.play-now:active { transform: translateY(2px); }
+.landing-note { margin: 12px 0 0; font-size: 12px; color: #8fa382; }
+
+.landing-games, .landing-how {
+  max-width: 760px; margin: 0 auto 24px;
+  background: linear-gradient(180deg, rgba(30,42,20,.90), rgba(16,24,12,.90));
+  border: 1px solid #3d5230; border-radius: 16px; padding: 18px;
+  box-shadow: 0 14px 40px rgba(0,0,0,.45);
+}
+.landing-games h2 { margin: 0 0 14px; font-size: 17px; color: var(--dt-gold-bright); }
+.landing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+.game-card {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  padding: 16px 12px; border-radius: 13px; text-decoration: none;
+  background: linear-gradient(180deg, #22300f, #17230d);
+  border: 2px solid var(--dt-line-soft); color: var(--dt-text);
+  transition: transform .16s cubic-bezier(.2,.9,.3,1), border-color .16s, box-shadow .16s;
+}
+.game-card:hover {
+  transform: translateY(-3px); border-color: var(--dt-gold);
+  box-shadow: 0 10px 24px rgba(0,0,0,.45), 0 0 20px rgba(217,192,99,.22);
+}
+.gc-ico { font-size: 30px; }
+.gc-name { font-weight: 700; font-size: 15px; color: var(--dt-gold-bright); }
+.gc-desc { font-size: 11px; color: var(--dt-text-dim); text-align: center; }
+
+.landing-how h3 { margin: 0 0 12px; font-size: 16px; color: var(--dt-gold-bright); }
+.how-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+.how-grid > div {
+  padding: 12px 14px; border-radius: 11px; font-size: 12.5px; line-height: 1.65;
+  background: rgba(10,16,8,.55); border: 1px solid #33461f; color: #a9bb96;
+}
+.how-grid b { color: var(--dt-gold); }
+@media (max-width: 520px) {
+  .landing-hero h1 { font-size: 26px; }
+  .landing-logo { font-size: 48px; }
+  .play-now { width: 100%; max-width: 320px; }
+}
+
+/* =========================================================
+   ข้อ 4: เลือกตัวละคร + ปุ่มบันทึก/คืนตำแหน่ง
+   ========================================================= */
+.char-pick {
+  margin: 0 0 16px; padding: 13px 12px 14px;
+  background: rgba(10,16,8,.45);
+  border: 1px solid #3d5230; border-radius: 13px;
+}
+.cp-head { display: flex; align-items: baseline; gap: 9px; flex-wrap: wrap; margin-bottom: 11px; }
+.cp-title { font-size: 14px; font-weight: 700; color: var(--dt-gold-bright); }
+.cp-hint { font-size: 11px; color: #8fa382; }
+.cp-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 9px; }
+.cp-item {
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
+  padding: 9px 5px 7px; cursor: pointer;
+  background: linear-gradient(180deg, #1d2a13, #16210f);
+  border: 2px solid var(--dt-line-soft); border-radius: 11px; color: var(--dt-text);
+  transition: transform .16s cubic-bezier(.2,.9,.3,1), border-color .16s, box-shadow .16s;
+}
+.cp-item:hover { transform: translateY(-3px); border-color: #5c7a3e; }
+.cp-item.sel {
+  border-color: var(--dt-gold);
+  background: linear-gradient(180deg, #33431d, #22300f);
+  box-shadow: 0 0 0 2px rgba(217,192,99,.26), 0 0 18px rgba(217,192,99,.26);
+}
+.cp-item img {
+  width: 40px; height: 40px; image-rendering: pixelated;
+  filter: drop-shadow(0 2px 2px rgba(0,0,0,.5));
+}
+.cp-item.sel img { filter: drop-shadow(0 0 6px rgba(217,192,99,.55)); }
+.cp-name { font-size: 11px; color: #a9bb96; text-align: center; line-height: 1.25; }
+.cp-item.sel .cp-name { color: var(--dt-gold-bright); font-weight: 700; }
+@media (max-width: 520px) {
+  .cp-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
 </style>
 </head>
 <body>
 
+<!-- ================= หน้าแรก / แลนด์ดิ้ง ================= -->
+<div id="landing" class="landing">
+  <div class="landing-hero">
+    <div class="landing-logo">🏘️</div>
+    <h1>เมืองดับดันเจียน</h1>
+    <p class="landing-sub">Dungeon Town · 2D top-down survival RPG · เล่นด้วยกันได้</p>
+    <button id="play-now" class="play-now">▶ เข้าเล่นทันที</button>
+    <p class="landing-note">กดแล้วเข้าเกมทันที · เลือกอาชีพและชื่อผู้เล่นได้ในเกม</p>
+  </div>
+
+  <div class="landing-games">
+    <h2>🎮 เกมอื่นของพี่เอ</h2>
+    <div class="landing-grid">
+      <a class="game-card" href="https://ekaijinnyopc-pixel.github.io/dummy-rummy/" target="_blank" rel="noopener">
+        <span class="gc-ico">🃏</span>
+        <span class="gc-name">Dummy Rummy</span>
+        <span class="gc-desc">เกมไพ่รัมมี่</span>
+      </a>
+      <a class="game-card" href="https://ekaijinnyopc-pixel.github.io/slave-card-game/" target="_blank" rel="noopener">
+        <span class="gc-ico">🃏</span>
+        <span class="gc-name">Slave Card Game</span>
+        <span class="gc-desc">เกมการ์ดแข่งขัน</span>
+      </a>
+      <a class="game-card" href="dist/dungeon-town.html" target="_blank" rel="noopener">
+        <span class="gc-ico">📦</span>
+        <span class="gc-name">Dungeon Town (ไฟล์เดียว)</span>
+        <span class="gc-desc">เล่นออฟไลน์ได้ ไม่ต้องต่อเน็ต</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="landing-how">
+    <h3>🕹️ วิธีเล่น</h3>
+    <div class="how-grid">
+      <div><b>เมาส์</b><br>คลิกขวา = เดิน/โจมตี · คลิกซ้าย = เปิดเมนู · ลากซ้าย = เดิน</div>
+      <div><b>คีย์บอร์ด</b><br>WASD/ลูกศร = เดิน · E = เก็บ/เข้าอาคาร · Space = โจมตี</div>
+      <div><b>เมนู</b><br>I = กระเป๋า · C = คราฟต์ · Q = เควสต์ · F = ร้าน · G = กองไฟ · Enter = แชท</div>
+      <div><b>มือถือ</b><br>ใช้จอยเดินมุมซ้ายล่าง + ปุ่มโจมตี/เก็บ/ร้าน/กองไฟ</div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= หน้าเลือกอาชีพ (หลังจากกด "เข้าเล่นทันที") ================= -->
 <!-- ================= หน้าเลือกอาชีพ ================= -->
-<div id="start" class="start">
+<div id="start" class="start hidden">
   <div class="start-box">
     <h1>🏘️ เมืองดับดันเจียน</h1>
     <p class="sub">เกม 2D isometric survival · 3 อาชีพ · เล่นด้วยกันได้</p>
@@ -701,6 +857,31 @@ html, body {
       </button>
     </div>
 
+    <div class="char-pick">
+      <div class="cp-head">
+        <span class="cp-title">🧙 เลือกตัวละคร</span>
+        <span class="cp-hint">เลือกได้ตอนเข้าเกม แล้วเปลี่ยนได้ภายหลัง</span>
+      </div>
+      <div class="cp-grid" id="charGrid">
+        <button class="cp-item sel" data-char="characters/player_down.png">
+          <span class="cp-name">ฮีโร่</span>
+          <img src="assets/characters/player_down.png" alt="ฮีโร่">
+        </button>
+        <button class="cp-item" data-char="characters/alt_down_6.png">
+          <span class="cp-name">นักเดินทาง A</span>
+          <img src="assets/characters/alt_down_6.png" alt="นักเดินทาง A">
+        </button>
+        <button class="cp-item" data-char="characters/alt_down_7.png">
+          <span class="cp-name">นักเดินทาง B</span>
+          <img src="assets/characters/alt_down_7.png" alt="นักเดินทาง B">
+        </button>
+        <button class="cp-item" data-char="characters/alt_down_10.png">
+          <span class="cp-name">นักเดินทาง C</span>
+          <img src="assets/characters/alt_down_10.png" alt="นักเดินทาง C">
+        </button>
+      </div>
+    </div>
+
     <button id="go" class="go">🚪 เข้าเมือง</button>
     <div class="howto">
       <b>วิธีเล่น (เมาส์)</b> · <b>คลิกขวา</b> = เดินไป / โจมตี · <b>คลิกซ้าย</b> = เปิดเมนู (อาคาร/NPC) ·
@@ -724,6 +905,8 @@ html, body {
     <button class="mini" data-act="toggle:inv">🎒 <span class="kbd">I</span></button>
     <button class="mini" data-act="toggle:craft">🔨 <span class="kbd">C</span></button>
     <button class="mini" data-act="toggle:party">👥 <span class="kbd">P</span></button>
+    <button class="mini" id="btn-savepos" data-act="save:pos" aria-label="บันทึกตำแหน่ง">📍</button>
+    <button class="mini" id="btn-resetpos" data-act="reset:pos" aria-label="คืนตำแหน่ง">🏠</button>
     <button class="mini" id="btn-sound" data-act="toggle:sound">🔊</button>
     <button class="mini" data-act="zoom:out" aria-label="ซูมออก">🔍−</button>
     <button class="mini" data-act="zoom:in" aria-label="ซูมเข้า">🔍+</button>
@@ -773,7 +956,7 @@ html, body {
   </div>
 </div>
 
-<script>window.__DT_SPRITE_DATA__ = {"characters/player_down.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA3klEQVR4nLWSrQ6DMBSFDwSSayeKqxlZ9jKTtZNTPA9PMIssggS9N0CRzaCgYpZkJJ1YSiBp+RE76v4037n3pt7jdtbP9wfX7OUBwF0cdXwIAQDT+t80uk6Le1x9E8SHEGb0XROkaaptjSRJNk0RCCFcPb0FEgy1/AWnCwDA5FvlA0BZ5BhqiaGWKIt8F8Br29Z6gyzLZrlrncBFFkKg7/tpyXqToGkaK4Ax5mLPAa6HURShqqpVkHOFruvAGINSahHgL3Y3aAQopVbdrAAiAhGBcw7OOUxORJBy/VN9AbMWSpngFS8IAAAAAElFTkSuQmCC","characters/player_up.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABJ0lEQVR4nKWSv0rDUBTGfwkp3EVswRAQsrQ4VZ8iW+l4R32C+zQO9wm6xkFIh0KFDoKTTxB0KQhJBCtdAi1cB+klbVJs7Ted8537fecP1xnJrrmL3x2AkeyaXqcFwNvXCoBNbRfVtyfBGcmuqRL7Ou6DC9DrtPjvOI7W2uySSqmDp/CklE28OcREa23cdZpYYp0mVPND4E4nYyucTsZHiQGcLMtqN4jjeCuvrrN7M6/JVUpJWZZVyiilHK21GQ6HlhRC4M3ncwBuHx+2TAbp7M/xy7LE833fEuc31zaOgqWNn55fa+KiKOj3+/UVVosFAJ/ZBwAXwWVNCOD7Pnme//7EU+BtXAfpjChY2s73YQRAq93m++oMeGk0cIUQhGF4dOckSRBC8ANP2Wsr6RSqRwAAAABJRU5ErkJggg==","characters/player_side.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAxElEQVR4nKVSMQ6DMBBzqiJl7cCYBdSJr2TMyrPuBayMYUDiJ6g8gBu6IhUpHaoiQFCSclIG3yU+24rAQRUmcektAgA8ni/kZSfW/VMlQi4XJnFznJeduIRuTG8R5tK9FRCR2+p7ERCRM8Zszq6+CsbWfh7c9QIHZdDUFcbWYmwtmroC8MPC2vOehU0CInJa6wlLKXdVeWUwDAOY+T8CZkaWZeEKvhvjOEbf97sEwT/xNAEzL/I4JLDWQko5HaUUlFITfgNpiEIyJsxc0AAAAABJRU5ErkJggg==","objects/tree_green.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAgMAAABinRfyAAAABGdBTUEAALGPC/xhBQAAAAxQTFRFAAAAR59KhMZpPyYxgawHvQAAAAF0Uk5TAEDm2GYAAABBSURBVAjXY2BgPsDAwMD/AUjY/wESdnuAxL/9DAzMv9YDiVsg4uf6AwzMr1aDiGwoi//V6g8M/KtW/QERNXDWBwDj6h2kkfzYkQAAAABJRU5ErkJggg==","objects/tree_green_large.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAgMAAABinRfyAAAABGdBTUEAALGPC/xhBQAAAAxQTFRFAAAAR59KhMZpPyYxgawHvQAAAAF0Uk5TAEDm2GYAAABXSURBVAjXHcarDYAwAEXRmzBAR+oUDQmmHoboHhgUgmc6AizBELiaIpryC+bkgEnA80BzhQ1zDAkjJaxUuaWVIkVK9zNGzkUTuV882blvbvZcbg7Yva0vvlAmggrmYVsAAAAASUVORK5CYII=","objects/tree_gold_round.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAABGdBTUEAALGPC/xhBQAAABJQTFRFAAAAvWxK6qVs/b5T44YoPyYxlpNTPgAAAAF0Uk5TAEDm2GYAAABNSURBVAjXY2ANNQaC0AAG1hBjYxdnVzDD2RnKgIiEhoDUgBgmzsbGJmARFyAAq8FghIIYQAMZQoGs0FAGBqBQoChIAMgKUgXTWBgQAABTZxlvP++e9wAAAABJRU5ErkJggg==","objects/tree_autumn.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAgMAAABinRfyAAAABGdBTUEAALGPC/xhBQAAAAxQTFRFAAAA44Yo/b5TPyYxPSBMUwAAAAF0Uk5TAEDm2GYAAABCSURBVAjXY2AAA/4PQML+D5Cw2wMk/u1nYGD+tR5I3FoPZh1gYH6VDSJWQwn+l9kfGPhXZv1h4F+1qgZIzAKzPgAAndIcUDD3gNkAAAAASUVORK5CYII=","objects/rock_boulder.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAABGdBTUEAALGPC/xhBQAAABJQTFRFAAAAvWxKjJy16qVsUmB8PyYxJOn26AAAAAF0Uk5TAEDm2GYAAABSSURBVAjXVY2xDcAgEANpWASxAgMkMj0S3P6rxPA0+cYnW2+n9DsIzTDCmI0w2uT4AdYHRxl1bWAVgSPeou7YUNWHe5AMu2xJp3d/cQfvUI7pDxIPF7ao8nmnAAAAAElFTkSuQmCC","objects/rock_small.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAABGdBTUEAALGPC/xhBQAAAA9QTFRFAAAAdjs26qVsvWxKPyYxWHQ6vwAAAAF0Uk5TAEDm2GYAAABBSURBVAjXY2DAAlxcYDQIMDCwuDiKABkODC7OhsJGSiouDC7GxsbKxkZQhhIGAyzlbGwMVsziAtbvgDAQyQ40AADY5hFFLR9IYwAAAABJRU5ErkJggg==","objects/bush.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAABGdBTUEAALGPC/xhBQAAAA9QTFRFAAAAvWxKR59KhMZpPyYxwlwcOgAAAAF0Uk5TAEDm2GYAAABDSURBVAjXVcvLDQAgDALQHpykbiAuoLL/TNrfQS68hCASYXYr8BRQS+H8IOloDx1+nQmAClvGg/oDM6ABGrahA4PrAvZkDmBgclR8AAAAAElFTkSuQmCC","objects/bush_cluster.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAABGdBTUEAALGPC/xhBQAAAA9QTFRFAAAAvWxKR59KhMZpPyYxwlwcOgAAAAF0Uk5TAEDm2GYAAABXSURBVAjXTc6xFcAgDENBFRmBCQwTIA8QsPafKTY0UXXVf4LUySlBMtISLsspQNlMMLHNRsG1mqLwAs+BAEVHNar1QzayRVQjW3bQL4L0wghO34Z2b6wPJf8Y+SI5AhEAAAAASUVORK5CYII=","objects/grass_flowers.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAABGdBTUEAALGPC/xhBQAAAA9QTFRF////44YoZaVW/b5ThMZpiQPwCAAAAEpJREFUCNdNjdEJQCEMAwNvBFfoAApOELP/TKY+UfPTg4QrtAON7hMBlWagMOrXV3WApcUzTmBsOJ6M6x/sWpCKC6Qf2AXFO7ZrAoI2Hifwpi13AAAAAElFTkSuQmCC","objects/mushrooms.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAABGdBTUEAALGPC/xhBQAAABVQTFRFAAAA/3BtvWxK6qVs////6EU3PyYxJrjr2gAAAAF0Uk5TAEDm2GYAAABOSURBVAjXY2DABGlpaWCaDchIAAukhoaBhdJEQwIhjNDQULCyNJdQV7AyICM0LRWoDCwl6ghkpCmlATlpQHOMIQwGECNJDWp6slkCpt0A808Zk5WzH6cAAAAASUVORK5CYII=","objects/dungeon_torch.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAABGdBTUEAALGPC/xhBQAAABhQTFRF/udhwMvc/q40/3Bt6EU3UmB8PyYxi5u0yr2gZwAAAGNJREFUCNdNjNEJgDAQQwu6wM1gBxAL/ZZS3OB0gLbZoNz6RgXpT3gkjzhFLLFAnSHl7GEjbDkvBMUawkRHPhBOewjzKCuqT8fzcyJ5NE4dlQWBFVqnowownHQzu4Q/L5j9cAN6cit8/+2ySQAAAABJRU5ErkJggg==","objects/barrel_pot.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAABGdBTUEAALGPC/xhBQAAABJQTFRFAAAA6qVswMvcdzgzvWxKPyYxqggN6wAAAAF0Uk5TAEDm2GYAAABWSURBVAjXVc2xDYAwEENRN9mACZCYIGQARK6PSLz/KtiJKPjV0+kkA4mqAeAMOlSlUxp3zmcYhex/BDmM7ufSwCerg2DdVTVmC9dmDCOoCSm8+o0uAS/bfB9qRZVXgQAAAABJRU5ErkJggg==","objects/crate.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAgMAAABinRfyAAAABGdBTUEAALGPC/xhBQAAAAxQTFRFdjs26qVsPyYxvWxK8Gb41wAAAB9JREFUCNdjWBoaGsWw/v//X1CCQwFGhIb+QpIgUh0Au4Ysdbz3tgEAAAAASUVORK5CYII=","objects/dungeon_anvil.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAABGdBTUEAALGPC/xhBQAAABJQTFRFAAAAUmB85O35i5u0wMvcJitEu7KpWAAAAAF0Uk5TAEDm2GYAAABVSURBVAjXZc27CcAwDARQNRnAK8gTBJEBjKVeEG7/VXxyCClyzb1CH5F/DjBvI0UAdw8KcwMPphO9oISpajfiNuYC13fX/rAz6iJGa5GFurNRM/n9XorfF7dQs8iEAAAAAElFTkSuQmCC","objects/dungeon_table.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAABGdBTUEAALGPC/xhBQAAAA9QTFRFAAAAdjs2vWxK6qVsPyYx9xQEvQAAAAF0Uk5TAEDm2GYAAAAySURBVAjXY2BxAQMHBhcoYHBRNgYCIyDDGAzIZiiBATJDEGSBIEhESElJESwFEkFiAADXchsZ17WF3gAAAABJRU5ErkJggg==","objects/pot.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAABGdBTUEAALGPC/xhBQAAABVQTFRFAAAAUmB8i5u0wMvcdzgzvWxKPyYxqhIq/QAAAAF0Uk5TAEDm2GYAAABXSURBVAjXVY7BDYAgEAT3RQF2YA1EK0AaUHmTANt/Ce6a8GBek8kle0CgqAD4A4W47VGJzeEkeL6iSY4npeu2ZLKvUshh6T7ORBhJlCpxWYQWr87R+cYHGYEnldd0uB8AAAAASUVORK5CYII=","objects/roof.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAABGdBTUEAALGPC/xhBQAAABVQTFRFwMvcWmmIi5u0PyYx/LyPw0s18oRiT1V7eAAAAG5JREFUCNcdyMERgzAMRNFNB4GhAdyCMA0guwEj3T3Y238JEfmnNx+kP9ltoo5bZM6JuzSRwwrM5LjEDN6EKnnC5KTGQgyvsdBOso4rQKcOzfDpfVMtAa67jgB7Stt7+AU+LzqirYBrivaKJf1bfl4JIMMMx2JlAAAAAElFTkSuQmCC","objects/roof_grey.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAABGdBTUEAALGPC/xhBQAAABVQTFRF6qVsdjs2vWxKPyYxwMvcWmmIi5u0O5CCXQAAAG5JREFUCNcdyMERgzAMRNFNB4GhAdyCMA0guwEj3T3Y238JEfmnNx+kP9ltoo5bZM6JuzSRwwrM5LjEDN6EKnnC5KTGQgyvsdBOso4rQKcOzfDpfVMtAa67jgB7Stt7+AU+LzqirYBrivaKJf1bfl4JIMMMx2JlAAAAAElFTkSuQmCC","objects/house_wall.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAgMAAABinRfyAAAABGdBTUEAALGPC/xhBQAAAAxQTFRFi5u0WmmIPyYxwMvcD0iD5AAAABlJREFUCNdjWL///3+GBSBiKYhYDyfIEwMAdOA2Xbgwn+YAAAAASUVORK5CYII="};</script>
+<script>window.__DT_SPRITE_DATA__ = {"characters/player_down.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA3klEQVR4nLWSrQ6DMBSFDwSSayeKqxlZ9jKTtZNTPA9PMIssggS9N0CRzaCgYpZkJJ1YSiBp+RE76v4037n3pt7jdtbP9wfX7OUBwF0cdXwIAQDT+t80uk6Le1x9E8SHEGb0XROkaaptjSRJNk0RCCFcPb0FEgy1/AWnCwDA5FvlA0BZ5BhqiaGWKIt8F8Br29Z6gyzLZrlrncBFFkKg7/tpyXqToGkaK4Ax5mLPAa6HURShqqpVkHOFruvAGINSahHgL3Y3aAQopVbdrAAiAhGBcw7OOUxORJBy/VN9AbMWSpngFS8IAAAAAElFTkSuQmCC","characters/player_up.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABJ0lEQVR4nKWSv0rDUBTGfwkp3EVswRAQsrQ4VZ8iW+l4R32C+zQO9wm6xkFIh0KFDoKTTxB0KQhJBCtdAi1cB+klbVJs7Ted8537fecP1xnJrrmL3x2AkeyaXqcFwNvXCoBNbRfVtyfBGcmuqRL7Ou6DC9DrtPjvOI7W2uySSqmDp/CklE28OcREa23cdZpYYp0mVPND4E4nYyucTsZHiQGcLMtqN4jjeCuvrrN7M6/JVUpJWZZVyiilHK21GQ6HlhRC4M3ncwBuHx+2TAbp7M/xy7LE833fEuc31zaOgqWNn55fa+KiKOj3+/UVVosFAJ/ZBwAXwWVNCOD7Pnme//7EU+BtXAfpjChY2s73YQRAq93m++oMeGk0cIUQhGF4dOckSRBC8ANP2Wsr6RSqRwAAAABJRU5ErkJggg==","characters/player_side.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAxElEQVR4nKVSMQ6DMBBzqiJl7cCYBdSJr2TMyrPuBayMYUDiJ6g8gBu6IhUpHaoiQFCSclIG3yU+24rAQRUmcektAgA8ni/kZSfW/VMlQi4XJnFznJeduIRuTG8R5tK9FRCR2+p7ERCRM8Zszq6+CsbWfh7c9QIHZdDUFcbWYmwtmroC8MPC2vOehU0CInJa6wlLKXdVeWUwDAOY+T8CZkaWZeEKvhvjOEbf97sEwT/xNAEzL/I4JLDWQko5HaUUlFITfgNpiEIyJsxc0AAAAABJRU5ErkJggg==","objects/tree_green_large.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAgMAAABinRfyAAAABGdBTUEAALGPC/xhBQAAAAxQTFRFAAAAR59KhMZpPyYxgawHvQAAAAF0Uk5TAEDm2GYAAABXSURBVAjXHcarDYAwAEXRmzBAR+oUDQmmHoboHhgUgmc6AizBELiaIpryC+bkgEnA80BzhQ1zDAkjJaxUuaWVIkVK9zNGzkUTuV882blvbvZcbg7Yva0vvlAmggrmYVsAAAAASUVORK5CYII=","objects/tree_green.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAgMAAABinRfyAAAABGdBTUEAALGPC/xhBQAAAAxQTFRFAAAAR59KhMZpPyYxgawHvQAAAAF0Uk5TAEDm2GYAAABBSURBVAjXY2BgPsDAwMD/AUjY/wESdnuAxL/9DAzMv9YDiVsg4uf6AwzMr1aDiGwoi//V6g8M/KtW/QERNXDWBwDj6h2kkfzYkQAAAABJRU5ErkJggg==","objects/tree_gold_round.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAABGdBTUEAALGPC/xhBQAAABJQTFRFAAAAvWxK6qVs/b5T44YoPyYxlpNTPgAAAAF0Uk5TAEDm2GYAAABNSURBVAjXY2ANNQaC0AAG1hBjYxdnVzDD2RnKgIiEhoDUgBgmzsbGJmARFyAAq8FghIIYQAMZQoGs0FAGBqBQoChIAMgKUgXTWBgQAABTZxlvP++e9wAAAABJRU5ErkJggg==","objects/tree_autumn.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAgMAAABinRfyAAAABGdBTUEAALGPC/xhBQAAAAxQTFRFAAAA44Yo/b5TPyYxPSBMUwAAAAF0Uk5TAEDm2GYAAABCSURBVAjXY2AAA/4PQML+D5Cw2wMk/u1nYGD+tR5I3FoPZh1gYH6VDSJWQwn+l9kfGPhXZv1h4F+1qgZIzAKzPgAAndIcUDD3gNkAAAAASUVORK5CYII=","objects/urban_rock.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAgMAAABinRfyAAAABGdBTUEAALGPC/xhBQAAAAxQTFRFAAAAdXV1SUlJXFxcX+B/DAAAAAF0Uk5TAEDm2GYAAAA2SURBVAjXY2BAA6uAmCkUSDLVhzYwMF39CyT+hzcwcP7/38DAHQ8i/v99ACT+QwmmVasaENoB1uMWLfbSviwAAAAASUVORK5CYII=","objects/city_rock.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAABGdBTUEAALGPC/xhBQAAAA9QTFRFAAAAUmB8wMvci5u0PyYxLQHrTAAAAAF0Uk5TAEDm2GYAAAA7SURBVAjXY2DABlxcIDSLi4sDRMBJxQUioKQEFmJxVlIygTCMjSEMF0FBiGoXY2OIfkwGi7OJAwM+AADoEgnmPewZzwAAAABJRU5ErkJggg==","objects/bush.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAgMAAABinRfyAAAABGdBTUEAALGPC/xhBQAAAAxQTFRFAAAAR59KhMZpPyYxgawHvQAAAAF0Uk5TAEDm2GYAAAAvSURBVAjXY2AgAvB/ABL2f4DEv/1A4td6BgbmX+sPMDC/Wg0l+F+t/sDAn5X5AQBNtREjNaFJ1QAAAABJRU5ErkJggg==","objects/bush_gold.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAgMAAABinRfyAAAABGdBTUEAALGPC/xhBQAAAAxQTFRFAAAA44Yo/b5TPyYxPSBMUwAAAAF0Uk5TAEDm2GYAAAAvSURBVAjXY2AgAvB/ABL2f4DEv/1A4td6BgbmX+sPMDC/Wg0l+F+t/sDAn5X5AQBNtREjNaFJ1QAAAABJRU5ErkJggg==","objects/urban_bush.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAABGdBTUEAALGPC/xhBQAAAA9QTFRFAAAAPZBbS6htMH5NQJxit1GBCwAAAAF0Uk5TAEDm2GYAAAA1SURBVAjXY2DAC5gNoAwjZaiAkpIBGkPFCcIwcnFRxs5gVnERASsCMlwgDBcXQRd0hguQAQDFAwocn4RuxQAAAABJRU5ErkJggg==","objects/mushrooms.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAABGdBTUEAALGPC/xhBQAAABVQTFRFAAAA/3BtvWxK6qVs////6EU3PyYxJrjr2gAAAAF0Uk5TAEDm2GYAAABOSURBVAjXY2DABGlpaWCaDchIAAukhoaBhdJEQwIhjNDQULCyNJdQV7AyICM0LRWoDCwl6ghkpCmlATlpQHOMIQwGECNJDWp6slkCpt0A808Zk5WzH6cAAAAASUVORK5CYII=","objects/dungeon_torch.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAABGdBTUEAALGPC/xhBQAAABhQTFRF/udhwMvc/q40/3Bt6EU3UmB8PyYxi5u0yr2gZwAAAGNJREFUCNdNjNEJgDAQQwu6wM1gBxAL/ZZS3OB0gLbZoNz6RgXpT3gkjzhFLLFAnSHl7GEjbDkvBMUawkRHPhBOewjzKCuqT8fzcyJ5NE4dlQWBFVqnowownHQzu4Q/L5j9cAN6cit8/+2ySQAAAABJRU5ErkJggg==","objects/barrel_pot.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAABGdBTUEAALGPC/xhBQAAABJQTFRFAAAA6qVswMvcdzgzvWxKPyYxqggN6wAAAAF0Uk5TAEDm2GYAAABWSURBVAjXVc2xDYAwEENRN9mACZCYIGQARK6PSLz/KtiJKPjV0+kkA4mqAeAMOlSlUxp3zmcYhex/BDmM7ufSwCerg2DdVTVmC9dmDCOoCSm8+o0uAS/bfB9qRZVXgQAAAABJRU5ErkJggg==","objects/crate.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAgMAAABinRfyAAAABGdBTUEAALGPC/xhBQAAAAxQTFRFdjs26qVsPyYxvWxK8Gb41wAAAB9JREFUCNdjWBoaGsWw/v//X1CCQwFGhIb+QpIgUh0Au4Ysdbz3tgEAAAAASUVORK5CYII=","objects/dungeon_anvil.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAABGdBTUEAALGPC/xhBQAAABJQTFRFAAAAUmB85O35i5u0wMvcJitEu7KpWAAAAAF0Uk5TAEDm2GYAAABVSURBVAjXZc27CcAwDARQNRnAK8gTBJEBjKVeEG7/VXxyCClyzb1CH5F/DjBvI0UAdw8KcwMPphO9oISpajfiNuYC13fX/rAz6iJGa5GFurNRM/n9XorfF7dQs8iEAAAAAElFTkSuQmCC","objects/dungeon_table.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAABGdBTUEAALGPC/xhBQAAAA9QTFRFAAAAdjs2vWxK6qVsPyYx9xQEvQAAAAF0Uk5TAEDm2GYAAAAySURBVAjXY2BxAQMHBhcoYHBRNgYCIyDDGAzIZiiBATJDEGSBIEhESElJESwFEkFiAADXchsZ17WF3gAAAABJRU5ErkJggg==","objects/pot.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAABGdBTUEAALGPC/xhBQAAABVQTFRFAAAAUmB8i5u0wMvcdzgzvWxKPyYxqhIq/QAAAAF0Uk5TAEDm2GYAAABXSURBVAjXVY7BDYAgEAT3RQF2YA1EK0AaUHmTANt/Ce6a8GBek8kle0CgqAD4A4W47VGJzeEkeL6iSY4npeu2ZLKvUshh6T7ORBhJlCpxWYQWr87R+cYHGYEnldd0uB8AAAAASUVORK5CYII=","mobs/slime.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAkElEQVR4nGNgGGjAiE3QoM73PzbxC02bMdRjCBjU+f4XkBPFatuHR68xDGEiyp14AE4DPjx6jZVNtAHI3sDlJQYGaBggBxpM8QqfNgaPaakMDAwMDDuyZjNEbKnCcM2Fps2MjPgCjRD48Og1DQORLAPwhTYuNQPvBZzRiO5UbOIXmjYzssAY6AYRI87AwMAAAF5+PJQLvI4iAAAAAElFTkSuQmCC","mobs/wolf.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAVklEQVR4nGP8//8/AyWAiSLdI8yACRkO/ydkOGCEOFEGTMhw+K+lIs9gaevIgG4I4+CKRmx+JNoAmD9JNWSQhQE2gCv+iTJgQobDf0tbRwZ8YUNxGAAAKlYnIwzKmQwAAAAASUVORK5CYII=","mobs/goblin.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA9UlEQVR4nLWRoQ6DMBCG/y4LjmSKZMHOTE9sPAAChYLXIJgJFApLeIyBQrGEB2AT0zPzS1AsPEAnlpLSdkyQ1Vx6vfvuv7+EUoo5ZzGr+2+AU3VW7qXKE9GDLAmloiBKCQDcH0+63azJV0CWhNSxLegrY8j1XYuqbhBEKTnGMTW11wgqrcA38/csCeluf4BjW6N3CZAX5Sj2XQsAcGwLt+tFGrAUAWwCi1XdDNHUxGoFgE3QVwbyooTvuZK6SQBfxFTwRoq/JH0j8DGMn8zDmftKgEjnHWcKfq7gey76rh084PNZEtJJBaIKEaZSoPRAtY6qGQDeuet/HJKw4qsAAAAASUVORK5CYII=","mobs/boar.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAoUlEQVR4nGPc2R33n4GBgeH9528MgrxcDLgAsvy1Ow8ZCmYcYGRgYGBgQVdEKoAbICsmQFDxl++/cBuATZIYwESWLmwuIMb/2AKZhYGBgYFfUonh/ecreMPh8asP+F3AwEBeODAxMDAwHD+8n2SNKAZY2jpSZsDH5/eI1sAvqYTCJzkloltGckrkl1RiYLjzENMAYmMA3QWUp8RrSM4hBwAACBc65vMc8DAAAAAASUVORK5CYII=","mobs/wraith.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAxUlEQVR4nGP8//8/AyWAiSLd1DCABV1gYlshhp/yq/oZcRnAiBwGE9sK/3u6WjLwCojBxT5/eMWwffdxnIZgeAFZMzY+QQNWrd6IQn/+8Io0AzxdLVHo7buPw+UmthX+Rw8jnF7gFRBjWLV6I0N+VT8jsv9jYmNRAhojFmBOZ2BADX1YAC9ZvBhVw////wniCa0F/5/d2v9/QmvBf3Q5RnxJGeZUT1dLnFFJMCWGhfqTlg6QQX5VPyNymGADeL1ADKA4MwEAz8V6Y4VIEoMAAAAASUVORK5CYII=","characters/alt_down_6.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABIklEQVR4nGOMiYn5z4AFvH37lmH79u2M2OSQAQsDAwNDjocKiuCUHXcI6YMDphwPFYYrly7ABa5cusCQ46HCEKzLTpQBjDExMf9zPFTgtsLYDlJfGHrYNeEKbzS3Y/UOI64wEPtzl+FoUA6c//HyFayGMOFymr6qJFFewGkAzFZCgMVV8RsDAwMDw+77XAwMDAwMMD46KPl5nSEFmwEMDAwMX77/ZrCU+MgAYTMw8HCyMjAwMDB43T7AEKYOiQ1cbmFhYGBgUFCQRxF88/IZQaejGECKBgwDegXMGYo/nEQR7BUwZ2BgYGD4yH2dQQuayFK6NmBNBywMDAwMdc/4GB7OXcDIwMDAIJ+c8J9fAKEAl8bBAxiLIiyxJuW+FceJcjoAb2ZU1GcS7VwAAAAASUVORK5CYII=","characters/alt_down_7.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABGklEQVR4nMWTsU7CUBSGP5p2dCgDScNG03SAcF2ZGN1NB9h9AnZfwMF3EAYc+wpOrr2NqE0TBxNSZWBhcrEOeG+K3KZs/tO5/8n5859z7mndXV+WGCDzgtv7x5YpV4UNEIbDAzLL0qY6DetvsRIUgcdsMjK6OxAAeEoTTVTjkxwADIbnmlCxzAtE4LGIeuUi6tU6sVSQx3PyeK4TIvCQeYHvOviuQ52I/f2wBMB3HQDUW+7aiMCDj21zCyYoB02wN92+MSFf9zOwwgsAvtIEeDsW6KxXR+Sm29cOTGuuorYFtYUmGAU66xXR2RbrJWkUsK3xVE9eq46nwL5v9bGubmLjXdhZliJ3bX04s8moFL+38Pz+edJB/S9+AC1hYDhTRs0GAAAAAElFTkSuQmCC","characters/alt_down_10.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA/ElEQVR4nNWSsU7DMBRFT6NkRFFURQgGD0Rq/AEo6oewok4szIiRga2IEdgRa3f+wcoHlEjtSJVGJfLMEKZETew0XbnT83ny9bu24d9rpJSq3p9uW3B2/0aSJKNjDFwhBJfyrAWFECilqmNMnM+XGwPaWK8BQLrcNKCuu7EOGuxH6MYZktvXmPLD9OqiqtfXi7X1Ppw4zwwY5xlR4JFMzokCjyjw+NgzMyaI8wz58AzA8vGuae6KYjjCOAzZFUVrY1fjMGRVflt7zqFTVuXv4CSODX6dTno3dOXOt9KkWwCJ1pqZPAEgLTfA2jQA0Fq3oO/7TV1/rNdFan3GP8LhTQaXL9MIAAAAAElFTkSuQmCC","objects/urban_shop_sign.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAABGdBTUEAALGPC/xhBQAAAA9QTFRFAAAA3t7ehoaGxmUn2nMskP0zSwAAAAF0Uk5TAEDm2GYAAAAsSURBVAjXY2DAAEpQwCAIBQwuUMBgDAUIEWdnZxMTY2cTBAOPYriBcCswAAA7pBKXymSUkwAAAABJRU5ErkJggg==","objects/urban_shop_awning.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAABGdBTUEAALGPC/xhBQAAABtQTFRFAAAA3t7eusHR0dbh2d3mzMzM3uLphoaGV7V6ayyHKgAAAAF0Uk5TAEDm2GYAAAA/SURBVAjXYygNd0tzcUk2ZigNT0txcTMGMTrAAMgAC7ggRArF4VJwBkiFSxpIOxgAGUpgAGQwQAAeRqE4mggAbmAi33I62fEAAAAASUVORK5CYII=","objects/urban_awning_orange.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAE1JREFUOI1j/P//PwMlgIki3YPCAEaDOl+UQAjjsERRsOrHcQZ88iyq9vooApVOlSj88/tq8cqzfHv9EUXg+/fvKHxC8gMfiKMGDAsDACxZGSSUkYlPAAAAAElFTkSuQmCC","objects/shop_blue_window.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAABGdBTUEAALGPC/xhBQAAACRQTFRFAAAAvmxJduT/UWB966ZsvWxK6qVswczdAJrcdjs2jJy1PSEte5MocAAAAAF0Uk5TAEDm2GYAAABsSURBVAjXY9gdOXNmaGjYbgYgY1oqhDEtc1oqiBGWOXPmtDQgI3Pm9MqZ04CMmbNWrVo5E8iYKKSkpCgJZJR4dHS0uEMYTVBGE0TEvKKjo70YyLBaXl5etRjEWAUEKIxdIMbq3QzcINbq3RsA9FhGLlfwM50AAAAASUVORK5CYII=","objects/city_storefront.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAABGdBTUEAALGPC/xhBQAAABVQTFRFwZyUw0s1UmB8i5u0PyYx6dTQwMvclYempgAAADdJREFUCNdjEIQCBkHRUDBgEAyFMkRDXcCAQTQEznAyBgEgw1kJCJRBDLW0tDS8jFAMBgMLLgYATekexZvCN1sAAAAASUVORK5CYII=","objects/signboard.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAABGdBTUEAALGPC/xhBQAAABJQTFRFAAAAwMvc6qVsdjs2vWxKPyYxEAllawAAAAF0Uk5TAEDm2GYAAABhSURBVAjXPY3BDYAwDAP76QBIsEDoAmmyAG0GoKLZfxViKnEv62TLKTu4U/JFhEZEJZQXM2uh/Oy9N41QVLV+RkQqOivEigCMAXRs282wuoStwwzmB2d5CE+cJt+OGeufF+KkHOP4i51iAAAAAElFTkSuQmCC","objects/signpost.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAABGdBTUEAALGPC/xhBQAAABJQTFRFAAAA6qVsUmB8jJy1vWxKPyYxgIpNTAAAAAF0Uk5TAEDm2GYAAABGSURBVAjXY2BgYAgNZWAAUyDAwMAaGhriGhoawBAabKziZGwayhBqDGIYgxihgaKhIAZEDRIDqC/ENQBsEGkMkE1Q+4EEAIjBF1BHeaL4AAAAAElFTkSuQmCC","objects/sign.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAABGdBTUEAALGPC/xhBQAAABVQTFRFAAAAvWxK/3Bt6qVs////6EU3PyYxEVmoHQAAAAF0Uk5TAEDm2GYAAABMSURBVAjXY2DAAtKAAESzgRgJIIEkJSU1kFCaamhoEJgR6uISCmaEhIa6QhghrugMmBRccWpoaBiIwZYoligGMpkt2VDYDMIwSwYyAHACGZKxmHjyAAAAAElFTkSuQmCC","objects/roof.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAABGdBTUEAALGPC/xhBQAAABVQTFRFwMvcWmmIi5u0PyYx/LyPw0s18oRiT1V7eAAAAG5JREFUCNcdyMERgzAMRNFNB4GhAdyCMA0guwEj3T3Y238JEfmnNx+kP9ltoo5bZM6JuzSRwwrM5LjEDN6EKnnC5KTGQgyvsdBOso4rQKcOzfDpfVMtAa67jgB7Stt7+AU+LzqirYBrivaKJf1bfl4JIMMMx2JlAAAAAElFTkSuQmCC","objects/roof_grey.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAABGdBTUEAALGPC/xhBQAAABVQTFRF6qVsdjs2vWxKPyYxwMvcWmmIi5u0O5CCXQAAAG5JREFUCNcdyMERgzAMRNFNB4GhAdyCMA0guwEj3T3Y238JEfmnNx+kP9ltoo5bZM6JuzSRwwrM5LjEDN6EKnnC5KTGQgyvsdBOso4rQKcOzfDpfVMtAa67jgB7Stt7+AU+LzqirYBrivaKJf1bfl4JIMMMx2JlAAAAAElFTkSuQmCC","objects/house_wall.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAgMAAABinRfyAAAABGdBTUEAALGPC/xhBQAAAAxQTFRFi5u0WmmIPyYxwMvcD0iD5AAAABlJREFUCNdjWL///3+GBSBiKYhYDyfIEwMAdOA2Xbgwn+YAAAAASUVORK5CYII="};</script>
 <script>
 
 /* ===== supabase.js ===== */
@@ -1074,10 +1257,13 @@ html, body {
   /* ---------- NPC ในเมือง ---------- */
   DT.NPCS = [
     { id: 'merchant', name: 'พ่อค้าเมือง', icon: '🧑‍🌾', x: 29.5, y: 21.5, prof: 'merchant',
+      sprite: 'characters/alt_down_6.png',
       greeting: 'ยินดีต้อนรับนักเดินทาง! สินค้ามีขายนะ' },
     { id: 'blacksmith', name: 'ตาลึง', icon: '👨‍🔧', x: 20.5, y: 20.5, prof: 'blacksmith',
+      sprite: 'characters/alt_down_7.png',
       greeting: 'ต้องการให้ตีอะไร? แต่งเครื่องดีๆ ได้ที่นี่' },
     { id: 'guide', name: 'ผู้กำกับเมือง', icon: '🧙', x: 24.5, y: 27.5, prof: 'guide',
+      sprite: 'characters/alt_down_10.png',
       greeting: 'รับใช้! มีเควสต์ให้ทำตลอดเวลา' }
   ];
 
@@ -1093,6 +1279,14 @@ html, body {
     { id: 'q_wood', name: 'เติมไม้ให้เมือง', desc: 'เก็บไม้มาให้เมือง 10 ไม้', goal: 10, type: 'gather', target: 'wood', reward: 60, xp: 30 },
     { id: 'q_ore', name: 'แร่สำหรับตาลึง', desc: 'ขุดแร่มาให้ตาลึง 8 แร่', goal: 8, type: 'gather', target: 'ore', reward: 110, xp: 55 },
     { id: 'q_boar', name: 'ปัญหาหมูป่า', desc: 'กำจัดหมูป่าเผือก 3 ตัว', goal: 3, type: 'kill', target: 'boar', reward: 170, xp: 90 }
+  ];
+
+  /* ---------- ตัวละครที่ผู้เล่นเลือกได้ ---------- */
+  DT.CHARACTERS = [
+    { id: 'hero',    name: 'ฮีโร่',          sprite: 'characters/player_down.png' },
+    { id: 'trav_a',  name: 'นักเดินทาง A',   sprite: 'characters/alt_down_6.png' },
+    { id: 'trav_b',  name: 'นักเดินทาง B',   sprite: 'characters/alt_down_7.png' },
+    { id: 'trav_c',  name: 'นักเดินทาง C',   sprite: 'characters/alt_down_10.png' }
   ];
 
   /* ---------- จุด spawn ---------- */
@@ -1269,29 +1463,44 @@ html, body {
   S.failed = {};   /* key -> true (โหลดไม่ได้) */
   S.tints = {};    /* key|color|alpha -> canvas */
   S.stats = { loaded: 0, failed: 0 };
+  S.enabled = true; /* ตั้ง false = บังคับใช้รูปทรงเดิม (ใช้ตอนเทียบ/ดีบัก) */
 
   /* ------------------------------------------------------------
      ตารางตัดภาพ + ขนาด/จุดยึด ต่อไฟล์
        src : [x, y, w, h] พิกเซลในภาพต้นฉบับ (16x16)
        sc  : ตัวคูณขนาด (2 = 1 พิกเซลภาพ = 2 หน่วยวาด)
        dy  : จุดยึด "กลางล่าง" เทียบกับพิกัดที่วาด (บวก = ต่ำลง)
+       หมายเหตุ: ตัดตาม bbox จริงของพิกเซลที่ไม่โปร่งใส
+         - characters/player_up.png มีภาพของเซลล์ข้างเคียงปนอยู่ที่ x=11..15
+           -> ตัดทิ้ง (เก็บแค่ตัวฮีโร่ x=0..9)
      ------------------------------------------------------------ */
   S.SPEC = {
-    /* --- ตัวละคร --- */
-    'characters/player_down.png': { src: [0, 1, 16, 15], sc: 2, dy: 0 },
-    'characters/player_up.png':   { src: [0, 1, 16, 15], sc: 2, dy: 0 },
-    'characters/player_side.png': { src: [4, 1, 12, 15], sc: 2, dy: 0 },
+    /* --- ตัวละคร (ผู้เล่น) --- */
+    /* ตัดแถวบน (y=0..1) ทิ้ง เพราะเป็นภาพเศษของตัวละครในเซลล์ข้างเคียง
+       (มีสีน้ำตาลคนละตัวปนอยู่) -> เหลือแค่ตัวฮีโร่ y=2..15
+       ฝั่งข้าง = mirror ของ player_down (ชุด CC0 นี้ไม่มีท่า side จริง) */
+    'characters/player_down.png': { src: [0, 2, 11, 14], sc: 2, dy: 0 },
+    'characters/player_up.png':   { src: [0, 2, 10, 14], sc: 2, dy: 0 },
+    'characters/player_side.png': { src: [5, 2, 11, 14], sc: 2, dy: 0 },
 
     /* --- ต้นไม้/พุ่ม/หิน --- */
-    'objects/tree_green.png':      { src: [0, 0, 16, 16], sc: 2, dy: 10 },
-    'objects/tree_green_large.png': { src: [0, 0, 16, 16], sc: 2, dy: 12 },
-    'objects/tree_gold_round.png': { src: [0, 0, 16, 16], sc: 2, dy: 10 },
-    'objects/tree_autumn.png':     { src: [0, 0, 16, 16], sc: 2, dy: 10 },
-    'objects/rock_boulder.png':    { src: [0, 2, 16, 14], sc: 2, dy: 6 },
-    'objects/rock_small.png':      { src: [0, 4, 16, 12], sc: 2, dy: 4 },
-    'objects/bush.png':            { src: [0, 0, 16, 16], sc: 2, dy: 6 },
-    'objects/bush_cluster.png':    { src: [0, 0, 16, 16], sc: 2, dy: 8 },
-    'objects/grass_flowers.png':   { src: [0, 0, 16, 16], sc: 2, dy: 6 },
+    /* ต้นไม้: ตัดเฉพาะกรอบที่มีภาพจริง (ไม่ตัดตัวต้นไม้ขาด)
+       dy ถูกเทียบกับ shape art: relBot = dy - 1
+         variant 0 (ทรงพุ่มใบกลมใหญ่) -> relBot 4  -> dy 5
+         variant 1 (ทรงพุ่มใบแฉก)      -> relBot 6  -> dy 7 */
+    'objects/tree_green_large.png': { src: [0, 0, 16, 16], sc: 2, dy: 5 },
+    'objects/tree_green.png':      { src: [2, 0, 13, 16], sc: 2, dy: 7 },
+    'objects/tree_gold_round.png': { src: [0, 0, 15, 15], sc: 2, dy: 5 },
+    'objects/tree_autumn.png':     { src: [2, 1, 13, 15], sc: 2, dy: 5 },
+    /* หิน: ใช้เฉพาะก้อนที่แยกเป็นวัตถุเดี่ยว
+       (rock_boulder/rock_small ถูกถอดเพราะเป็น tile ที่ภาพชนขอบ) */
+    'objects/urban_rock.png':      { src: [2, 3, 12, 11], sc: 2, dy: 11 },
+    'objects/city_rock.png':       { src: [3, 2, 10, 11], sc: 2, dy: 11 },
+    /* พุ่ม urban เป็นพุ่มสูง (พุ่งขึ้น) จึงตัดเต็มความสูง ไม่ตัดใบทิ้ง */
+    /* พุ่ม: bush/bush_gold = กอพุ่มเตี้ยบนพื้น, urban_bush = พุ่มพุ่งสูง */
+    'objects/bush.png':            { src: [2, 7, 12, 9],  sc: 2, dy: 6 },
+    'objects/bush_gold.png':       { src: [2, 7, 12, 9],  sc: 2, dy: 6 },
+    'objects/urban_bush.png':      { src: [3, 3, 10, 13], sc: 2, dy: 6 },
     'objects/mushrooms.png':       { src: [0, 4, 16, 9],  sc: 2, dy: 3 },
 
     /* --- ของในบ้าน/ดันเจอ --- */
@@ -1301,6 +1510,28 @@ html, body {
     'objects/dungeon_anvil.png':   { src: [2, 4, 12, 11], sc: 2, dy: 2 },
     'objects/dungeon_table.png':   { src: [0, 0, 16, 16], sc: 2, dy: 4 },
     'objects/pot.png':             { src: [0, 0, 16, 16], sc: 2, dy: 4 },
+
+    /* --- มอนส์ (ตัดจาก Kenney CC0 → 16x16 RGBA) --- */
+    'mobs/slime.png':   { src: [0, 0, 16, 16], sc: 2, dy: 0 },
+    'mobs/wolf.png':    { src: [0, 0, 16, 16], sc: 2, dy: 0 },
+    'mobs/goblin.png':  { src: [0, 0, 16, 16], sc: 2, dy: 0 },
+    'mobs/boar.png':    { src: [0, 0, 16, 16], sc: 2, dy: 0 },
+    'mobs/wraith.png':  { src: [0, 0, 16, 16], sc: 2, dy: 0 },
+
+    /* --- NPC (ตัวละครชุดเดียวกับผู้เล่น แต่ย้อมสี) --- */
+    'characters/alt_down_6.png':  { src: [0, 0, 16, 16], sc: 2, dy: 0 },
+    'characters/alt_down_7.png':  { src: [0, 0, 16, 16], sc: 2, dy: 0 },
+    'characters/alt_down_10.png': { src: [0, 0, 16, 16], sc: 2, dy: 0 },
+
+    /* --- ป้าย/สัญญาลักษณ์ร้านค้า + มลน้ำ --- */
+    'objects/urban_shop_sign.png':  { src: [0, 0, 16, 16], sc: 2, dy: 0 },
+    'objects/urban_shop_awning.png':{ src: [0, 0, 16, 16], sc: 2, dy: 0 },
+    'objects/urban_awning_orange.png': { src: [0, 0, 16, 16], sc: 2, dy: 0 },
+    'objects/shop_blue_window.png': { src: [0, 0, 16,  16], sc: 2, dy: 0 },
+    'objects/city_storefront.png':  { src: [0, 0, 16, 16], sc: 2, dy: 0 },
+    'objects/signboard.png':        { src: [0, 0, 16, 16], sc: 2, dy: 0 },
+    'objects/signpost.png':         { src: [0, 0, 16, 16], sc: 2, dy: 0 },
+    'objects/sign.png':             { src: [0, 0, 16, 16], sc: 2, dy: 0 },
 
     /* --- เนื้ออาคาร (ใช้เรียงซ้อน) --- */
     'objects/roof.png':            { src: [0, 0, 16, 16], sc: 3, tile: 1 },
@@ -1384,6 +1615,7 @@ html, body {
        tint  = สีย้อม · tintA = ความเข้ม (default 0.22)
        คืน true ถ้าวาดได้จริง / false ถ้ายังไม่พร้อม (ให้ fallback) */
   S.draw = function (ctx, key, x, y, flip, tint, tintA, scaleMul) {
+    if (!S.enabled) return false;
     var img = S.get(key);
     if (!img) return false;
     var sp = S.spec(key);
@@ -1406,6 +1638,7 @@ html, body {
 
   /* เรียงภาพสไปรต์เป็นพื้นผิว (ใช้กับหลังคา/ผนังบ้าน) */
   S.tile = function (ctx, key, x, y, w, h) {
+    if (!S.enabled) return false;
     var img = S.get(key);
     if (!img) return false;
     if (!(w > 0) || !(h > 0)) return false;
@@ -1597,8 +1830,12 @@ html, body {
     var sway = Math.sin(t * 1.1 + (seed || 0)) * 0.9;
 
     /* --- สไปรต์ (ถ้าพร้อม) --- */
-    var treeKey = v === 0 ? 'objects/tree_green.png'
-      : v === 1 ? 'objects/tree_green_large.png'
+    /* variant 0 = ทรงพุ่มใบกลม (shape 33x29) -> tree_green_large (ใบกลม)
+       variant 1 = ทรงพุ่มใบแฉก (shape 31x26) -> tree_green (ต้นสน)
+       variant 2 = ทรงพุ่มใบกลม + ผลไม้        -> tree_gold_round
+       variant 3 = ทรงพุ่มใบกลม โทนเข้ม       -> tree_autumn */
+    var treeKey = v === 0 ? 'objects/tree_green_large.png'
+      : v === 1 ? 'objects/tree_green.png'
       : v === 2 ? 'objects/tree_gold_round.png'
       : 'objects/tree_autumn.png';
     ctx.save();
@@ -1712,8 +1949,11 @@ html, body {
     ctx.save();
     ctx.translate(sx, sy);
     ctx.scale(z, z);
-    var rockKey = ore ? 'objects/rock_boulder.png'
-      : (v === 1 ? 'objects/rock_small.png' : 'objects/rock_boulder.png');
+    /* หิน: ใช้ก้อนที่แยกเป็นวัตถุเดี่ยว (isolated) เท่านั้น
+       - objects/rock_boulder / rock_small ถูกถอดออกเพราะเป็น tile ที่ภาพ
+         ชนขอบ (edge bleed) ทำให้ก้อนหินดูเหมือนถูกตัดขาด */
+    var rockKey = ore ? 'objects/urban_rock.png'
+      : (v === 1 ? 'objects/city_rock.png' : 'objects/urban_rock.png');
     var rockDrew = drawSprite(ctx, rockKey, 0, 0, false, null, 0);
     if (rockDrew && ore) drawOreGems(ctx);
     ctx.restore();
@@ -1773,9 +2013,19 @@ html, body {
     var sway = Math.sin(t * 1.6 + (seed || 0)) * 0.7;
 
     /* --- สไปรต์ (ถ้าพร้อม) --- */
+    /* พุ่ม: ใช้เฉพาะภาพที่เป็น "พุ่มเดี่ยว" ไม่ใช่ tile พื้น
+       - objects/grass_flowers เป็น tile พื้นที่มีดอกไม้ (ห้ามใช้เป็นวัตถุลอย)
+       - objects/bush_cluster เป็น tile ที่เต็มเฟรม (ห้ามใช้เป็นวัตถุลอย)
+       ที่ใช้จริง:
+       - objects/bush.png      = Tiny Town 0007 (กอพุ่มเขียวแยกเดี่ยว ตัดขอบสะอาด)
+       - objects/bush_gold.png = Tiny Town 0010 (กอพุ่มทอง แยกเดี่ยว)
+       - objects/urban_bush.png = Urban 0403 (พุ่มพุ่งสูง ไม่มีลำต้น) */
+    /* variant 0 = พุ่มกลมมีผลไม้ (shape 22x18) -> bush (กอพุ่มเตี้ย)
+       variant 1 = กอหญ้าสูง      (shape 21x20) -> urban_bush (พุ่มพุ่งสูง)
+       variant 2 = พุ่มดอกไม้      (shape 22x19) -> bush_gold */
     var bushKey = v === 0 ? 'objects/bush.png'
-      : v === 1 ? 'objects/grass_flowers.png'
-      : 'objects/bush_cluster.png';
+      : v === 1 ? 'objects/urban_bush.png'
+      : 'objects/bush_gold.png';
     ctx.save();
     ctx.translate(sx, sy);
     ctx.scale(z, z);
@@ -2049,9 +2299,14 @@ html, body {
     var seed = opts.seed || 0;
 
     /* ---------- สไปรต์ (ถ้าพร้อม) : 4 ทิศ + idle/เดิน ---------- */
-    var charKey = dir === 'up' ? 'characters/player_up.png'
-      : (dir === 'left' || dir === 'right') ? 'characters/player_side.png'
-      : 'characters/player_down.png';
+    var custom = opts.sprite;
+    var charKey = custom
+      ? (dir === 'up' ? 'characters/player_up.png'
+        : (dir === 'left' || dir === 'right') ? 'characters/player_side.png'
+        : custom)
+      : (dir === 'up' ? 'characters/player_up.png'
+        : (dir === 'left' || dir === 'right') ? 'characters/player_side.png'
+        : 'characters/player_down.png');
     /* เดิน = ขึ้นลงตามจังหวะ · ยืนนิ่ง = หายใจเบาๆ */
     var freq = running ? 15 : 9.5;
     var sprBob = moving ? Math.abs(Math.sin(t * freq)) * (running ? 2.4 : 1.6)
@@ -2270,6 +2525,12 @@ html, body {
     /* หันหลัง = พลิกแนวตั้ง (หัวไปด้านบน) */
     if (!face) { ctx.translate(0, -11); ctx.scale(1, -1); ctx.translate(0, 11); }
 
+    /* ---------- สไปรต์มอนส์จริง (ถ้าพร้อม) ---------- */
+    var mobKey = 'mobs/' + type + '.png';
+    var mobBob = Math.sin(t * 4 + (opts.seed || 0)) * 0.8;
+    var mobDrew = drawSprite(ctx, mobKey, 0, mobBob, false, null, 0);
+    if (mobDrew) { ctx.restore(); return; }
+
     if (type === 'slime') {
       var squash = 1 + Math.sin(t * 5) * 0.10;
       ell(ctx, 0, -9, 11 / squash, 9 * squash, st.c);
@@ -2447,6 +2708,27 @@ html, body {
     ctx.restore();
   };
 
+  /* ================= NPC (สไปรต์ตัวละครย้อมสี) ================= */
+  Art.npc = function (ctx, sx, sy, z, opts) {
+    opts = opts || {};
+    var key = opts.sprite || 'characters/player_down.png';
+    var t = opts.t || 0;
+    ctx.save();
+    ctx.translate(sx, sy);
+    ctx.scale(z, z);
+    var bob = Math.sin(t * 2.4 + (opts.seed || 0)) * 0.6;
+    var drew = drawSprite(ctx, key, 0, bob, false,
+      opts.tint || '#8fa05a', 0.30);
+    ctx.restore();
+    if (drew) return true;
+    /* fallback: ใช้ Art.player แบบ shape */
+    Art.player(ctx, sx, sy, z, {
+      prof: opts.prof === 'merchant' ? 'hunter' : (opts.prof === 'blacksmith' ? 'miner' : 'farmer'),
+      t: t, moving: false, hurt: 0, swing: 0, weapon: null, dir: opts.dir || 'down'
+    });
+    return false;
+  };
+
   /* ================= อาคาร (top-down) =================
      b    = ข้อมูลอาคาร { x, y, w, h, name, icon }
      rect = { x, y, w, h } พิกัด pixel ของ footprint บนจอ
@@ -2560,6 +2842,43 @@ html, body {
     if (!roofDrew) {
       ctx.fillStyle = 'rgba(255,214,180,0.28)';
       ctx.fillRect(x, y, w, Math.max(1.5 * z, roofH * 0.12));
+    }
+
+    /* ---- สัญญาลักษณ์ร้านค้า (ป้าย + มลน้ำ) ---- */
+    if (b.sign) {
+      var sw = 16 * z, sh = 16 * z;
+      var signX = x + w / 2 - sw / 2;
+      var signY = wallY - sh * 0.55;
+      ctx.save();
+      ctx.globalAlpha = 0.98;
+      var signDrew = drawSprite(ctx, b.sign, signX + sw / 2, signY + sh, false, null, 0);
+      if (!signDrew) {
+        /* fallback: ป้ายไม้ + หมวดค้าสีส้ม */
+        ctx.fillStyle = '#7a5230';
+        ctx.fillRect(signX, signY + sh * 0.2, sw, sh * 0.55);
+        ctx.fillStyle = '#e08a3c';
+        ctx.fillRect(signX + sw * 0.1, signY + sh * 0.3, sw * 0.8, sh * 0.35);
+      }
+      ctx.restore();
+      /* มลน้ำ (awning) ใต้ป้าย ยื่นออกมาด้านหน้า */
+      if (b.awning) {
+        var aw = 16 * z, ah = 10 * z;
+        var awX = x + w / 2 - aw / 2;
+        var awY = wallY + wallH * 0.15;
+        ctx.save();
+        var awDrew = drawSprite(ctx, b.awning, awX + aw / 2, awY + ah, false, null, 0);
+        if (!awDrew) {
+          ctx.fillStyle = '#e8e2d0';
+          ctx.fillRect(awX, awY, aw, ah);
+          ctx.fillStyle = '#4f9f52';
+          for (var ai = 0; ai < 4; ai++) {
+            ctx.fillRect(awX + ai * (aw / 4), awY, aw / 8, ah);
+          }
+          ctx.fillStyle = 'rgba(0,0,0,0.18)';
+          ctx.fillRect(awX, awY + ah - 2 * z, aw, 2 * z);
+        }
+        ctx.restore();
+      }
     }
 
     /* ---- ป้ายชื่ออาคาร ---- */
@@ -3577,8 +3896,8 @@ html, body {
     }
     /* โรงตีเหล็ก (ซ้ายบน) */
     building(19, 19, 3, 3, 20, 19);
-    /* ตลาด (ขวาบน) */
-    building(28, 19, 3, 2, 29, 19);
+    /* ตลาด (ขวาบน) — ลดขนาดให้เล็กลง เหลือ 2x2 (footprint 3x3) */
+    building(28, 19, 2, 2, 29, 19);
     /* บ้านนักล่า */
     building(18, 29, 3, 2, 19, 29);
     /* บ้านช่างปลูก */
@@ -3598,7 +3917,8 @@ html, body {
       w: w, h: h, grid: g,
       buildings: [
         { x: 19, y: 19, w: 4, h: 4, name: 'โรงตีเหล็ก', icon: '🔨', work: true, door: { x: 20, y: 19 } },
-        { x: 28, y: 19, w: 4, h: 3, name: 'ตลาด', icon: '🏪', door: { x: 29, y: 19 } },
+        { x: 28, y: 19, w: 3, h: 3, name: 'ตลาด', icon: '🏪', door: { x: 29, y: 19 },
+          sign: 'objects/urban_shop_sign.png', awning: 'objects/urban_shop_awning.png' },
         { x: 18, y: 29, w: 4, h: 3, name: 'บ้านนักล่า', icon: '🏹', door: { x: 19, y: 29 } },
         { x: 28, y: 29, w: 4, h: 3, name: 'บ้านช่างปลูก', icon: '🌾', door: { x: 29, y: 29 } },
         { x: 23, y: 32, w: 4, h: 3, name: 'บ้านคนเหมือง', icon: '⛏️', door: { x: 24, y: 32 } }
@@ -5025,10 +5345,13 @@ html, body {
       var p = this.toScreen(n.x, n.y);
       var z = this.zoom;
       Art.groundShadow(ctx, p.sx, p.sy, 10, z, 0.25, this.hour);
-      /* ตัว NPC = ผู้เล่นสีเทาอมชมพู */
-      Art.player(ctx, p.sx, p.sy, z, {
-        prof: n.prof === 'merchant' ? 'hunter' : (n.prof === 'blacksmith' ? 'miner' : 'farmer'),
-        t: this.t + n.x, moving: false, hurt: 0, swing: 0, weapon: null,
+      /* ตัว NPC = สไปรต์ตัวละครย้อมสี (fallback = Art.player shape) */
+      Art.npc(ctx, p.sx, p.sy, z, {
+        sprite: n.sprite,
+        prof: n.prof,
+        tint: n.tint || '#9aa66a',
+        t: this.t + n.x,
+        seed: n.x,
         dir: n.dir || 'down'
       });
       /* ป้าย */
@@ -5617,7 +5940,8 @@ var DT_SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXB
           hp: pl.hp, hunger: pl.hunger, stamina: pl.stamina, inv: pl.inv,
           weapon: pl.weapon || null,
           armorId: pl.armorId || null,
-          accessoryId: pl.accessoryId || null
+          accessoryId: pl.accessoryId || null,
+          sprite: pl.sprite || null
         }));
       } catch (e) {}
     },
@@ -7388,6 +7712,8 @@ var DT_SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXB
       var prof = opts.prof || 'miner';
       this.local = DT.Player(DT.Net.clientId, name, prof, true);
       this.players = [this.local];
+      /* ข้อ 4: ตัวละครที่เลือกได้ (สไปรต์สำรอง) */
+      this.local.sprite = opts.sprite || 'characters/player_down.png';
       this.local.equipBest();
 
       DT.Net.boot();
@@ -7441,6 +7767,18 @@ var DT_SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXB
       };
       /* โหลดเซฟ (localStorage ก่อน, ถ้ามีตาราง Supabase ค่อยทับ) */
       DT.Net.load(function (row) {
+        if (row) {
+          /* ข้อ 4: คืนตำแหน่งผู้เล่นหลังรีเฟรช */
+          if (row.x !== undefined && row.x !== null && row.y !== undefined && row.y !== null) {
+            var sx = Number(row.x), sy = Number(row.y);
+            if (isFinite(sx) && isFinite(sy)) {
+              self.local.x = sx;
+              self.local.y = sy;
+            }
+          }
+          /* คืนตัวละครที่เลือกไว้ */
+          if (row.sprite) self.local.sprite = row.sprite;
+        }
         if (row && row.inv) {
           self.local.inv = row.inv;
           self.local.hp = row.hp || 100;
@@ -8107,6 +8445,26 @@ var DT_SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXB
         this.toast('ซูม ' + Math.round((DT.Render.zoomMul || 1) * 100) + '%');
         return;
       }
+      /* --- ข้อ 4: บันทึก / คืนตำแหน่งผู้เล่น --- */
+      if (act === 'save:pos') {
+        var L = this.local;
+        if (!L) return;
+        DT.Net.saveLocal(L);
+        if (DT.Net.save) DT.Net.save(L);
+        this.toast('บันทึกตำแหน่งแล้ว (' + Math.round(L.x) + ', ' + Math.round(L.y) + ')');
+        return;
+      }
+      if (act === 'reset:pos') {
+        var L2 = this.local;
+        if (!L2) return;
+        L2.x = DT.SPAWNS.player.x;
+        L2.y = DT.SPAWNS.player.y;
+        DT.Net.saveLocal(L2);
+        if (DT.Net.save) DT.Net.save(L2);
+        this.toast('คืนตำแหน่งเริ่มต้นแล้ว');
+        return;
+      }
+
       /* --- toggle: เปิด/ปิดแผง (ปุ่มมุมขวาบน) --- */
       if (act && act.indexOf('toggle:') === 0) {
         var what = act.slice(7);
@@ -8861,6 +9219,16 @@ var DT_SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXB
 </script>
 <script>
 (function () {
+  /* ---------- ข้อ 1: หน้าแรก/แลนด์ดิ้ง ---------- */
+  var landing = document.getElementById('landing');
+  var playNow = document.getElementById('play-now');
+  function openStart() {
+    if (landing) landing.classList.add('hidden');
+    document.getElementById('start').classList.remove('hidden');
+    try { window.scrollTo(0, 0); } catch (e) {}
+  }
+  if (playNow) playNow.addEventListener('click', openStart);
+
   var chosen = 'miner';
   var btns = document.querySelectorAll('.prof');
   function mark(p) {
@@ -8874,11 +9242,26 @@ var DT_SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXB
   }
   mark('miner');
 
+  /* ---------- ข้อ 4: เลือกตัวละคร ---------- */
+  var chosenChar = 'characters/player_down.png';
+  var charItems = document.querySelectorAll('.cp-item');
+  for (var ci = 0; ci < charItems.length; ci++) {
+    (function (btn) {
+      btn.addEventListener('click', function () {
+        chosenChar = btn.getAttribute('data-char');
+        for (var cj = 0; cj < charItems.length; cj++) {
+          charItems[cj].classList.toggle('sel', charItems[cj] === btn);
+        }
+      });
+    })(charItems[ci]);
+  }
+
   document.getElementById('go').addEventListener('click', function () {
     var n = document.getElementById('pname').value.trim();
     document.getElementById('start').classList.add('hidden');
+    if (landing) landing.classList.add('hidden');
     document.getElementById('app').classList.remove('hidden');
-    DT.Game.start({ name: n, prof: chosen });
+    DT.Game.start({ name: n, prof: chosen, sprite: chosenChar });
   });
 
   /* P4-C: ปุ่มมือถือผูกใน js/game.js (bindMobilePads + bindTouch) แล้ว
