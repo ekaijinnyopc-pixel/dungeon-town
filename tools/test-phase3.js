@@ -158,15 +158,15 @@ function ok(c, m) { if (c) { pass++; console.log('  ✅ ' + m); } else { fail++;
   ok(await ev("DT.Game.local.x") > 20, 'กลับมาอยู่กลางแปลงเมือง');
 
   console.log('\n== ปุ่ม toggle มุมขวาบน ==');
-  await ev("document.querySelector('[data-act=\"toggle:inv\"]').click()");
+  await ev("(function(){var b=document.querySelector('[data-act=\"toggle:inv\"]'); if(b) b.click(); return !!b;})()");
   await sleep(300);
   ok(await ev("DT.Game.panel") === 'inv', 'กดปุ่ม 🎒 เปิดกระเป๋าได้');
-  await ev("document.querySelector('[data-act=\"toggle:inv\"]').click()");
+  await ev("(function(){var b=document.querySelector('[data-act=\"toggle:inv\"]'); if(b) b.click(); return !!b;})()");
   await sleep(200);
-  await ev("document.getElementById('btn-sound').click()");
+  await ev("(function(){var b=document.getElementById('btn-sound'); if(b) b.click(); return !!b;})()");
   await sleep(200);
   ok(await ev("DT.Audio.isMuted()") === true, 'กดปุ่ม 🔊 ปิดเสียงได้');
-  await ev("document.getElementById('btn-sound').click()");
+  await ev("(function(){var b=document.getElementById('btn-sound'); if(b) b.click(); return !!b;})()");
   await sleep(200);
 
   console.log('\n== error ==');
