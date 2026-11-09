@@ -74,7 +74,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
     await sleep(250);
   }
   /* รอสไปรต์มอนส์โหลดครบทุกตัว */
-  const TYPES = ['slime','wolf','goblin','boar','wraith','bat','imp','ghoul','skeleton','mage','knight','dragon'];
+  const TYPES = ['slime','wolf','goblin','boar','wraith','bat','imp','ghoul','skeleton','mage','knight','dragon','pirate_leader','squidman','pirate_zombie'];
   for (let i = 0; i < 60; i++) {
     const n = await ev("(function(){var l=" + JSON.stringify(TYPES) +
       ";var c=0;for(var i=0;i<l.length;i++){if(DT.Sprites.get('mobs/'+l[i]+'.png'))c++;}return c;})()");
@@ -90,7 +90,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
   const result = await ev(`(function(){
     var T = ${JSON.stringify(TYPES)};
     var cv = document.createElement('canvas');
-    cv.width = 6 * 140; cv.height = 2 * 170;
+    cv.width = 6 * 140; cv.height = Math.ceil(T.length / 6) * 170;
     cv.style.cssText = 'position:fixed;left:0;top:0;z-index:99999;background:#20242c;';
     document.body.appendChild(cv);
     var x = cv.getContext('2d');
