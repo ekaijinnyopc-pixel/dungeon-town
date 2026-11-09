@@ -105,6 +105,9 @@
         var t = map.grid[y * w + x];
         if (t === T.WATER || t === T.WALL || t === T.FLOOR) continue;
         var r = DT.rand();
+        /* easter egg: จิ้าจอก Platino ซ่อนอยู่ในป่าเหนือ (license DawnLike
+           บังคับให้ต้องใช้ + ซ่อนตัวนี้) — อยู่ไกลจากเมือง ต้องเดินไปหาเอง */
+        if (x === 7 && y === 41) { put('platino', x, y); continue; }
         if (t === T.FIELD) { if (r < 0.30) put('bush', x, y); continue; }
         if (t === T.DIRT) { if (r < 0.22) put('ore', x, y); else if (r < 0.34) put('rock', x, y); continue; }
         /* ป่า/ทุ่ง */
@@ -137,8 +140,10 @@
         nodes: makeNodes(map),
         mobs: makeMobs(),
         npcs: (DT.NPCS || []).map(function (n) {
+          /* ต้อง copy 'sprite' ด้วย ไม่งั้น NPC จะวาดเป็น shape-art ทั้งหมด */
           return { id: n.id, name: n.name, icon: n.icon, x: n.x, y: n.y,
-                   prof: n.prof, greeting: n.greeting, bubble: 0 };
+                   prof: n.prof, greeting: n.greeting, sprite: n.sprite,
+                   tint: n.tint, bubble: 0 };
         }),
         campfires: [],
         drops: [],

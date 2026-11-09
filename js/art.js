@@ -838,6 +838,25 @@
     wraith: { c: '#8f9bd6', d: '#5f6ba5', eye: '#a0f0ff' }
   };
 
+  /* ================= Platino (easter egg ที่ซ่อนอยู่ในป่า) =================
+     วาดด้วยสไปรต์จริงจาก DawnLike; ถ้าโหลดไม่ได้วาดรูปทรงแทน (ไม่จอดำ) */
+  Art.platino = function (ctx, sx, sy, z, t, seed) {
+    var bob = Math.sin(t * 2 + (seed || 0)) * 0.6;
+    ctx.save();
+    ctx.translate(sx, sy);
+    ctx.scale(z, z);
+    var drew = drawSprite(ctx, 'mobs/platino.png', 0, bob, false, null, 0);
+    if (!drew) {
+      /* fallback: ตัวจิ้าจอกสีเทาอมฟ้า (ถ้าสไปรต์โหลดไม่ได้ เกมยังเล่นต่อได้) */
+      ell(ctx, 0, -8, 6.5, 7, '#7d8d9c');
+      ell(ctx, -4.5, -13, 3.4, 3.0, '#dceee2');
+      circle(ctx, -5.4, -13.4, 0.9, '#342233');
+      ell(ctx, 4.5, -4, 2.6, 3.4, '#85876d');
+    }
+    ctx.restore();
+    return true;
+  };
+
   Art.mob = function (ctx, sx, sy, z, type, opts) {
     opts = opts || {};
     var st = MOB_STYLE[type] || MOB_STYLE.slime;

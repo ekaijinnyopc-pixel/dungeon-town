@@ -200,6 +200,12 @@
         x: node.x, y: node.y, vx: 0, vy: -1.5, t: 0, life: 0.6,
         c: DT.ITEMS[def.yields].icon, r: 4, text: true
       });
+      /* easter egg: เก็บจิ้าจอก Platino ได้ -> ข้อความพิเศษ */
+      if (def.secret) {
+        if (root.DT.Game && root.DT.Game.toast) {
+          root.DT.Game.toast('🦎 เจอจิ้าจอกเงา! มันหนีหายไป...');
+        }
+      }
       /* เสียง + เอฟเฟกต์ตามชนิดทรัพยากร */
       if (root.DT.Audio) {
         DT.Audio.play(node.type === 'tree' ? 'chop' : (node.type === 'rock' || node.type === 'ore' ? 'mine' : 'gather'));

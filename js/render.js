@@ -17,6 +17,24 @@
     4: '#bda876', 5: '#75563a', 6: '#8d6a2b', 7: '#493827', 8: '#6a563c'
   };
 
+  /* ---------- พื้นผิวจริง (สไปรต์ tile จาก Kenney Roguelike CC0) ----------
+     ผูก DT.TILE -> ไฟล์สไปรต์ใน assets/tiles/ground/
+     ถ้าภาพโหลดไม่ได้ -> วาดแบบ canvas เดิม (fallback ปลอดภัย ไม่จอดำ) */
+  var GROUND_SPRITES = {};
+  GROUND_SPRITES[T.GRASS]  = 'tiles/ground/grass.png';
+  GROUND_SPRITES[T.PATH]   = 'tiles/ground/path.png';
+  GROUND_SPRITES[T.STONE]  = 'tiles/ground/stone.png';
+  GROUND_SPRITES[T.WATER]  = 'tiles/ground/water.png';
+  GROUND_SPRITES[T.SAND]   = 'tiles/ground/sand.png';
+  GROUND_SPRITES[T.DIRT]   = 'tiles/ground/dirt.png';
+  GROUND_SPRITES[T.FIELD]  = 'tiles/ground/field.png';
+  GROUND_SPRITES[T.FLOOR]  = 'tiles/ground/floor.png';
+
+  /* พื้นที่ใช้สไปรต์แทนการไล่สี (ให้สลับ tile ได้ ไม่ซ้ำตายตัว) */
+  var GROUND_VARIANTS = {
+    'tiles/ground/grass.png': ['tiles/ground/grass.png', 'tiles/ground/grass_flowers.png']
+  };
+
   function shade(hex, amt) {
     var n = parseInt(hex.slice(1), 16);
     var r = Math.max(0, Math.min(255, ((n >> 16) & 255) + amt));
@@ -185,9 +203,36 @@
       ctx.save();
       ctx.translate(p.sx, p.sy);
 
+      /* ---------- พื้นผิวจริง (สไปรต์ tile) ----------
+         ถ้าโหลดสไปรต์ได้ -> วาด tile จริงทับพื้นไล่สี
+         ถ้าไม่ได้ -> ใช้วิธีเดิม (ไล่สี) ต่อ ไม่จอดำ */
+      var gKey = GROUND_SPRITES[type];
+      var gDrew = false;
+      if (gKey && DT.Sprites) {
+        /* เลือก variant ให้ไม่ซ้ำตายตัว (สลับตามตำแหน่ง) */
+        var variants = GROUND_VARIANTS[gKey];
+        if (variants && variants.length > 1) {
+          gKey = variants[Math.abs((tx * 7 + ty * 13)) % variants.length];
+        }
+        /* ขยายให้เต็ม tile เสมอ (ไม่ขึ้นกับขนาดไฟล์) */
+        var img = DT.Sprites.get(gKey);
+        if (img) {
+          ctx.save();
+          ctx.imageSmoothingEnabled = false;
+          try {
+            ctx.drawImage(img, 0, 0, img.naturalWidth || img.width, img.naturalHeight || img.height,
+              0, 0, w, h);
+            gDrew = true;
+          } catch (err) { gDrew = false; }
+          ctx.restore();
+        }
+      }
+
       /* ตัว tile — สี่เหลี่ยมจัตุรัส (top-down) */
-      ctx.fillStyle = st.grad;
-      ctx.fillRect(0, 0, w, h);
+      if (!gDrew) {
+        ctx.fillStyle = st.grad;
+        ctx.fillRect(0, 0, w, h);
+      }
 
       /* เนื้อผิวตามแบบ tile (สลับตามตำแหน่ง ไม่ซ้ำตายตัว) */
       if (type === T.GRASS) {
@@ -339,6 +384,7 @@
       if (n.type === 'tree') Art.tree(ctx, p.sx, p.sy, z, this.t, nseed);
       else if (n.type === 'rock') Art.rock(ctx, p.sx, p.sy, z, false, nseed);
       else if (n.type === 'ore') Art.rock(ctx, p.sx, p.sy, z, true, nseed);
+      else if (n.type === 'platino') Art.platino(ctx, p.sx, p.sy, z, this.t, nseed);
       else Art.bush(ctx, p.sx, p.sy, z, this.t, n.x * 2.1 + n.y * 5.7);
       ctx.globalAlpha = 1;
 

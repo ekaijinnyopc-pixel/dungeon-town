@@ -257,7 +257,9 @@
     tree: { label: 'ต้นไม้', icon: '🌳', yields: 'wood', amount: 6 },
     rock: { label: 'ก้อนหิน', icon: '🪨', yields: 'stone', amount: 6 },
     ore:  { label: 'แร่', icon: '⛏️', yields: 'ore', amount: 5 },
-    bush: { label: 'พุ่มไม้', icon: '🌿', yields: 'herb', amount: 4 }
+    bush: { label: 'พุ่มไม้', icon: '🌿', yields: 'herb', amount: 4 },
+    /* easter egg — ซ่อนไว้ในป่า (DawnLike license: ต้องใช้ + ซ่อน Platino) */
+    platino: { label: 'จิ้าจอกเงา', icon: '🦎', yields: 'herb', amount: 1, secret: true }
   };
 
   /* ---------- มอนส์ ----------

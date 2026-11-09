@@ -1,52 +1,89 @@
 {
+  "_license": {
+    "FF": "10 Basic RPG Enemies by redshrike (OpenGameArt) — CC-BY 3.0 + OGA-BY 3.0",
+    "DawnLike": "Dawnlike 16x16 Universal Roguelike tileset v1.81 — CC-BY 4.0",
+    "note": "Attribution kept in assets/CREDITS.md and project README."
+  },
   "slime": {
     "file": "mobs/slime.png",
-    "note": "green slime (front view) — ตรงชื่อ 100%",
-    "source_pack": "Roguelike Characters (Kenney CC0)",
-    "source_file": "assets/chars/roguelike/char_0162.png",
-    "tile_size": "16x16",
+    "note": "green slime (front view) — FF critter #9",
+    "source_pack": "10 Basic RPG Enemies (redshrike, CC-BY 3.0 + OGA-BY 3.0)",
+    "source_file": "rpgcritters2.png cell (col 1, row 4)",
+    "size": "40x36",
     "mode": "RGBA",
-    "trimmed": false,
-    "scaled": false
-  },
-  "wolf": {
-    "file": "mobs/wolf.png",
-    "note": "small skeleton — ใกล้เคียงสัตว์ (ชุด asset ไม่มีสัตว์ 4 ขา)",
-    "source_pack": "Tiny Dungeon (Kenney CC0)",
-    "source_file": "assets/chars/dungeon/dun_0062.png",
-    "tile_size": "16x16",
-    "mode": "RGBA",
-    "trimmed": false,
-    "scaled": false
+    "trimmed": true
   },
   "goblin": {
     "file": "mobs/goblin.png",
-    "note": "skeleton warrior — ใกล้เคียงมอนส์ผีประจำถิ่น",
-    "source_pack": "Tiny Dungeon (Kenney CC0)",
-    "source_file": "assets/chars/dungeon/dun_0061.png",
-    "tile_size": "16x16",
+    "note": "goblin warrior — FF critter #5",
+    "source_pack": "10 Basic RPG Enemies (redshrike, CC-BY 3.0 + OGA-BY 3.0)",
+    "source_file": "rpgcritters2.png cell (col 1, row 0)",
+    "size": "26x31",
     "mode": "RGBA",
-    "trimmed": false,
-    "scaled": false
+    "trimmed": true
+  },
+  "ghoul": {
+    "file": "mobs/ghoul.png",
+    "note": "ghoul/mutant — FF critter #0 (ใช้แทน wraith)",
+    "source_pack": "10 Basic RPG Enemies (redshrike, CC-BY 3.0 + OGA-BY 3.0)",
+    "source_file": "rpgcritters2.png cell (col 0, row 0)",
+    "size": "30x24",
+    "mode": "RGBA",
+    "trimmed": true
+  },
+  "skeleton": {
+    "file": "mobs/skeleton.png",
+    "note": "skeleton — FF critter #6",
+    "source_pack": "10 Basic RPG Enemies (redshrike, CC-BY 3.0 + OGA-BY 3.0)",
+    "source_file": "rpgcritters2.png cell (col 1, row 1)",
+    "size": "28x41",
+    "mode": "RGBA",
+    "trimmed": true
+  },
+  "mage": {
+    "file": "mobs/mage.png",
+    "note": "mage — FF critter #7",
+    "source_pack": "10 Basic RPG Enemies (redshrike, CC-BY 3.0 + OGA-BY 3.0)",
+    "source_file": "rpgcritters2.png cell (col 1, row 2)",
+    "size": "33x42",
+    "mode": "RGBA",
+    "trimmed": true
+  },
+  "wolf": {
+    "file": "mobs/wolf.png",
+    "note": "dark canine — สัตว์ 4 ขาจริง",
+    "source_pack": "Dawnlike (CC-BY 4.0)",
+    "source_file": "Characters/Quadraped0.png cell (col 5, row 0)",
+    "size": "13x12",
+    "mode": "RGBA",
+    "trimmed": true
   },
   "boar": {
     "file": "mobs/boar.png",
-    "note": "skeleton pile / bones — ใกล้เคียงซากสัตว์",
-    "source_pack": "Tiny Dungeon (Kenney CC0)",
-    "source_file": "assets/chars/dungeon/dun_0057.png",
-    "tile_size": "16x16",
+    "note": "boar/pig — สัตว์ 4 ขาจริง",
+    "source_pack": "Dawnlike (CC-BY 4.0)",
+    "source_file": "Characters/Quadraped0.png cell (col 0, row 0)",
+    "size": "13x12",
     "mode": "RGBA",
-    "trimmed": false,
-    "scaled": false
+    "trimmed": true
   },
   "wraith": {
     "file": "mobs/wraith.png",
-    "note": "undead remains — ใกล้เคียงผี/มอนส์ผูกพัน",
-    "source_pack": "Tiny Dungeon (Kenney CC0)",
-    "source_file": "assets/chars/dungeon/dun_0060.png",
-    "tile_size": "16x16",
+    "note": "wraith = ghoul (FF critter #0) — ใช้ตัวเดียวกัน",
+    "source_pack": "10 Basic RPG Enemies (redshrike, CC-BY 3.0 + OGA-BY 3.0)",
+    "source_file": "rpgcritters2.png cell (col 0, row 0)",
+    "size": "30x24",
+    "mode": "RGBA",
+    "trimmed": true
+  },
+  "platino": {
+    "file": "mobs/platino.png",
+    "note": "Platino — จิ้าจอกสีเทาอมฟ้า (easter egg ที่ซ่อนอยู่ในป่า)",
+    "source_pack": "Dawnlike (CC-BY 4.0)",
+    "source_file": "Characters/Reptile0.png cell (col 3, row 12)",
+    "size": "16x16",
     "mode": "RGBA",
     "trimmed": false,
-    "scaled": false
+    "license_note": "license Dawnlike บังคับให้ต้องใช้ + ซ่อนตัวนี้ — เกมมี easter egg ซ่อนไว้ในป่า"
   }
 }

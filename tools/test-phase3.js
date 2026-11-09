@@ -103,6 +103,18 @@ if (!wsUrl) { console.log('❌ เชื่อม CDP ไม่ได้'); proc
   await send('Page.navigate', { url: URL });
   await sleep(4000);
 
+  /* หน้าแลนด์ใหม่: ต้องกด #play-now ก่อนถึงจะเข้าหน้าเลือกอาชีพ (#go)
+     รอให้สคริปต์โหลดเสร็จก่อน แล้วกดปุ่ม (ถ้ามี) */
+  {
+    let ready = false;
+    for (let i = 0; i < 40 && !ready; i++) {
+      try { ready = await ev("typeof DT !== 'undefined'"); } catch (e) {}
+      if (!ready) await sleep(250);
+    }
+    const hasPlayNow = await ev("!!document.getElementById('play-now')").catch(() => false);
+    if (hasPlayNow) { await ev("document.getElementById('play-now').click()"); await sleep(300); }
+  }
+
   console.log('== โมดูล Phase 3 โหลดครบ ==');
   ok(await ev("typeof DT.Audio==='object'"), 'js/audio.js โหลดแล้ว');
   ok(await ev("typeof DT.FX==='object'"), 'js/fx.js โหลดแล้ว');

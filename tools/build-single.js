@@ -58,13 +58,13 @@ for (const f of order) {
   const keys = [];
   const push = k => { if (k && keys.indexOf(k) === -1) keys.push(k); };
   /* 1) คีย์สไปรต์ใน SPEC ของ js/sprites.js (characters/, objects/, mobs/) */
-  const re = /'((?:characters|objects|mobs)\/[A-Za-z0-9_.-]+\.png)'\s*:/g;
+  const re = /'((?:characters|objects|mobs|tiles)(?:\/[A-Za-z0-9_-]+)*\/[A-Za-z0-9_.-]+\.png)'\s*:/g;
   let m;
   const src = read('js/sprites.js');
   while ((m = re.exec(src))) push(m[1]);
   /* 2) คีย์สไปรต์ที่อ้างถึงในไฟล์อื่น (เช่น NPC ใน js/config.js, ตัวละครใน index.html) */
   const others = ['js/config.js', 'js/art.js', 'js/game.js', 'js/render.js'];
-  const re2 = /'((?:characters|objects|mobs)\/[A-Za-z0-9_.-]+\.png)'/g;
+  const re2 = /'((?:characters|objects|mobs|tiles)(?:\/[A-Za-z0-9_-]+)*\/[A-Za-z0-9_.-]+\.png)'/g;
   for (const f of others) {
     let t;
     try { t = read(f); } catch (e) { continue; }

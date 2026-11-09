@@ -71,12 +71,30 @@
     'objects/dungeon_table.png':   { src: [0, 0, 16, 16], sc: 2, dy: 4 },
     'objects/pot.png':             { src: [0, 0, 16, 16], sc: 2, dy: 4 },
 
-    /* --- มอนส์ (ตัดจาก Kenney CC0 → 16x16 RGBA) --- */
-    'mobs/slime.png':   { src: [0, 0, 16, 16], sc: 2, dy: 0 },
-    'mobs/wolf.png':    { src: [0, 0, 16, 16], sc: 2, dy: 0 },
-    'mobs/goblin.png':  { src: [0, 0, 16, 16], sc: 2, dy: 0 },
-    'mobs/boar.png':    { src: [0, 0, 16, 16], sc: 2, dy: 0 },
-    'mobs/wraith.png':  { src: [0, 0, 16, 16], sc: 2, dy: 0 },
+    /* --- มอนส์ (FF 10 Basic RPG Enemies + DawnLike) ---
+       FF (redshrike, CC-BY 3.0 + OGA-BY 3.0): slime / goblin / ghoul / skeleton / mage
+       DawnLike (CC-BY 4.0): wolf / boar
+       ไฟล์ถูกครอปเป็นขนาดตามจริงแล้ว (trim แล้ว) -> src ใช้เต็มภาพ */
+    'mobs/slime.png':   { src: [0, 0, 40, 36], sc: 1, dy: 0 },
+    'mobs/wolf.png':    { src: [0, 0, 13, 12], sc: 2, dy: 0 },
+    'mobs/goblin.png':  { src: [0, 0, 26, 31], sc: 1, dy: 0 },
+    'mobs/boar.png':    { src: [0, 0, 13, 12], sc: 2, dy: 0 },
+    'mobs/wraith.png':  { src: [0, 0, 30, 24], sc: 1, dy: 0 },
+    /* Platino (DawnLike, CC-BY 4.0) — easter egg ที่ซ่อนอยู่ในป่า
+       license ของ Dawnlike บังคับให้ต้องใช้ + ซ่อนตัวนี้ */
+    'mobs/platino.png': { src: [0, 0, 16, 16], sc: 2, dy: 0 },
+
+    /* --- พื้นผิวจริง (Kenney Roguelike RPG Pack, CC0) ---
+       ใช้ sc = 3 ให้ขนาดใกล้เคียง tile 48px (16px * 3) */
+    'tiles/ground/grass.png':        { src: [0, 0, 16, 16], sc: 3 },
+    'tiles/ground/path.png':         { src: [0, 0, 16, 16], sc: 3 },
+    'tiles/ground/stone.png':        { src: [0, 0, 16, 16], sc: 3 },
+    'tiles/ground/water.png':        { src: [0, 0, 16, 16], sc: 3 },
+    'tiles/ground/sand.png':         { src: [0, 0, 16, 16], sc: 3 },
+    'tiles/ground/dirt.png':         { src: [0, 0, 16, 16], sc: 3 },
+    'tiles/ground/field.png':        { src: [0, 0, 16, 16], sc: 3 },
+    'tiles/ground/floor.png':        { src: [0, 0, 16, 16], sc: 3 },
+    'tiles/ground/grass_flowers.png':{ src: [0, 0, 16, 16], sc: 3 },
 
     /* --- NPC (ตัวละครชุดเดียวกับผู้เล่น แต่ย้อมสี) --- */
     'characters/alt_down_6.png':  { src: [0, 0, 16, 16], sc: 2, dy: 0 },

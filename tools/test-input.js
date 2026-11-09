@@ -119,6 +119,13 @@ if (!wsUrl) { console.log('❌ เชื่อม CDP ไม่ได้'); proc
   console.log('== โหลดเกม ==');
   await send('Page.navigate', { url: URL });
   await sleep(4000);
+  /* หน้าแลนด์มีปุ่ม 'เข้าเล่นทันที' (#play-now) ก่อน -> ต้องกดก่อนถึงจะเห็น #start (ที่มีปุ่ม #go)
+     ถ้าไม่มี #play-now (เกมรุ่นเก่า) ให้ข้ามได้ */
+  const hasPlayNow = await ev("!!document.getElementById('play-now')");
+  if (hasPlayNow) {
+    await ev("document.getElementById('play-now').click()");
+    await sleep(300);
+  }
   ok(await ev("!!document.getElementById('go')"), 'หน้าเลือกอาชีพแสดง');
 
   console.log('\n== เริ่มเกม (พิมพ์ชื่อก่อน เหมือนคนจริง) ==');
