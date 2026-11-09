@@ -36,7 +36,7 @@ async function waitGameStart(ev, timeoutMs = 15000) {
   return false;
 }
 
-const URL = process.argv[2] || 'http://127.0.0.1:8931/index.html';
+const URL = process.argv[2] || 'http://127.0.0.1:8931/dungeon-town/index.html';
 const PORT = 9357;
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 let pass = 0, fail = 0;
