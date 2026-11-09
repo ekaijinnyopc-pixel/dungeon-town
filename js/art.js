@@ -279,8 +279,10 @@
     /* หิน: ใช้ก้อนที่แยกเป็นวัตถุเดี่ยว (isolated) เท่านั้น
        - objects/rock_boulder / rock_small ถูกถอดออกเพราะเป็น tile ที่ภาพ
          ชนขอบ (edge bleed) ทำให้ก้อนหินดูเหมือนถูกตัดขาด */
-    var rockKey = ore ? 'objects/urban_rock.png'
-      : (v === 1 ? 'objects/city_rock.png' : 'objects/urban_rock.png');
+    /* หิน: ใช้ชุด Tiny Town (palette เดียวกับพื้น) แทน Modern City สีเทา
+       - variant 0 = ก้อนใหญ่, variant 1 = ก้อนเล็ก, variant 2 = ก้อนใหญ่ */
+    var rockKey = (v === 1 && !ore) ? 'objects/tiny_rock_small.png'
+      : 'objects/tiny_rock.png';
     var rockDrew = drawSprite(ctx, rockKey, 0, 0, false, null, 0);
     if (rockDrew && ore) drawOreGems(ctx);
     ctx.restore();
@@ -351,7 +353,7 @@
        variant 1 = กอหญ้าสูง      (shape 21x20) -> urban_bush (พุ่มพุ่งสูง)
        variant 2 = พุ่มดอกไม้      (shape 22x19) -> bush_gold */
     var bushKey = v === 0 ? 'objects/bush.png'
-      : v === 1 ? 'objects/urban_bush.png'
+      : v === 1 ? 'objects/tiny_tallgrass.png'
       : 'objects/bush_gold.png';
     ctx.save();
     ctx.translate(sx, sy);

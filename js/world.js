@@ -80,7 +80,7 @@
       buildings: [
         { x: 19, y: 19, w: 4, h: 4, name: 'โรงตีเหล็ก', icon: '🔨', work: true, door: { x: 20, y: 19 } },
         { x: 28, y: 19, w: 3, h: 3, name: 'ตลาด', icon: '🏪', door: { x: 29, y: 19 },
-          sign: 'objects/urban_shop_sign.png', awning: 'objects/urban_shop_awning.png' },
+          sign: 'objects/tiny_shop_sign.png', awning: 'objects/tiny_awning.png' },
         { x: 18, y: 29, w: 4, h: 3, name: 'บ้านนักล่า', icon: '🏹', door: { x: 19, y: 29 } },
         { x: 28, y: 29, w: 4, h: 3, name: 'บ้านช่างปลูก', icon: '🌾', door: { x: 29, y: 29 } },
         { x: 23, y: 32, w: 4, h: 3, name: 'บ้านคนเหมือง', icon: '⛏️', door: { x: 24, y: 32 } }

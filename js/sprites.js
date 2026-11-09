@@ -94,15 +94,23 @@
 
     /* --- พื้นผิวจริง (Kenney Roguelike RPG Pack, CC0) ---
        ใช้ sc = 3 ให้ขนาดใกล้เคียง tile 48px (16px * 3) */
-    'tiles/ground/grass.png':        { src: [0, 0, 16, 16], sc: 3 },
-    'tiles/ground/path.png':         { src: [0, 0, 16, 16], sc: 3 },
-    'tiles/ground/stone.png':        { src: [0, 0, 16, 16], sc: 3 },
-    'tiles/ground/water.png':        { src: [0, 0, 16, 16], sc: 3 },
-    'tiles/ground/sand.png':         { src: [0, 0, 16, 16], sc: 3 },
-    'tiles/ground/dirt.png':         { src: [0, 0, 16, 16], sc: 3 },
-    'tiles/ground/field.png':        { src: [0, 0, 16, 16], sc: 3 },
-    'tiles/ground/floor.png':        { src: [0, 0, 16, 16], sc: 3 },
-    'tiles/ground/grass_flowers.png':{ src: [0, 0, 16, 16], sc: 3 },
+    'tiles/ground/tiny_grass.png':        { src: [0, 0, 16, 16], sc: 3 },
+    'tiles/ground/tiny_path.png':         { src: [0, 0, 16, 16], sc: 3 },
+    'tiles/ground/tiny_stone.png':        { src: [0, 0, 16, 16], sc: 3 },
+    'tiles/ground/tiny_floor.png':        { src: [0, 0, 16, 16], sc: 3 },
+    'tiles/ground/tiny_grass_flowers.png':{ src: [0, 0, 16, 16], sc: 3 },
+    'tiles/town/tiny_water.png':          { src: [0, 0, 16, 16], sc: 3 },
+    'tiles/town/tiny_sand.png':           { src: [0, 0, 16, 16], sc: 3 },
+    'tiles/town/tiny_dirt.png':           { src: [0, 0, 16, 16], sc: 3 },
+    'tiles/town/tiny_field.png':          { src: [0, 0, 16, 16], sc: 3 },
+
+    /* --- วัตถุชุด Tiny Town (palette เดียวกับพื้น) --- */
+    'objects/tiny_tallgrass.png':   { src: [0, 0, 16, 16], sc: 2, dy: 6 },
+    'objects/tiny_shop_sign.png':   { src: [0, 0, 16, 16], sc: 2, dy: 0 },
+    'objects/tiny_awning.png':      { src: [0, 0, 16, 16], sc: 2, dy: 0 },
+    'objects/tiny_rock.png':        { src: [0, 0, 13, 13], sc: 2, dy: 11 },
+    'objects/tiny_rock_small.png':  { src: [0, 0, 9, 9],   sc: 2, dy: 7 },
+    'objects/tiny_flowers.png':     { src: [0, 0, 8, 10],  sc: 2, dy: 6 },
 
     /* --- NPC (ตัวละครชุดเดียวกับผู้เล่น แต่ย้อมสี) --- */
     'characters/alt_down_6.png':  { src: [0, 0, 16, 16], sc: 2, dy: 0 },

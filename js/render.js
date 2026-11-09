@@ -21,18 +21,18 @@
      ผูก DT.TILE -> ไฟล์สไปรต์ใน assets/tiles/ground/
      ถ้าภาพโหลดไม่ได้ -> วาดแบบ canvas เดิม (fallback ปลอดภัย ไม่จอดำ) */
   var GROUND_SPRITES = {};
-  GROUND_SPRITES[T.GRASS]  = 'tiles/ground/grass.png';
-  GROUND_SPRITES[T.PATH]   = 'tiles/ground/path.png';
-  GROUND_SPRITES[T.STONE]  = 'tiles/ground/stone.png';
-  GROUND_SPRITES[T.WATER]  = 'tiles/ground/water.png';
-  GROUND_SPRITES[T.SAND]   = 'tiles/ground/sand.png';
-  GROUND_SPRITES[T.DIRT]   = 'tiles/ground/dirt.png';
-  GROUND_SPRITES[T.FIELD]  = 'tiles/ground/field.png';
-  GROUND_SPRITES[T.FLOOR]  = 'tiles/ground/floor.png';
+  GROUND_SPRITES[T.GRASS]  = 'tiles/ground/tiny_grass.png';
+  GROUND_SPRITES[T.PATH]   = 'tiles/ground/tiny_path.png';
+  GROUND_SPRITES[T.STONE]  = 'tiles/ground/tiny_stone.png';
+  GROUND_SPRITES[T.WATER]  = 'tiles/town/tiny_water.png';
+  GROUND_SPRITES[T.SAND]   = 'tiles/town/tiny_sand.png';
+  GROUND_SPRITES[T.DIRT]   = 'tiles/town/tiny_dirt.png';
+  GROUND_SPRITES[T.FIELD]  = 'tiles/town/tiny_field.png';
+  GROUND_SPRITES[T.FLOOR]  = 'tiles/ground/tiny_floor.png';
 
   /* พื้นที่ใช้สไปรต์แทนการไล่สี (ให้สลับ tile ได้ ไม่ซ้ำตายตัว) */
   var GROUND_VARIANTS = {
-    'tiles/ground/grass.png': ['tiles/ground/grass.png', 'tiles/ground/grass_flowers.png']
+    'tiles/ground/tiny_grass.png': ['tiles/ground/tiny_grass.png', 'tiles/ground/tiny_grass_flowers.png']
   };
 
   function shade(hex, amt) {

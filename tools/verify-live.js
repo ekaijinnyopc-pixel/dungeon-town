@@ -109,21 +109,21 @@ function ok(c, m) { if (c) { pass++; console.log('  ✅ ' + m); } else { fail++;
   ok(await ev("!!DT.Game.world && !!DT.Game.world.map"), 'มีแผนที่โลก');
 
   console.log('\n== พื้นหน้า texture จริง (retro tiles) ==');
-  ok(await ev("!!DT.Sprites.SPEC['tiles/ground/grass.png']"), 'มี spec tile grass');
-  ok(await ev("!!DT.Sprites.SPEC['tiles/ground/path.png']"), 'มี spec tile path');
-  ok(await ev("!!DT.Sprites.SPEC['tiles/ground/stone.png']"), 'มี spec tile stone');
-  ok(await ev("!!DT.Sprites.SPEC['tiles/ground/water.png']"), 'มี spec tile water');
-  const gTiles = await ev("(function(){var n=0;for(var k in DT.Sprites.SPEC){if(k.indexOf('tiles/ground/')===0)n++;}return n;})()");
-  ok(gTiles >= 8, 'มี tile พื้นครบ ' + gTiles + ' แบบ');
+  ok(await ev("!!DT.Sprites.SPEC['tiles/ground/tiny_grass.png']"), 'มี spec tile grass');
+  ok(await ev("!!DT.Sprites.SPEC['tiles/ground/tiny_path.png']"), 'มี spec tile path');
+  ok(await ev("!!DT.Sprites.SPEC['tiles/ground/tiny_stone.png']"), 'มี spec tile stone');
+  ok(await ev("!!DT.Sprites.SPEC['tiles/town/tiny_water.png']"), 'มี spec tile water');
+  const gTiles = await ev("(function(){var n=0;for(var k in DT.Sprites.SPEC){if(k.indexOf('tiles/')===0)n++;}return n;})()");
+  ok(gTiles >= 9, 'มี tile พื้นครบ ' + gTiles + ' แบบ');
   /* tile พื้นโหลดแบบ lazy -> รอให้โหลดครบก่อนเช็ค (network ช้าได้) */
   for (let i = 0; i < 40; i++) {
-    const n = await ev("(function(){var n=0;for(var k in DT.Sprites.SPEC){if(k.indexOf('tiles/ground/')===0&&DT.Sprites.get(k))n++;}return n;})()");
+    const n = await ev("(function(){var n=0;for(var k in DT.Sprites.SPEC){if(k.indexOf('tiles/')===0&&DT.Sprites.get(k))n++;}return n;})()");
     if (n >= 9) break;
     await sleep(250);
   }
-  const gLoaded = await ev("(function(){var n=0;for(var k in DT.Sprites.SPEC){if(k.indexOf('tiles/ground/')===0&&DT.Sprites.get(k))n++;}return n;})()");
+  const gLoaded = await ev("(function(){var n=0;for(var k in DT.Sprites.SPEC){if(k.indexOf('tiles/')===0&&DT.Sprites.get(k))n++;}return n;})()");
   ok(gLoaded >= 8, 'โหลด tile พื้นสำเร็จ ' + gLoaded + ' แบบ');
-  const gFailed = await ev("(function(){var n=0;for(var k in DT.Sprites.SPEC){if(k.indexOf('tiles/ground/')===0&&DT.Sprites.failed[k])n++;}return n;})()");
+  const gFailed = await ev("(function(){var n=0;for(var k in DT.Sprites.SPEC){if(k.indexOf('tiles/')===0&&DT.Sprites.failed[k])n++;}return n;})()");
   ok(gFailed === 0, 'ไม่มี tile พื้นที่โหลดไม่สำเร็จ (' + gFailed + ')');
 
   console.log('\n== สไปรต์มอนส์ ==');
