@@ -275,7 +275,23 @@
     boar:   { name: 'หมูป่าเผือก', icon: '🐗', hp: 42, dmg: 10, speed: 2.3, spawnWeight: 2, radius: 0.5, xp: 26,
               loot: [['raw_meat', 0.6], ['hide', 0.5], ['coin', 0.3]] },
     wraith: { name: 'วิญญาต', icon: '👻', hp: 30, dmg: 12, speed: 1.9, spawnWeight: 1, radius: 0.45, xp: 35,
-              night: true, loot: [['herbal_tonic', 0.25], ['coin', 0.5], ['herb', 0.4]] }
+              night: true, loot: [['herbal_tonic', 0.25], ['coin', 0.5], ['herb', 0.4]] },
+
+    /* --- มอนส์เพิ่มเติมจาก FF "10 Basic RPG Enemies" (redshrike, CC-BY 3.0 + OGA-BY 3.0) --- */
+    bat:     { name: 'ค้างคาว', icon: '🦇', hp: 18, dmg: 5, speed: 3.2, spawnWeight: 2, radius: 0.4, xp: 12,
+               loot: [['raw_meat', 0.3], ['coin', 0.2]] },
+    imp:     { name: 'นายภูต', icon: '👹', hp: 26, dmg: 9, speed: 2.6, spawnWeight: 1.5, radius: 0.45, xp: 20,
+               loot: [['coin', 0.45], ['herb', 0.3], ['goblin_ear', 0.15]] },
+    ghoul:   { name: 'ผีกลืน', icon: '🧟', hp: 44, dmg: 12, speed: 1.7, spawnWeight: 1.5, radius: 0.5, xp: 30,
+               night: true, loot: [['hide', 0.35], ['coin', 0.45], ['herb', 0.35]] },
+    skeleton: { name: 'กระดูก', icon: '💀', hp: 52, dmg: 14, speed: 1.8, spawnWeight: 1, radius: 0.5, xp: 38,
+               loot: [['ore', 0.4], ['iron_ingot', 0.25], ['coin', 0.4]] },
+    mage:    { name: 'ผู้หญิงผมขาว', icon: '🧙', hp: 38, dmg: 16, speed: 2.0, spawnWeight: 1, radius: 0.45, xp: 42,
+               night: true, loot: [['herbal_tonic', 0.4], ['herb', 0.45], ['coin', 0.5]] },
+    knight:  { name: 'อัศวินโบราณ', icon: '⚔️', hp: 60, dmg: 18, speed: 1.9, spawnWeight: 0.6, radius: 0.55, xp: 55,
+               loot: [['iron_ingot', 0.45], ['coin', 0.6], ['ore', 0.35]] },
+    dragon:  { name: 'มังกร', icon: '🐉', hp: 90, dmg: 24, speed: 2.2, spawnWeight: 0.35, radius: 0.6, xp: 90,
+               night: true, loot: [['iron_ingot', 0.55], ['coin', 0.7], ['ore', 0.4]] }
   };
 
   /* ---------- ราคาขายของซื้อ (เหรียญต่อชิ้น) ---------- */

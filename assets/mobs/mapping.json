@@ -2,50 +2,96 @@
   "_license": {
     "FF": "10 Basic RPG Enemies by redshrike (OpenGameArt) — CC-BY 3.0 + OGA-BY 3.0",
     "DawnLike": "Dawnlike 16x16 Universal Roguelike tileset v1.81 — CC-BY 4.0",
-    "note": "Attribution kept in assets/CREDITS.md and project README."
+    "note": "Attribution kept in assets/CREDITS.md and project README.",
+    "extract_tool": "tools/extract-ff-mobs.py (crop จาก rpgcritters2.png ด้วย connected-component bbox แล้ว trim ขอบ)"
   },
   "slime": {
     "file": "mobs/slime.png",
-    "note": "green slime (front view) — FF critter #9",
+    "note": "green slime (front view) — FF critter (col 1, row 4)",
     "source_pack": "10 Basic RPG Enemies (redshrike, CC-BY 3.0 + OGA-BY 3.0)",
-    "source_file": "rpgcritters2.png cell (col 1, row 4)",
-    "size": "40x36",
+    "source_file": "rpgcritters2.png cell (col 1, row 4) bbox (64,201,24x19)",
+    "size": "24x19",
     "mode": "RGBA",
     "trimmed": true
   },
   "goblin": {
     "file": "mobs/goblin.png",
-    "note": "goblin warrior — FF critter #5",
+    "note": "goblin warrior — FF critter (col 1, row 0)",
     "source_pack": "10 Basic RPG Enemies (redshrike, CC-BY 3.0 + OGA-BY 3.0)",
-    "source_file": "rpgcritters2.png cell (col 1, row 0)",
+    "source_file": "rpgcritters2.png cell (col 1, row 0) bbox (56,9,26x31)",
     "size": "26x31",
     "mode": "RGBA",
     "trimmed": true
   },
   "ghoul": {
     "file": "mobs/ghoul.png",
-    "note": "ghoul/mutant — FF critter #0 (ใช้แทน wraith)",
+    "note": "ghoul / mutant — FF critter (col 0, row 0)",
     "source_pack": "10 Basic RPG Enemies (redshrike, CC-BY 3.0 + OGA-BY 3.0)",
-    "source_file": "rpgcritters2.png cell (col 0, row 0)",
+    "source_file": "rpgcritters2.png cell (col 0, row 0) bbox (17,16,30x24)",
     "size": "30x24",
     "mode": "RGBA",
     "trimmed": true
   },
   "skeleton": {
     "file": "mobs/skeleton.png",
-    "note": "skeleton — FF critter #6",
+    "note": "skeleton — FF critter (col 1, row 1)",
     "source_pack": "10 Basic RPG Enemies (redshrike, CC-BY 3.0 + OGA-BY 3.0)",
-    "source_file": "rpgcritters2.png cell (col 1, row 1)",
-    "size": "28x41",
+    "source_file": "rpgcritters2.png cell (col 1, row 1) bbox (55,51,28x45)",
+    "size": "28x45",
     "mode": "RGBA",
     "trimmed": true
   },
   "mage": {
     "file": "mobs/mage.png",
-    "note": "mage — FF critter #7",
+    "note": "mage (โค้ดหมวก + ไม้เท้า) — FF critter (col 1, row 2)",
     "source_pack": "10 Basic RPG Enemies (redshrike, CC-BY 3.0 + OGA-BY 3.0)",
-    "source_file": "rpgcritters2.png cell (col 1, row 2)",
-    "size": "33x42",
+    "source_file": "rpgcritters2.png cell (col 1, row 2) bbox (61,105,19x27)",
+    "size": "19x27",
+    "mode": "RGBA",
+    "trimmed": true
+  },
+  "imp": {
+    "file": "mobs/imp.png",
+    "note": "imp / devil — FF critter (col 0, row 2)",
+    "source_pack": "10 Basic RPG Enemies (redshrike, CC-BY 3.0 + OGA-BY 3.0)",
+    "source_file": "rpgcritters2.png cell (col 0, row 2) bbox (18,106,33x32)",
+    "size": "33x32",
+    "mode": "RGBA",
+    "trimmed": true
+  },
+  "knight": {
+    "file": "mobs/knight.png",
+    "note": "armored knight (ดาบยาว) — FF critter (col 1, row 3)",
+    "source_pack": "10 Basic RPG Enemies (redshrike, CC-BY 3.0 + OGA-BY 3.0)",
+    "source_file": "rpgcritters2.png cell (col 1, row 3) bbox (56,151,29x35)",
+    "size": "29x35",
+    "mode": "RGBA",
+    "trimmed": true
+  },
+  "bat": {
+    "file": "mobs/bat.png",
+    "note": "bat (ปีกกว้างแนวนอน) — FF critter (col 0, row 4)",
+    "source_pack": "10 Basic RPG Enemies (redshrike, CC-BY 3.0 + OGA-BY 3.0)",
+    "source_file": "rpgcritters2.png cell (col 0, row 4) bbox (15,197,41x22)",
+    "size": "41x22",
+    "mode": "RGBA",
+    "trimmed": true
+  },
+  "dragon": {
+    "file": "mobs/dragon.png",
+    "note": "dragon / winged — FF critter (col 0, row 1)",
+    "source_pack": "10 Basic RPG Enemies (redshrike, CC-BY 3.0 + OGA-BY 3.0)",
+    "source_file": "rpgcritters2.png cell (col 0, row 1) bbox (9,52,37x34)",
+    "size": "37x34",
+    "mode": "RGBA",
+    "trimmed": true
+  },
+  "wraith": {
+    "file": "mobs/wraith.png",
+    "note": "wraith / floating shade — FF critter (col 0, row 3)",
+    "source_pack": "10 Basic RPG Enemies (redshrike, CC-BY 3.0 + OGA-BY 3.0)",
+    "source_file": "rpgcritters2.png cell (col 0, row 3) bbox (17,153,32x33)",
+    "size": "32x33",
     "mode": "RGBA",
     "trimmed": true
   },
@@ -64,15 +110,6 @@
     "source_pack": "Dawnlike (CC-BY 4.0)",
     "source_file": "Characters/Quadraped0.png cell (col 0, row 0)",
     "size": "13x12",
-    "mode": "RGBA",
-    "trimmed": true
-  },
-  "wraith": {
-    "file": "mobs/wraith.png",
-    "note": "wraith = ghoul (FF critter #0) — ใช้ตัวเดียวกัน",
-    "source_pack": "10 Basic RPG Enemies (redshrike, CC-BY 3.0 + OGA-BY 3.0)",
-    "source_file": "rpgcritters2.png cell (col 0, row 0)",
-    "size": "30x24",
     "mode": "RGBA",
     "trimmed": true
   },

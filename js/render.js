@@ -396,7 +396,23 @@
       }
     },
 
-    /* ---------- มอนส์ ---------- */
+    /* ---------- มอนส์ ----------
+       ความสูงของแถบ HP/ชื่อ: อ่านสเปกสไปรต์จริงถ้ามี (สูงขึ้น = แถบยิ่งสูงขึ้น)
+       ถ้าไม่มีสไปรต์ (lazy load ยังไม่เสร็จ) ใช้ค่ากลาง 26 เหมือนเดิม — ไม่จอดำ */
+    mobTopOffset: function (type) {
+      var S = window.DT && DT.Sprites;
+      var sp = null;
+      if (S && S.SPEC) {
+        sp = S.SPEC['mobs/' + type + '.png'] || null;
+        if (sp && !sp.src) sp = null;
+      }
+      var h = sp ? (sp.src[3] * (sp.sc || 1)) : 26;
+      /* clamp: ไม่ต่ำกว่า 20 ไม่สูงกว่า 52 (กันแถบล้นเลย / ทับสไปรต์ข้างเคียง) */
+      if (h < 20) h = 20;
+      if (h > 52) h = 52;
+      return h + 4;
+    },
+
     drawMob: function (ctx, m) {
       var p = this.toScreen(m.x, m.y);
       var z = this.zoom;
@@ -404,19 +420,20 @@
       Art.groundShadow(ctx, p.sx, p.sy, 9, z, 0.25, this.hour);
       Art.mob(ctx, p.sx, p.sy, z, m.type, { t: this.t, hurt: m.hitFlash, seed: m.x });
 
-      /* hp bar */
+      /* hp bar — ความสูงคำนวณจากสไปรต์จริง (fallback shape-art ใช้ค่ากลาง) */
+      var top = this.mobTopOffset(m.type) * z;
       var w = 26 * z;
       ctx.fillStyle = 'rgba(0,0,0,0.6)';
-      ctx.fillRect(p.sx - w / 2, p.sy - (m.type === 'wraith' ? 34 : 26) * z, w, 4.5 * z);
+      ctx.fillRect(p.sx - w / 2, p.sy - top, w, 4.5 * z);
       var ratio = Math.max(0, m.hp / m.maxHp);
       ctx.fillStyle = ratio > 0.4 ? '#ff6b6b' : '#ff9a3c';
-      ctx.fillRect(p.sx - w / 2, p.sy - (m.type === 'wraith' ? 34 : 26) * z, w * ratio, 4.5 * z);
+      ctx.fillRect(p.sx - w / 2, p.sy - top, w * ratio, 4.5 * z);
 
       /* ชื่อ + ระดับอันตราย */
       ctx.font = (10 * z) + 'px sans-serif';
       ctx.textAlign = 'center';
       ctx.fillStyle = 'rgba(255,255,255,0.85)';
-      ctx.fillText((def.icon || '') + ' ' + (def.name || ''), p.sx, p.sy - (m.type === 'wraith' ? 38 : 30) * z);
+      ctx.fillText((def.icon || '') + ' ' + (def.name || ''), p.sx, p.sy - (top + 4) * z);
     },
 
     /* ---------- ผู้เล่น ---------- */

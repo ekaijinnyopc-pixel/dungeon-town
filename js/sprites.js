@@ -72,14 +72,22 @@
     'objects/pot.png':             { src: [0, 0, 16, 16], sc: 2, dy: 4 },
 
     /* --- มอนส์ (FF 10 Basic RPG Enemies + DawnLike) ---
-       FF (redshrike, CC-BY 3.0 + OGA-BY 3.0): slime / goblin / ghoul / skeleton / mage
+       FF (redshrike, CC-BY 3.0 + OGA-BY 3.0): 10 ชนิด
+         slime / goblin / ghoul / skeleton / mage / imp / knight / bat / dragon / wraith
        DawnLike (CC-BY 4.0): wolf / boar
-       ไฟล์ถูกครอปเป็นขนาดตามจริงแล้ว (trim แล้ว) -> src ใช้เต็มภาพ */
-    'mobs/slime.png':   { src: [0, 0, 40, 36], sc: 1, dy: 0 },
-    'mobs/wolf.png':    { src: [0, 0, 13, 12], sc: 2, dy: 0 },
-    'mobs/goblin.png':  { src: [0, 0, 26, 31], sc: 1, dy: 0 },
-    'mobs/boar.png':    { src: [0, 0, 13, 12], sc: 2, dy: 0 },
-    'mobs/wraith.png':  { src: [0, 0, 30, 24], sc: 1, dy: 0 },
+       ไฟล์ถูกครอปจาก sheet แล้ว trim ขอบ -> src ใช้เต็มภาพ (ดู tools/extract-ff-mobs.py) */
+    'mobs/slime.png':    { src: [0, 0, 24, 19], sc: 1, dy: 0 },
+    'mobs/wolf.png':     { src: [0, 0, 13, 12], sc: 2, dy: 0 },
+    'mobs/goblin.png':   { src: [0, 0, 26, 31], sc: 1, dy: 0 },
+    'mobs/boar.png':     { src: [0, 0, 13, 12], sc: 2, dy: 0 },
+    'mobs/wraith.png':   { src: [0, 0, 32, 33], sc: 1, dy: 0 },
+    'mobs/bat.png':      { src: [0, 0, 41, 22], sc: 1, dy: 0 },
+    'mobs/imp.png':      { src: [0, 0, 33, 32], sc: 1, dy: 0 },
+    'mobs/ghoul.png':    { src: [0, 0, 30, 24], sc: 1, dy: 0 },
+    'mobs/skeleton.png': { src: [0, 0, 28, 45], sc: 1, dy: 0 },
+    'mobs/mage.png':     { src: [0, 0, 19, 27], sc: 1, dy: 0 },
+    'mobs/knight.png':   { src: [0, 0, 29, 35], sc: 1, dy: 0 },
+    'mobs/dragon.png':   { src: [0, 0, 37, 34], sc: 1, dy: 0 },
     /* Platino (DawnLike, CC-BY 4.0) — easter egg ที่ซ่อนอยู่ในป่า
        license ของ Dawnlike บังคับให้ต้องใช้ + ซ่อนตัวนี้ */
     'mobs/platino.png': { src: [0, 0, 16, 16], sc: 2, dy: 0 },

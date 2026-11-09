@@ -29,9 +29,13 @@
 - **10 Basic RPG Enemies**
   - ผู้สร้าง: **redshrike** (OpenGameArt)
   - ใช้: `assets/mobs/slime.png`, `assets/mobs/goblin.png`, `assets/mobs/ghoul.png`,
-    `assets/mobs/skeleton.png`, `assets/mobs/mage.png`, `assets/mobs/wraith.png`
+    `assets/mobs/skeleton.png`, `assets/mobs/mage.png`, `assets/mobs/imp.png`,
+    `assets/mobs/knight.png`, `assets/mobs/bat.png`, `assets/mobs/dragon.png`,
+    `assets/mobs/wraith.png` (ทั้งหมด 10 ตัวจากชุดนี้)
   - ที่มา: https://opengameart.org/content/10-basic-rpg-enemies (`rpgcritters2.png`)
   - เงื่อนไข: CC-BY 3.0 + OGA-BY 3.0
+  - การครอป: ใช้ `tools/extract-ff-mobs.py` (crop จาก connected-component bbox แล้ว trim ขอบ)
+    — แต่ละตัวถูกตัดจากเซลล์ของตัวเอง ไม่มีเศษภาพจากเซลล์ข้างเคียงปนมา
 
 ---
 

@@ -127,10 +127,21 @@ function ok(c, m) { if (c) { pass++; console.log('  ✅ ' + m); } else { fail++;
   ok(gFailed === 0, 'ไม่มี tile พื้นที่โหลดไม่สำเร็จ (' + gFailed + ')');
 
   console.log('\n== สไปรต์มอนส์ ==');
+  const ALL_MOBS = ['slime','wolf','goblin','boar','wraith','bat','imp','ghoul','skeleton','mage','knight','dragon'];
   const mobTypes = await ev("Object.keys(DT.MOBS).join(',')");
   ok(/slime/.test(mobTypes), 'มีมอนส์ slime');
-  const mobLoaded = await ev("(function(){var n=0;['slime','goblin','wolf','boar','wraith'].forEach(function(t){if(DT.Sprites.get('mobs/'+t+'.png'))n++;});return n;})()");
-  ok(mobLoaded >= 5, 'โหลดสไปรต์มอนส์สำเร็จ ' + mobLoaded + '/5');
+  const missingTypes = ALL_MOBS.filter((t) => !mobTypes.includes(t));
+  ok(missingTypes.length === 0, 'DT.MOBS ครบ ' + ALL_MOBS.length + ' ชนิด' + (missingTypes.length ? ' (ขาด: ' + missingTypes.join(',') + ')' : ''));
+  /* ทุกชนิดใน DT.MOBS ต้องมี loot ที่ key มีจริงใน DT.ITEMS */
+  const badLoot = await ev("(function(){var bad=[];for(var k in DT.MOBS){var l=DT.MOBS[k].loot||[];for(var i=0;i<l.length;i++){if(!DT.ITEMS[l[i][0]])bad.push(k+'->'+l[i][0]);}}return bad.join(',');})()");
+  ok(!badLoot, 'loot ของมอนส์ทุกชนิดมีไอเทมจริง' + (badLoot ? ' (ผิด: ' + badLoot + ')' : ''));
+  const mobLoaded = await ev("(function(){var n=0;var l=" + JSON.stringify(ALL_MOBS) + ";for(var i=0;i<l.length;i++){if(DT.Sprites.get('mobs/'+l[i]+'.png'))n++;}return n;})()");
+  ok(mobLoaded === ALL_MOBS.length, 'โหลดสไปรต์มอนส์สำเร็จ ' + mobLoaded + '/' + ALL_MOBS.length);
+  const mobNoSpec = await ev("(function(){var l=" + JSON.stringify(ALL_MOBS) + ";var bad=[];for(var i=0;i<l.length;i++){if(!DT.Sprites.SPEC['mobs/'+l[i]+'.png'])bad.push(l[i]);}return bad.join(',');})()");
+  ok(!mobNoSpec, 'มี S.SPEC ครบทุกมอนส์' + (mobNoSpec ? ' (ขาด: ' + mobNoSpec + ')' : ''));
+  /* สไปรต์มอนส์ทุกตัวต้องไม่ซ้ำกัน (กันเผลอ crop จากเซลล์เดียวกัน) */
+  const dupMobs = await ev("(function(){var l=" + JSON.stringify(ALL_MOBS) + ";var seen={},dup=[];for(var i=0;i<l.length;i++){var im=DT.Sprites.get('mobs/'+l[i]+'.png');if(!im)continue;var c=document.createElement('canvas');c.width=im.width;c.height=im.height;var x=c.getContext('2d');x.drawImage(im,0,0);var d=c.toDataURL();if(seen[d])dup.push(l[i]+'='+seen[d]);else seen[d]=l[i];}return dup.join(',');})()");
+  ok(!dupMobs, 'สไปรต์มอนส์ไม่ซ้ำกัน' + (dupMobs ? ' (ซ้ำ: ' + dupMobs + ')' : ''));
 
   console.log('\n== easter egg: Platino (เงื่อนไข license Dawnlike) ==');
   ok(await ev("!!DT.Sprites.SPEC['mobs/platino.png']"), 'มี spec platino');

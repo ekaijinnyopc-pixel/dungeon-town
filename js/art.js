@@ -835,7 +835,15 @@
     wolf:   { c: '#8b8f9c', d: '#5f636e', eye: '#e05a5a' },
     goblin: { c: '#b98bd4', d: '#8a5fa5', eye: '#ffd54f' },
     boar:   { c: '#a9714a', d: '#7d4e2f', eye: '#fff' },
-    wraith: { c: '#8f9bd6', d: '#5f6ba5', eye: '#a0f0ff' }
+    wraith: { c: '#8f9bd6', d: '#5f6ba5', eye: '#a0f0ff' },
+    /* --- เพิ่มเติมจาก FF 10 Basic RPG Enemies (ใช้เป็น fallback shape-art เท่านั้น) --- */
+    bat:     { c: '#8a6fa8', d: '#5c4573', eye: '#ffe066' },
+    imp:     { c: '#c05a4a', d: '#8c3a2f', eye: '#ffd54f' },
+    ghoul:   { c: '#9ab08a', d: '#6d8260', eye: '#e8f0c0' },
+    skeleton: { c: '#e8e2cf', d: '#b8b09a', eye: '#3a2a20' },
+    mage:    { c: '#6fa8c0', d: '#42708a', eye: '#e8f4ff' },
+    knight:  { c: '#a8b0bd', d: '#6f7885', eye: '#ff6b6b' },
+    dragon:  { c: '#d4683a', d: '#a04425', eye: '#ffe066' }
   };
 
   /* ================= Platino (easter egg ที่ซ่อนอยู่ในป่า) =================
@@ -1020,7 +1028,7 @@
       /* หู */
       poly(ctx, [[-4.6, -8.2], [-7.6, -12.6], [-1.4, -9.4]], st.d);
       poly(ctx, [[4.6, -8.2], [7.6, -12.6], [1.4, -9.4]], st.d);
-    } else { /* wraith */
+    } else if (type === 'wraith') {
       var wy2 = -20 + Math.sin(t * 2.4) * 1.2;
       ctx.fillStyle = 'rgba(160,240,255,0.13)';
       ctx.beginPath(); ctx.arc(0, wy2, 15, 0, Math.PI * 2); ctx.fill();
@@ -1050,6 +1058,131 @@
       ctx.beginPath();
       ctx.ellipse(0, wy2 - 1, 2.0, 2.4, 0, 0, Math.PI);
       ctx.stroke();
+    } else {
+      /* ---------- fallback ทั่วไปสำหรับมอนส์ชนิดใหม่ ----------
+         ถ้าสไปรต์โหลดไม่ได้ ยังต้องเห็นตัว (ไม่จอดำ) — รูปทรงต่างตามชนิด */
+      var gy2 = -16 + Math.sin(t * 3.4 + (opts.seed || 0)) * 0.7;
+      if (type === 'bat') {
+        /* ปีกกาง */
+        var flap = Math.sin(t * 9) * 3.2;
+        poly(ctx, [[-3, gy2 - 4], [-16, gy2 - 12 + flap], [-13, gy2 + 2], [-4, gy2 + 4]], st.d);
+        poly(ctx, [[3, gy2 - 4], [16, gy2 - 12 + flap], [13, gy2 + 2], [4, gy2 + 4]], st.d);
+        ell(ctx, 0, gy2, 5.2, 6.4, st.c);
+        /* หู */
+        poly(ctx, [[-3.4, gy2 - 5], [-5.4, gy2 - 11], [-1.4, gy2 - 7]], st.c);
+        poly(ctx, [[3.4, gy2 - 5], [5.4, gy2 - 11], [1.4, gy2 - 7]], st.c);
+        ell(ctx, -2, gy2 - 2, 1.4, 1.2, st.eye);
+        ell(ctx, 2, gy2 - 2, 1.4, 1.2, st.eye);
+      } else if (type === 'imp') {
+        /* ตัวกลม + เขายาว + หาง */
+        ell(ctx, 0, gy2 + 3, 8, 8.6, st.d);
+        ell(ctx, 0, gy2 + 1, 6.2, 6.6, st.c);
+        poly(ctx, [[-4, gy2 - 6], [-7.5, gy2 - 14], [-1.5, gy2 - 8]], st.d);
+        poly(ctx, [[4, gy2 - 6], [7.5, gy2 - 14], [1.5, gy2 - 8]], st.d);
+        ell(ctx, -2.4, gy2 - 3, 1.6, 1.4, st.eye);
+        ell(ctx, 2.4, gy2 - 3, 1.6, 1.4, st.eye);
+        ctx.strokeStyle = st.d;
+        ctx.lineWidth = 1.8;
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(6, gy2 + 8);
+        ctx.quadraticCurveTo(11, gy2 + 6, 9, gy2 - 1);
+        ctx.stroke();
+      } else if (type === 'ghoul') {
+        /* ผีสีเขียวซีด */
+        ell(ctx, 0, gy2 + 4, 8.6, 9.4, st.d);
+        ell(ctx, 0, gy2 + 2, 6.6, 7.2, st.c);
+        circle(ctx, 0, gy2 - 6, 6, st.c);
+        ell(ctx, -2.4, gy2 - 7, 1.7, 1.5, st.eye);
+        ell(ctx, 2.4, gy2 - 7, 1.7, 1.5, st.eye);
+        circle(ctx, -2.3, gy2 - 6.6, 0.7, '#2a3a24');
+        circle(ctx, 2.5, gy2 - 6.6, 0.7, '#2a3a24');
+        ell(ctx, 0, gy2 - 2.6, 2.4, 1.8, '#1e2a1c');
+        /* แขนยื่น */
+        circle(ctx, -8, gy2 + 3, 2.2, st.c);
+        circle(ctx, 8, gy2 + 3, 2.2, st.c);
+      } else if (type === 'skeleton') {
+        /* กระดูก: กะโหลก + ซี่กระดูก */
+        circle(ctx, 0, gy2 - 5, 6.2, st.c);
+        ell(ctx, -2.4, gy2 - 6, 1.6, 1.8, '#241f18');
+        ell(ctx, 2.4, gy2 - 6, 1.6, 1.8, '#241f18');
+        ctx.fillStyle = '#241f18';
+        ctx.fillRect(-3.2, gy2 - 2.6, 6.4, 1.1);
+        /* ซี่กระดูก */
+        ctx.strokeStyle = st.c;
+        ctx.lineWidth = 1.4;
+        ctx.beginPath();
+        for (var sb = 0; sb < 3; sb++) {
+          ctx.moveTo(-6, gy2 + 1 + sb * 2.6);
+          ctx.lineTo(6, gy2 + 1 + sb * 2.6);
+        }
+        ctx.stroke();
+        /* แขนขา */
+        ctx.strokeStyle = st.d;
+        ctx.lineWidth = 1.8;
+        ctx.beginPath();
+        ctx.moveTo(-5, gy2 + 8); ctx.lineTo(-6.5, gy2 + 15);
+        ctx.moveTo(5, gy2 + 8); ctx.lineTo(6.5, gy2 + 15);
+        ctx.stroke();
+      } else if (type === 'mage') {
+        /* ผู้หญิงผมขาว: หมวก + ไม้เท้า */
+        poly(ctx, [[-9, gy2 - 5], [0, gy2 - 22], [9, gy2 - 5]], st.d);
+        ell(ctx, 0, gy2 - 4, 9, 2.4, st.d);
+        ell(ctx, 0, gy2 + 3, 6.6, 7.4, st.c);
+        ell(ctx, -2.2, gy2 + 1, 1.5, 1.3, st.eye);
+        ell(ctx, 2.2, gy2 + 1, 1.5, 1.3, st.eye);
+        /* ไม้เท้า */
+        ctx.strokeStyle = '#7a5a34';
+        ctx.lineWidth = 1.8;
+        ctx.beginPath();
+        ctx.moveTo(7.5, gy2 + 12); ctx.lineTo(9.5, gy2 - 12);
+        ctx.stroke();
+        circle(ctx, 9.5, gy2 - 13, 2.6, st.eye);
+      } else if (type === 'knight') {
+        /* อัศวิน: หมวก + โล่ + ดาบ */
+        ctx.fillStyle = st.d;
+        rrect(ctx, -5.4, gy2 - 16, 10.8, 8, 2);
+        ctx.fill();
+        ctx.fillStyle = '#2b2f38';
+        ctx.fillRect(-5.4, gy2 - 10.5, 10.8, 2.4);
+        ell(ctx, 0, gy2 + 2, 7.6, 8.6, st.c);
+        ell(ctx, -2.4, gy2, 1.5, 1.2, st.eye);
+        ell(ctx, 2.4, gy2, 1.5, 1.2, st.eye);
+        /* โล่ (ซ้าย) */
+        circle(ctx, -9, gy2 + 3, 4.2, st.d);
+        circle(ctx, -9, gy2 + 3, 2.6, st.c);
+        /* ดาบ (ขวา) */
+        ctx.strokeStyle = '#d8dce4';
+        ctx.lineWidth = 2.4;
+        ctx.beginPath();
+        ctx.moveTo(10, gy2 + 10); ctx.lineTo(12.5, gy2 - 9);
+        ctx.stroke();
+      } else if (type === 'dragon') {
+        /* มังกร: ปีก + หัว + หาง */
+        var dflap = Math.sin(t * 5) * 2.6;
+        poly(ctx, [[-5, gy2 - 6], [-20, gy2 - 18 + dflap], [-15, gy2 + 4], [-6, gy2 + 2]], st.d);
+        poly(ctx, [[5, gy2 - 6], [20, gy2 - 18 + dflap], [15, gy2 + 4], [6, gy2 + 2]], st.d);
+        ell(ctx, 0, gy2 + 2, 8.4, 9.6, st.d);
+        ell(ctx, 0, gy2, 5.8, 7, st.c);
+        circle(ctx, 0, gy2 - 9, 5.6, st.c);
+        poly(ctx, [[-3, gy2 - 12], [-5, gy2 - 17], [-1, gy2 - 13]], st.d);
+        poly(ctx, [[3, gy2 - 12], [5, gy2 - 17], [1, gy2 - 13]], st.d);
+        ell(ctx, -2, gy2 - 10, 1.5, 1.3, st.eye);
+        ell(ctx, 2, gy2 - 10, 1.5, 1.3, st.eye);
+        /* หาง */
+        ctx.strokeStyle = st.d;
+        ctx.lineWidth = 2.4;
+        ctx.beginPath();
+        ctx.moveTo(7, gy2 + 8);
+        ctx.quadraticCurveTo(14, gy2 + 6, 12, gy2 - 2);
+        ctx.stroke();
+      } else {
+        /* fallback สุดท้าย: วงกลมสี + ตา (ไม่จอดำ) */
+        ell(ctx, 0, gy2, 8, 8.4, st.c);
+        ell(ctx, 0, gy2 + 1, 5.6, 5.8, st.d);
+        ell(ctx, -2.4, gy2 - 1, 1.5, 1.3, st.eye);
+        ell(ctx, 2.4, gy2 - 1, 1.5, 1.3, st.eye);
+      }
     }
     ctx.restore();
   };
