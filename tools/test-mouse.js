@@ -21,6 +21,7 @@ let __cleaned = false;
 function __cleanup() {
   if (__cleaned) return; __cleaned = true;
   if (__child) { try { killChrome(__child); } catch (e) {} }
+  if (__srv) { try { __srv.close(); } catch (e) {} }
 }
 process.on('exit', __cleanup);
 process.on('uncaughtException', (e) => { console.error('UNCAUGHT: ' + (e && e.stack || e)); __cleanup(); process.exit(1); });
@@ -38,13 +39,20 @@ async function waitGameStart(ev, timeoutMs = 15000) {
 }
 
 const ROOT = path.join(__dirname, '..');
-const URL = process.argv[2] || ('file://' + path.join(ROOT, 'index.html'));
+const serve = require('./lib/serve.js');
+const HTTP_PORT = 8941;
+let __srv = null;
+const URL = process.argv[2] || ('http://127.0.0.1:' + HTTP_PORT + '/index.html');
 const PORT = 9359;
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 let pass = 0, fail = 0;
 function ok(c, m) { if (c) { pass++; console.log('  ✅ ' + m); } else { fail++; console.log('  ❌ ' + m); } }
 
 (async () => {
+  if (!process.argv[2]) {
+    try { __srv = await serve.start(ROOT, HTTP_PORT); }
+    catch (e) { console.log('❌ เปิด static server ไม่ได้: ' + (e && e.message || e)); process.exit(1); }
+  }
   const ud = fs.mkdtempSync(path.join(os.tmpdir(), 'dt-mouse-'));
   const ch = spawn('/usr/bin/chromium', ['--headless=new', '--no-sandbox', '--disable-gpu',
     '--window-size=1100,780', '--allow-file-access-from-files',

@@ -24,6 +24,7 @@ let __cleaned = false;
 function __cleanup() {
   if (__cleaned) return; __cleaned = true;
   if (__child) { try { killChrome(__child); } catch (e) {} }
+  if (__srv) { try { __srv.close(); } catch (e) {} }
 }
 process.on('exit', __cleanup);
 process.on('uncaughtException', (e) => { console.error('UNCAUGHT: ' + (e && e.stack || e)); __cleanup(); process.exit(1); });
@@ -42,18 +43,25 @@ async function waitGameStart(evaluate, timeoutMs = 15000) {
 
 
 const ROOT = path.join(__dirname, '..');
+const serve = require('./lib/serve.js');
 const PORT = 9333;
-const URL_FILE = 'file://' + path.join(ROOT, 'index.html');
+const HTTP_PORT = 8934;
+let __srv = null;
+const URL_FILE = process.argv[2] || ('http://127.0.0.1:' + HTTP_PORT + '/index.html');
 const OUT = path.join(ROOT, 'dist');
 if (!fs.existsSync(OUT)) fs.mkdirSync(OUT, { recursive: true });
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 (async function main() {
+  if (!process.argv[2]) {
+    try { __srv = await serve.start(ROOT, HTTP_PORT); }
+    catch (e) { console.log('❌ เปิด static server ไม่ได้: ' + (e && e.message || e)); process.exit(1); }
+  }
   const userDir = fs.mkdtempSync(path.join(os.tmpdir(), 'dt-cdp-'));
   const chrome = spawn('/usr/bin/chromium', [
     '--headless=new', '--no-sandbox', '--disable-gpu', '--hide-scrollbars',
-    '--window-size=1100,780', '--allow-file-access-from-files',
+    '--window-size=1100,780',
     '--remote-debugging-port=' + PORT, '--user-data-dir=' + userDir,
     'about:blank'
   ], { stdio: ['ignore', 'ignore', 'pipe'], detached: true });

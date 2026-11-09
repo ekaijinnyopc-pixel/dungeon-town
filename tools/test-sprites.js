@@ -17,6 +17,7 @@ let __cleaned = false;
 function __cleanup() {
   if (__cleaned) return; __cleaned = true;
   if (__child) { try { killChrome(__child); } catch (e) {} }
+  if (__srv) { try { __srv.close(); } catch (e) {} }
 }
 process.on('exit', __cleanup);
 process.on('uncaughtException', (e) => { console.error('UNCAUGHT: ' + (e && e.stack || e)); __cleanup(); process.exit(1); });
@@ -33,17 +34,53 @@ async function waitGameStart(ev, timeoutMs = 15000) {
   return false;
 }
 
+const http = require('http');
 const ROOT = path.join(__dirname, '..');
-const URL = process.argv[2] || ('file://' + path.join(ROOT, 'index.html'));
 const PORT = 9377;
+const HTTP_PORT = 8932;
+
+/* ---------- static server เล็กๆ ----------
+   ต้องใช้ http:// ไม่ใช่ file:// เพราะ canvas จะถูก taint เมื่อโหลดภาพจาก file://
+   (getImageData -> SecurityError) ทำให้เทสต์วาดสไปรต์พังโดยไม่เกี่ยวกับตัวเกม */
+const MIME = {
+  '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8',
+  '.css': 'text/css; charset=utf-8', '.json': 'application/json; charset=utf-8',
+  '.png': 'image/png', '.jpg': 'image/jpeg', '.svg': 'image/svg+xml',
+  '.webp': 'image/webp', '.woff2': 'font/woff2'
+};
+function startServer() {
+  return new Promise((resolve, reject) => {
+    const srv = http.createServer((req, res) => {
+      let p = decodeURIComponent(req.url.split('?')[0]);
+      if (p === '/') p = '/index.html';
+      const file = path.join(ROOT, p);
+      if (!file.startsWith(ROOT)) { res.writeHead(403); return res.end('forbidden'); }
+      fs.readFile(file, (err, buf) => {
+        if (err) { res.writeHead(404); return res.end('not found'); }
+        res.writeHead(200, { 'Content-Type': MIME[path.extname(file).toLowerCase()] || 'application/octet-stream' });
+        res.end(buf);
+      });
+    });
+    srv.on('error', reject);
+    srv.listen(HTTP_PORT, '127.0.0.1', () => resolve(srv));
+  });
+}
+let __srv = null;
+const URL = process.argv[2] || ('http://127.0.0.1:' + HTTP_PORT + '/index.html');
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 let pass = 0, fail = 0;
 function ok(c, m) { if (c) { pass++; console.log('  ✅ ' + m); } else { fail++; console.log('  ❌ ' + m); } }
 
 (async () => {
+  if (!process.argv[2]) {
+    try { __srv = await startServer(); } catch (e) {
+      console.log('❌ เปิด static server ไม่ได้: ' + (e && e.message || e));
+      process.exit(1);
+    }
+  }
   const ud = fs.mkdtempSync(path.join(os.tmpdir(), 'dt-spr-'));
   const ch = spawn('/usr/bin/chromium', ['--headless=new', '--no-sandbox', '--disable-gpu',
-    '--disable-dev-shm-usage', '--window-size=1280,800', '--allow-file-access-from-files',
+    '--disable-dev-shm-usage', '--window-size=1280,800',
     '--remote-debugging-port=' + PORT, '--user-data-dir=' + ud, 'about:blank'], { stdio: 'ignore', detached: true });
   let wsUrl = null;
   for (let i = 0; i < 80 && !wsUrl; i++) {
