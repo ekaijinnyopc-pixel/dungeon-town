@@ -91,6 +91,54 @@
     /* Platino (DawnLike, CC-BY 4.0) — easter egg ที่ซ่อนอยู่ในป่า
        license ของ Dawnlike บังคับให้ต้องใช้ + ซ่อนตัวนี้ */
     'mobs/platino.png': { src: [0, 0, 16, 16], sc: 2, dy: 0 },
+    /* --- ตัวละครหญิง 4 ทิศ (CraftPix: Free Base 4-Direction Female Character Pixel Art) ---
+    /*   ทุกเฟรม normalize เป็น canvas 24x34 ก้นล่างตรงกัน -> ขยับไม่กระตุก */
+    /* --- อาคาร (CraftPix: Free Fantasy Medieval Village Buildings) --- */
+    /* --- Boss จาก CraftPix: Free Fantasy RPG Pirate Boss Character Pack --- */
+
+    'characters/hero_down_0.png': { src: [0, 0, 24, 34], sc: 1, dy: 0 },
+    'characters/hero_down_1.png': { src: [0, 0, 24, 34], sc: 1, dy: 0 },
+    'characters/hero_down_2.png': { src: [0, 0, 24, 34], sc: 1, dy: 0 },
+    'characters/hero_down_3.png': { src: [0, 0, 24, 34], sc: 1, dy: 0 },
+    'characters/hero_down_4.png': { src: [0, 0, 24, 34], sc: 1, dy: 0 },
+    'characters/hero_down_5.png': { src: [0, 0, 24, 34], sc: 1, dy: 0 },
+    'characters/hero_left_0.png': { src: [0, 0, 24, 34], sc: 1, dy: 0 },
+    'characters/hero_left_1.png': { src: [0, 0, 24, 34], sc: 1, dy: 0 },
+    'characters/hero_left_2.png': { src: [0, 0, 24, 34], sc: 1, dy: 0 },
+    'characters/hero_left_3.png': { src: [0, 0, 24, 34], sc: 1, dy: 0 },
+    'characters/hero_left_4.png': { src: [0, 0, 24, 34], sc: 1, dy: 0 },
+    'characters/hero_left_5.png': { src: [0, 0, 24, 34], sc: 1, dy: 0 },
+    'characters/hero_right_0.png': { src: [0, 0, 24, 34], sc: 1, dy: 0 },
+    'characters/hero_right_1.png': { src: [0, 0, 24, 34], sc: 1, dy: 0 },
+    'characters/hero_right_2.png': { src: [0, 0, 24, 34], sc: 1, dy: 0 },
+    'characters/hero_right_3.png': { src: [0, 0, 24, 34], sc: 1, dy: 0 },
+    'characters/hero_right_4.png': { src: [0, 0, 24, 34], sc: 1, dy: 0 },
+    'characters/hero_right_5.png': { src: [0, 0, 24, 34], sc: 1, dy: 0 },
+    'characters/hero_up_0.png': { src: [0, 0, 24, 34], sc: 1, dy: 0 },
+    'characters/hero_up_1.png': { src: [0, 0, 24, 34], sc: 1, dy: 0 },
+    'characters/hero_up_2.png': { src: [0, 0, 24, 34], sc: 1, dy: 0 },
+    'characters/hero_up_3.png': { src: [0, 0, 24, 34], sc: 1, dy: 0 },
+    'characters/hero_up_4.png': { src: [0, 0, 24, 34], sc: 1, dy: 0 },
+    'characters/hero_up_5.png': { src: [0, 0, 24, 34], sc: 1, dy: 0 },
+    'objects/mv_bh_large.png': { src: [0, 0, 85, 92], sc: 1, dy: 0 },
+    'objects/mv_bh_med.png': { src: [0, 0, 50, 76], sc: 1, dy: 0 },
+    'objects/mv_bh_small_a.png': { src: [0, 0, 37, 56], sc: 1, dy: 0 },
+    'objects/mv_bh_small_b.png': { src: [0, 0, 41, 60], sc: 1, dy: 0 },
+    'objects/mv_bw_large.png': { src: [0, 0, 90, 96], sc: 1, dy: 0 },
+    'objects/mv_bw_med.png': { src: [0, 0, 70, 80], sc: 1, dy: 0 },
+    'objects/mv_bw_small_a.png': { src: [0, 0, 41, 58], sc: 1, dy: 0 },
+    'objects/mv_bw_small_b.png': { src: [0, 0, 44, 62], sc: 1, dy: 0 },
+    'objects/mv_wh_large.png': { src: [0, 0, 83, 92], sc: 1, dy: 0 },
+    'objects/mv_wh_med.png': { src: [0, 0, 49, 76], sc: 1, dy: 0 },
+    'objects/mv_wh_small_a.png': { src: [0, 0, 38, 56], sc: 1, dy: 0 },
+    'objects/mv_wh_small_b.png': { src: [0, 0, 41, 60], sc: 1, dy: 0 },
+    'objects/mv_ww_large.png': { src: [0, 0, 92, 96], sc: 1, dy: 0 },
+    'objects/mv_ww_med.png': { src: [0, 0, 70, 80], sc: 1, dy: 0 },
+    'objects/mv_ww_small_a.png': { src: [0, 0, 40, 58], sc: 1, dy: 0 },
+    'objects/mv_ww_small_b.png': { src: [0, 0, 45, 62], sc: 1, dy: 0 },
+    'mobs/pirate_leader.png': { src: [0, 0, 42, 60], sc: 1, dy: 0 },
+    'mobs/squidman.png': { src: [0, 0, 40, 64], sc: 1, dy: 0 },
+    'mobs/pirate_zombie.png': { src: [0, 0, 39, 60], sc: 1, dy: 0 },
 
     /* --- พื้นผิวจริง (Kenney Roguelike RPG Pack, CC0) ---
        ใช้ sc = 3 ให้ขนาดใกล้เคียง tile 48px (16px * 3) */

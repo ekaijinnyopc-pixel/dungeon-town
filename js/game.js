@@ -75,7 +75,8 @@
       this.local = DT.Player(DT.Net.clientId, name, prof, true);
       this.players = [this.local];
       /* ข้อ 4: ตัวละครที่เลือกได้ (สไปรต์สำรอง) */
-      this.local.sprite = opts.sprite || 'characters/player_down.png';
+      this.local.sprite = opts.sprite || 'characters/hero_down_0.png';
+      this.local.female = !!opts.female;
       this.local.equipBest();
 
       DT.Net.boot();
@@ -124,6 +125,8 @@
         }
         peer.x = m.x; peer.y = m.y; peer.hp = m.hp;
         peer.prof = m.prof || peer.prof;
+        peer.sprite = m.sprite || peer.sprite;
+        peer.female = !!m.female;
         peer.alive = m.alive !== false;
         peer.name = m.name || peer.name;
       };
@@ -1166,7 +1169,8 @@
         this.sendAcc = 0;
         DT.Net.send({
           t: 'state', x: round2(L.x), y: round2(L.y), name: L.name,
-          prof: L.prof, hp: Math.round(L.hp), alive: L.alive
+          prof: L.prof, hp: Math.round(L.hp), alive: L.alive,
+          sprite: L.sprite, female: !!L.female
         });
       }
     },
@@ -1207,7 +1211,7 @@
       if (root.DT.Audio) DT.Audio.play('door');
       this.toast('เข้า' + b.name + ' — กด E ที่จุดใช้งาน');
       /* ส่งสถานะให้คนอื่นเห็นว่าเข้าอาคาร */
-      DT.Net.send({ t: 'state', x: this.local.x, y: this.local.y, name: this.local.name, prof: this.local.prof, hp: Math.round(this.local.hp), alive: this.local.alive, inside: b.name });
+      DT.Net.send({ t: 'state', x: this.local.x, y: this.local.y, name: this.local.name, prof: this.local.prof, hp: Math.round(this.local.hp), alive: this.local.alive, inside: b.name, sprite: this.local.sprite, female: !!this.local.female });
     },
 
     exitBuilding: function () {
@@ -1218,7 +1222,7 @@
       if (r) { this.local.x = r.x; this.local.y = r.y; }
       if (root.DT.Audio) DT.Audio.play('door');
       this.toast('ออกจากอาคาร');
-      DT.Net.send({ t: 'state', x: this.local.x, y: this.local.y, name: this.local.name, prof: this.local.prof, hp: Math.round(this.local.hp), alive: this.local.alive, inside: null });
+      DT.Net.send({ t: 'state', x: this.local.x, y: this.local.y, name: this.local.name, prof: this.local.prof, hp: Math.round(this.local.hp), alive: this.local.alive, inside: null, sprite: this.local.sprite, female: !!this.local.female });
     },
 
     /* ---------- อัปเดตตอนอยู่ในห้อง ---------- */
@@ -1300,7 +1304,8 @@
         this.sendAcc = 0;
         DT.Net.send({
           t: 'state', x: round2(L.x), y: round2(L.y), name: L.name,
-          prof: L.prof, hp: Math.round(L.hp), alive: L.alive, inside: this.room.def.name
+          prof: L.prof, hp: Math.round(L.hp), alive: L.alive, inside: this.room.def.name,
+          sprite: L.sprite, female: !!L.female
         });
       }
     },

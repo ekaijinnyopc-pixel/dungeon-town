@@ -277,6 +277,14 @@
     wraith: { name: 'วิญญาต', icon: '👻', hp: 30, dmg: 12, speed: 1.9, spawnWeight: 1, radius: 0.45, xp: 35,
               night: true, loot: [['herbal_tonic', 0.25], ['coin', 0.5], ['herb', 0.4]] },
 
+    /* --- Boss จาก CraftPix: Free Fantasy RPG Pirate Boss Character Pack --- */
+    pirate_leader: { name: 'ผู้นำโจรสลับ', icon: '🏴‍☠️', hp: 140, dmg: 24, speed: 1.7, spawnWeight: 0.5, radius: 0.7, xp: 220,
+               night: true, boss: true, loot: [['coin', 0.9], ['steel_sword', 0.35], ['goblin_amulet', 0.3], ['lucky_stone', 0.2]] },
+    squidman:   { name: 'หัวหมึกยักษ์', icon: '🦑', hp: 165, dmg: 27, speed: 1.5, spawnWeight: 0.4, radius: 0.7, xp: 260,
+               night: true, boss: true, loot: [['coin', 0.9], ['iron_armor', 0.3], ['herbal_tonic', 0.4], ['protect_stone', 0.2]] },
+    pirate_zombie: { name: 'โจรสังขาร', icon: '🧟‍♂️', hp: 185, dmg: 30, speed: 1.6, spawnWeight: 0.4, radius: 0.7, xp: 300,
+               night: true, boss: true, loot: [['coin', 1.0], ['steel_sword', 0.4], ['wolf_ring', 0.25], ['bedroll', 0.2]] },
+
     /* --- มอนส์เพิ่มเติมจาก FF "10 Basic RPG Enemies" (redshrike, CC-BY 3.0 + OGA-BY 3.0) --- */
     bat:     { name: 'ค้างคาว', icon: '🦇', hp: 18, dmg: 5, speed: 3.2, spawnWeight: 2, radius: 0.4, xp: 12,
                loot: [['raw_meat', 0.3], ['coin', 0.2]] },
@@ -337,6 +345,7 @@
   /* ---------- ตัวละครที่ผู้เล่นเลือกได้ ---------- */
   DT.CHARACTERS = [
     { id: 'hero',    name: 'ฮีโร่',          sprite: 'characters/player_down.png' },
+    { id: 'heroine', name: 'ผู้กล้าหญิง',   sprite: 'characters/hero_down_0.png', female: true },
     { id: 'trav_a',  name: 'นักเดินทาง A',   sprite: 'characters/alt_down_6.png' },
     { id: 'trav_b',  name: 'นักเดินทาง B',   sprite: 'characters/alt_down_7.png' },
     { id: 'trav_c',  name: 'นักเดินทาง C',   sprite: 'characters/alt_down_10.png' }

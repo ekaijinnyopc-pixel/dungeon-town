@@ -140,6 +140,32 @@
     return S.tile(ctx, key, x, y, w, h);
   }
 
+  /* วาดสไปรต์ให้พอดีกรอบ (กว้าง w / สูงไม่เกิน maxH) ยึด "กลางล่าง" ที่ (x,y)
+     ใช้กับอาคาร CraftPix ที่สเกลไม่ใช่ 16x16
+     คืน true ถ้าวาดได้ / false ถ้ายังโหลดไม่เสร็จ (ให้ fallback รูปทรงเดิม) */
+  function drawSpriteFit(ctx, key, x, y, w, maxH, flip) {
+    var S = Spr(); if (!S) return false;
+    var img = S.get(key);
+    if (!img) return false;
+    var iw = img.naturalWidth || img.width, ih = img.naturalHeight || img.height;
+    if (!iw || !ih) return false;
+    var lim = maxH || w;
+    var sc = Math.min(w / iw, lim / ih);
+    if (!(sc > 0)) return false;
+    var dw = iw * sc, dh = ih * sc;
+    ctx.save();
+    ctx.imageSmoothingEnabled = false;
+    if (flip) {
+      ctx.translate(x, y);
+      ctx.scale(-1, 1);
+      ctx.drawImage(img, -dw / 2, -dh, dw, dh);
+    } else {
+      ctx.drawImage(img, x - dw / 2, y - dh, dw, dh);
+    }
+    ctx.restore();
+    return true;
+  }
+
   /* เรียงสไปรต์แบบคูณสเกล z (สำหรับอาคารที่วาดด้วยพิกเซลจอจริง) */
   function tileSpriteZ(ctx, key, x, y, w, h, z) {
     if (!(w > 0) || !(h > 0)) return false;
@@ -627,6 +653,42 @@
     var swing = opts.swing || 0;
     var seed = opts.seed || 0;
 
+    /* ---------- สไปรต์ตัวหญิง CraftPix 4 ทิศ (มี walk cycle 6 เฟรม/ทิศ) ----------
+       เลือกไฟล์ตามทิศ + ตามจังหวะเดิน; ถ้าโหลดไม่ได้ -> fallback ไป shape-art เดิม */
+    var HERO_DIR = { down: 'down', up: 'up', left: 'left', right: 'right' };
+    var useHero = !!opts.female;
+    var heroPrefix = (useHero && HERO_DIR[dir]) ? 'characters/hero_' + HERO_DIR[dir] + '_' : null;
+    if (heroPrefix) {
+      var hFreq = running ? 11 : 7.5;
+      var hFrame = moving ? (Math.floor(t * hFreq) % 6) : 0;
+      if (hFrame < 0) hFrame = 0;
+      var hKey = heroPrefix + hFrame + '.png';
+      ctx.save();
+      ctx.translate(sx, sy);
+      ctx.scale(z, z);
+      if (hurt > 0) ctx.globalAlpha = 0.55;
+      var heroDrew = drawSprite(ctx, hKey, 0, 0, false, null, 0);
+      if (heroDrew) {
+        var hw = weaponKind(opts.weapon);
+        if (hw) {
+          var hHandX = dir === 'left' ? -4.6 : 4.6;
+          var hHandY = -16;
+          ctx.save();
+          ctx.translate(hHandX, hHandY);
+          var hArm;
+          if (swing > 0) hArm = -1.45 + swing * 2.5;
+          else if (waving) hArm = -2.25 + Math.sin(t * 8) * 0.25;
+          else hArm = 0.14 + (moving ? Math.sin(t * hFreq) * 0.35 : 0);
+          ctx.rotate(hArm);
+          drawWeapon(ctx, hw, swing);
+          ctx.restore();
+        }
+        ctx.restore();
+        return;
+      }
+      ctx.restore();
+    }
+
     /* ---------- สไปรต์ (ถ้าพร้อม) : 4 ทิศ + idle/เดิน ---------- */
     var custom = opts.sprite;
     var charKey = custom
@@ -845,7 +907,11 @@
     skeleton: { c: '#e8e2cf', d: '#b8b09a', eye: '#3a2a20' },
     mage:    { c: '#6fa8c0', d: '#42708a', eye: '#e8f4ff' },
     knight:  { c: '#a8b0bd', d: '#6f7885', eye: '#ff6b6b' },
-    dragon:  { c: '#d4683a', d: '#a04425', eye: '#ffe066' }
+    dragon:  { c: '#d4683a', d: '#a04425', eye: '#ffe066' },
+    /* --- Boss จาก CraftPix Pirate Boss Pack (fallback shape-art) --- */
+    pirate_leader:   { c: '#b03a3a', d: '#6e1f22', eye: '#ffe066' },
+    squidman:        { c: '#6ec0c8', d: '#3d7c86', eye: '#fff' },
+    pirate_zombie:   { c: '#8fae72', d: '#587141', eye: '#ff6b6b' }
   };
 
   /* ================= Platino (easter egg ที่ซ่อนอยู่ในป่า) =================
@@ -1230,6 +1296,37 @@
       z = arguments[4] || c;
     }
     if (w <= 0 || h <= 0) return;
+
+    /* ---- อาคาร CraftPix (Free Fantasy Medieval Village Buildings) ----
+       ถ้ามี b.sprite -> วาดสไปรต์จริงให้พอดี footprint
+       (ยึดกลางล่าง) ถ้าโหลดไม่ได้ -> fallback ไป shape-art ด้านล่าง (ไม่จอดำ) */
+    if (b.sprite) {
+      var bDrew = false;
+      ctx.save();
+      /* เงาใต้อาคาร */
+      ctx.fillStyle = 'rgba(10,16,8,0.22)';
+      ctx.fillRect(x + 3 * z, y + 5 * z, w * 0.92, h * 0.9);
+      bDrew = drawSpriteFit(ctx, b.sprite, x + w / 2, y + h, w * 1.02, h * 1.06, false);
+      ctx.restore();
+      if (bDrew) {
+        /* ป้ายชื่ออาคาร (เหมือนแบบ shape-art) */
+        var bLabel = (b.icon ? b.icon + ' ' : '') + (b.name || '');
+        if (bLabel) {
+          ctx.save();
+          ctx.font = Math.max(9, 11 * z) + 'px sans-serif';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'alphabetic';
+          var btw = ctx.measureText(bLabel).width;
+          var bly = y - 7 * z;
+          ctx.fillStyle = 'rgba(0,0,0,0.55)';
+          ctx.fillRect(x + w / 2 - btw / 2 - 6 * z, bly - 13 * z, btw + 12 * z, 16 * z);
+          ctx.fillStyle = '#f2e4b8';
+          ctx.fillText(bLabel, x + w / 2, bly - 1.5 * z);
+          ctx.restore();
+        }
+        return;
+      }
+    }
 
     var seed = Art.hash(b.x || 0, b.y || 0);
     var PAL = [

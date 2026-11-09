@@ -91,7 +91,11 @@
         <span class="cp-hint">เลือกได้ตอนเข้าเกม แล้วเปลี่ยนได้ภายหลัง</span>
       </div>
       <div class="cp-grid" id="charGrid">
-        <button class="cp-item sel" data-char="characters/player_down.png">
+        <button class="cp-item sel" data-char="characters/hero_down_0.png" data-female="1">
+          <span class="cp-name">ผู้กล้าหญิง</span>
+          <img src="assets/characters/hero_down_0.png" alt="ผู้กล้าหญิง">
+        </button>
+        <button class="cp-item" data-char="characters/player_down.png">
           <span class="cp-name">ฮีโร่</span>
           <img src="assets/characters/player_down.png" alt="ฮีโร่">
         </button>
@@ -229,12 +233,14 @@
   mark('miner');
 
   /* ---------- ข้อ 4: เลือกตัวละคร ---------- */
-  var chosenChar = 'characters/player_down.png';
+  var chosenChar = 'characters/hero_down_0.png';
+  var chosenFemale = true;
   var charItems = document.querySelectorAll('.cp-item');
   for (var ci = 0; ci < charItems.length; ci++) {
     (function (btn) {
       btn.addEventListener('click', function () {
         chosenChar = btn.getAttribute('data-char');
+        chosenFemale = btn.getAttribute('data-female') === '1';
         for (var cj = 0; cj < charItems.length; cj++) {
           charItems[cj].classList.toggle('sel', charItems[cj] === btn);
         }
@@ -247,7 +253,7 @@
     document.getElementById('start').classList.add('hidden');
     if (landing) landing.classList.add('hidden');
     document.getElementById('app').classList.remove('hidden');
-    DT.Game.start({ name: n, prof: chosen, sprite: chosenChar });
+    DT.Game.start({ name: n, prof: chosen, sprite: chosenChar, female: chosenFemale });
   });
 
   /* P4-C: ปุ่มมือถือผูกใน js/game.js (bindMobilePads + bindTouch) แล้ว

@@ -78,12 +78,17 @@
     return {
       w: w, h: h, grid: g,
       buildings: [
-        { x: 19, y: 19, w: 4, h: 4, name: 'โรงตีเหล็ก', icon: '🔨', work: true, door: { x: 20, y: 19 } },
+        { x: 19, y: 19, w: 4, h: 4, name: 'โรงตีเหล็ก', icon: '🔨', work: true, door: { x: 20, y: 19 },
+          sprite: 'objects/mv_bh_large.png' },
         { x: 28, y: 19, w: 3, h: 3, name: 'ตลาด', icon: '🏪', door: { x: 29, y: 19 },
+          sprite: 'objects/mv_wh_med.png',
           sign: 'objects/tiny_shop_sign.png', awning: 'objects/tiny_awning.png' },
-        { x: 18, y: 29, w: 4, h: 3, name: 'บ้านนักล่า', icon: '🏹', door: { x: 19, y: 29 } },
-        { x: 28, y: 29, w: 4, h: 3, name: 'บ้านช่างปลูก', icon: '🌾', door: { x: 29, y: 29 } },
-        { x: 23, y: 32, w: 4, h: 3, name: 'บ้านคนเหมือง', icon: '⛏️', door: { x: 24, y: 32 } }
+        { x: 18, y: 29, w: 4, h: 3, name: 'บ้านนักล่า', icon: '🏹', door: { x: 19, y: 29 },
+          sprite: 'objects/mv_ww_small_a.png' },
+        { x: 28, y: 29, w: 4, h: 3, name: 'บ้านช่างปลูก', icon: '🌾', door: { x: 29, y: 29 },
+          sprite: 'objects/mv_wh_small_a.png' },
+        { x: 23, y: 32, w: 4, h: 3, name: 'บ้านคนเหมือง', icon: '⛏️', door: { x: 24, y: 32 },
+          sprite: 'objects/mv_bw_small_a.png' },
       ]
     };
   }
@@ -154,6 +159,34 @@
         day: 1,
         tickAcc: 0
       };
+      /* ---------- Boss 3 ตัว (CraftPix Pirate Boss Pack) ----------
+         เกิดคงที่นอกเมือง 1 ตัว/จุด ตอนกลางคืน (ไม่เกิดซ้ำจนกว่าจะตาย) */
+      world.BOSS_SPOTS = [
+        { type: 'pirate_leader', x: 14.5, y: 37.5 },
+        { type: 'squidman',      x: 38.5, y: 37.5 },
+        { type: 'pirate_zombie', x: 40.5, y: 10.5 }
+      ];
+      world.spawnBosses = function () {
+        for (var bi = 0; bi < world.BOSS_SPOTS.length; bi++) {
+          var spot = world.BOSS_SPOTS[bi];
+          var exists = false;
+          for (var mi = 0; mi < world.mobs.length; mi++) {
+            if (world.mobs[mi].type === spot.type) { exists = true; break; }
+          }
+          if (exists) continue;
+          var bd = DT.MOBS[spot.type];
+          if (!bd) continue;
+          world.mobs.push({
+            id: 'boss_' + spot.type,
+            type: spot.type, x: spot.x, y: spot.y,
+            hp: bd.hp, maxHp: bd.hp,
+            dmg: bd.dmg, speed: bd.speed,
+            cd: 0, hitFlash: 0, swing: 0,
+            boss: true
+          });
+        }
+      };
+
       world.spawnNight = function () {
         // เฉพาะกลางคืน
         if (!DT.isNight(world.time)) return;
@@ -213,7 +246,11 @@
       world.time += dt / C.DAY_LENGTH;
       while (world.time >= 1) { world.time -= 1; world.day++; }
       world.tickAcc += dt;
-      if (world.tickAcc > 2) { world.tickAcc = 0; world.spawnNight(); }
+      if (world.tickAcc > 2) {
+        world.tickAcc = 0;
+        world.spawnNight();
+        if (DT.isNight(world.time)) world.spawnBosses();
+      }
 
       /* สภาพอากาศเปลี่ยนเป็นครั้งคราว */
       world.weatherT -= dt;

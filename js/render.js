@@ -460,6 +460,7 @@
         waving: !!pl.waving,
         hurt: pl.hurtFlash, swing: pl.swing, weapon: Art.toolIcon(pl.weapon),
         dir: pl.dir || 'down',
+        female: !!pl.female,
         seed: pl.x * 0.7 + pl.y * 1.3
       });
 
