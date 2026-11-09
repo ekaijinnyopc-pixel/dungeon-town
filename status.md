@@ -1,7 +1,20 @@
 # status.md — Dungeon Town / wire Kenney CC0 sprites
 
 ## งานที่กำลังทำ (active)
-- ไม่มี — ข้อ 1-4 commit + push + deploy เสร็จแล้ว (รอคำสั่งถัดไป)
+- **งานที่ 5: เปลี่ยนธีม asset ตามที่พี่เอสั่ง (CraftPix)** — เริ่ม 2026-11-10 02:00
+  1. บ้าน/ร้าน → `Free Fantasy Medieval Village Buildings Asset Pack` (id 116565)
+  2. ตัวละคร Boss → `Free Fantasy RPG Pirate Boss Character Pack` (id 114848)
+  3. ตัวละครหลัก → `Free Base 4-Direction Female Character Pixel Art` (id 69845)
+  - ทั้ง 3 ชุด **ฟรีจริง** (Free Download — royalty free usage in unlimited projects)
+  - ⚠️ หน้า download ขอ "Just sign in for download" → เครื่องนี้ไม่มี credential
+    → ดึงภาพ preview จริงของ pack จาก `img.craftpix.net` มา crop เป็นสไปรต์
+  - ไฟล์ preview ที่ดึงได้: bld1/bld2.png, pir.png..pir6.png, fem.jpg..fem4.jpg (1800x1200)
+
+## ✅ งานที่ 4 (เสร็จแล้ว — commit `63fe42d`) รวมธีมสี Tiny Town ทั้งเกม
+- พื้น/หิน/พุ่ม/ป้ายร้าน/มลน้ำ → ชุด Tiny Town เดียวกัน (แก้ปัญหา 3 ชุดสีปนกัน)
+- เทสต์: verify-live 34/0 · sprite-render 10/0 · refine 128/0 · party 57/0 · market 58/0
+        phase3 29/0 · mouse 19/0 · touch 73/0 · viewports 32/0
+- deploy success · live URL verify 34/0
 
 ## งานข้อ 1-4 (ส่งมอบแล้ว — commit `c3c1520`)
 1. **หน้าแลนด์ดิ้ง** — `#landing` + ปุ่ม `#play-now` "▶ เข้าเล่นทันที"; หน้าเลือกอาชีพซ่อนเป็นค่าเริ่มต้น
