@@ -1,3 +1,5 @@
 node_modules/
 .cache/
 *.log
+tools/__pycache__/
+assets/_raw/
