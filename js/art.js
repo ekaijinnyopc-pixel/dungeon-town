@@ -1306,7 +1306,8 @@
       /* เงาใต้อาคาร */
       ctx.fillStyle = 'rgba(10,16,8,0.22)';
       ctx.fillRect(x + 3 * z, y + 5 * z, w * 0.92, h * 0.9);
-      bDrew = drawSpriteFit(ctx, b.sprite, x + w / 2, y + h, w * 1.02, h * 1.06, false);
+      /* ใช้ footprint เป็นขอบเขต: กว้างไม่เกิน w, สูงไม่เกิน h*1.15 (หลังค่อยทับบนได้) */
+      bDrew = drawSpriteFit(ctx, b.sprite, x + w / 2, y + h, w, h * 1.15, false);
       ctx.restore();
       if (bDrew) {
         /* ป้ายชื่ออาคาร (เหมือนแบบ shape-art) */
