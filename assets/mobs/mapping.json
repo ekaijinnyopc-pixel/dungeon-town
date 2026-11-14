@@ -3,7 +3,8 @@
     "FF": "10 Basic RPG Enemies by redshrike (OpenGameArt) — CC-BY 3.0 + OGA-BY 3.0",
     "DawnLike": "Dawnlike 16x16 Universal Roguelike tileset v1.81 — CC-BY 4.0",
     "note": "Attribution kept in assets/CREDITS.md and project README.",
-    "extract_tool": "tools/extract-ff-mobs.py (crop จาก rpgcritters2.png ด้วย connected-component bbox แล้ว trim ขอบ)"
+    "extract_tool": "tools/extract-ff-mobs.py (crop จาก rpgcritters2.png ด้วย connected-component bbox แล้ว trim ขอบ)",
+    "CraftPix": "CraftPix Free Fantasy RPG Pirate Boss Character Pack — royalty-free freebie, unlimited projects; pack preview artwork re-cropped (see assets/CREDITS.md)"
   },
   "slime": {
     "file": "mobs/slime.png",
@@ -122,5 +123,32 @@
     "mode": "RGBA",
     "trimmed": false,
     "license_note": "license Dawnlike บังคับให้ต้องใช้ + ซ่อนตัวนี้ — เกมมี easter egg ซ่อนไว้ในป่า"
+  },
+  "pirate_leader": {
+    "file": "mobs/pirate_leader.png",
+    "note": "Boss 'ผู้นำโจรสลับ' — CraftPix pirate boss (cropped from pack preview art)",
+    "source_pack": "Free Fantasy RPG Pirate Boss Character Pack (CraftPix, royalty-free freebie)",
+    "source_file": "img.craftpix.net pack preview artwork (pir.*)",
+    "size": "42x60",
+    "mode": "RGBA",
+    "trimmed": true
+  },
+  "squidman": {
+    "file": "mobs/squidman.png",
+    "note": "Boss 'หัวหมึกยักษ์' — CraftPix pirate boss (cropped from pack preview art)",
+    "source_pack": "Free Fantasy RPG Pirate Boss Character Pack (CraftPix, royalty-free freebie)",
+    "source_file": "img.craftpix.net pack preview artwork (pir.*)",
+    "size": "40x64",
+    "mode": "RGBA",
+    "trimmed": true
+  },
+  "pirate_zombie": {
+    "file": "mobs/pirate_zombie.png",
+    "note": "Boss 'โจรสังขาร' — CraftPix pirate boss (cropped from pack preview art)",
+    "source_pack": "Free Fantasy RPG Pirate Boss Character Pack (CraftPix, royalty-free freebie)",
+    "source_file": "img.craftpix.net pack preview artwork (pir.*)",
+    "size": "39x60",
+    "mode": "RGBA",
+    "trimmed": true
   }
 }

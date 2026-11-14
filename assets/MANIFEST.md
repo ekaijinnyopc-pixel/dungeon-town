@@ -1,6 +1,7 @@
 # MANIFEST — dungeon-town/assets
 
-ชุดภาพทั้งหมดดาวน์โหลดจาก **Kenney** (kenney.nl) ใบอนุญาต **CC0 1.0 (Public Domain)** — ใช้ค้า ดัดแปลง แจกต่อ ได้โดยไม่ต้องขออนุญาต
+ภาพส่วนใหญ่ดาวน์โหลดจาก **Kenney** (kenney.nl) ใบอนุญาต **CC0 1.0 (Public Domain)** — ใช้ค้า ดัดแปลง แจกต่อ ได้โดยไม่ต้องขออนุญาต
+รวมถึงชุด **CraftPix freebies** (royalty-free, ใช้ได้ไม่จำกัดโปรเจกต์) — ดูหัวข้อ 7
 
 > ข้อควรรู้: ภาพชุดนี้ **wire เข้าเกมแล้ว** — `js/sprites.js` (ตัวโหลดแบบ lazy + fallback) และ `js/art.js`
 > (ผูกสไปรต์เข้ากับ tree / rock / ore / bush / player / บ้าน / prop) ถ้าโหลดสไปรต์ไม่ได้จะวาดรูปทรงเดิมแบบ shape art ทันที
@@ -88,7 +89,8 @@ mapping.json แต่ละรายการมี: `file`, `source_pack`, `so
 
 ## 3. `characters/` — ตัวละคร 4 ทิศ
 
-**6 PNG** + `characters.json` — สกัดจาก `sheets/roguelikeChar_transparent.png` (grid origin = x6, y9, cell 16×16)
+**30 PNG** + `characters.json` — 6 ไฟล์หลักจาก `sheets/roguelikeChar_transparent.png` (grid origin = x6, y9, cell 16×16)
+และ 24 ไฟล์ `hero_{down,left,right,up}_{0..5}.png` จาก CraftPix (ดูหัวข้อ 7)
 
 | ไฟล์ | ทิศ | ต้นทาง | หมายเหตุ |
 |---|---|---|---|
@@ -182,5 +184,35 @@ cd dungeon-town && python3 tools/make_objects.py
 
 ## 6. License
 
-ทุกชุดเป็น **Kenney CC0 1.0** — ไฟล์ license ต้นฉบับอยู่ใน `licenses/`
+ชุดหลักเป็น **Kenney CC0 1.0** — ไฟล์ license ต้นฉบับอยู่ใน `licenses/`
 ถ้าจะเผยแพร่เกม ควรใส่เครดิต "Art by Kenney (kenney.nl) — CC0" ในหน้า About/Credits
+ชุด CC-BY (Dawnlike / 10 Basic RPG Enemies) และชุด CraftPix ดูรายละเอียดที่ `assets/CREDITS.md`
+
+---
+
+## 7. CraftPix Freebies — ธีมอาคาร / Boss / ตัวละครหลัก (งานที่ 5)
+
+ดาวน์โหลดจาก `img.craftpix.net` (ภาพ preview ของ pack) แล้ว crop ให้เป็น PNG โปร่งใส
+เครื่องมือ: `tools/craftpix-assets.py`, `tools/craftpix-buildings.py`, `tools/craftpix-hero.py`
+
+| Pack | Product ID | ไฟล์ที่ได้ | ใช้ทำอะไร |
+|---|---|---|---|
+| Free Fantasy Medieval Village Buildings Asset Pack | 116565 | `objects/mv_*.png` (16 ไฟล์: wh/bh/ww/bw × small_a/small_b/med/large) | อาคารทุกหลังในเมือง (5 หลังใน `js/world.js`) |
+| Free Fantasy RPG Pirate Boss Character Pack | 114848 | `mobs/pirate_leader.png`, `mobs/squidman.png`, `mobs/pirate_zombie.png` | Boss 3 ตัว (เกิดกลางคืน, `world.BOSS_SPOTS`) |
+| Free Base 4-Direction Female Character Pixel Art | 69845 | `characters/hero_{down,left,right,up}_{0..5}.png` (24 ไฟล์) | ตัวเล่นฝ่ายหญิง 4 ทิศ + walk cycle 6 เฟรม/ทิศ |
+
+### Wiring
+
+- **อาคาร** — `Art.building` ใช้ `b.sprite` (ฟิลด์ `sprite` ใน `js/world.js`) วาดสไปรต์จริงให้พอดี footprint
+  ยึดกลางล่าง; ถ้าโหลดไม่ได้ → fallback เป็น shape-art เดิม (ไม่จอดำ)
+  ป้าย/อานของตลาดยังใช้ `objects/tiny_shop_sign.png` + `objects/tiny_awning.png` (Tiny Town)
+- **Boss** — `Art.mob` โหลด `mobs/<type>.png` ก่อนเสมอ (`pirate_leader`, `squidman`, `pirate_zombie` มีใน `S.SPEC`)
+- **ตัวเล่นหญิง** — `Art.player` เมื่อ `opts.female === true` เลือก `characters/hero_<dir>_<frame>.png`
+  (dir = down/up/left/right, frame 0–5 ตามจังหวะเดิน; เดินเร็ว 11 fps / เดิน 7.5 fps)
+  ถ้าโหลดไม่ได้ → fallback เป็นสไปรต์ `player_*.png` เดิม
+
+### กฎ
+
+- PNG โหลดจาก `assets/` แบบ relative (ได้ทั้งโฟลเดอร์และ single-file build)
+- ทุกสไปรต์มี fallback shape-art ทันทีเมื่อโหลดไม่ได้
+- ถ้าโหลด pack ต้นฉบับได้ภายหลัง (ต้องมีบัญชี CraftPix) ให้ crop ใหม่ด้วยสคริปต์เดิมแล้วอัปเดต `mapping.json`

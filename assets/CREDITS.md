@@ -52,8 +52,8 @@ The original pack files require a free CraftPix account to download.
 
 | Pack | URL | Product ID | Used for |
 |---|---|---|---|
-| Free Fantasy Medieval Village Buildings Asset Pack | https://craftpix.net/freebies/free-fantasy-medieval-village-buildings-asset-pack/ | 69845 | Town buildings & shop (`assets/objects/mv_*.png`) |
+| Free Fantasy Medieval Village Buildings Asset Pack | https://craftpix.net/freebies/free-fantasy-medieval-village-buildings-asset-pack/ | 116565 | Town buildings & shop (`assets/objects/mv_*.png`) |
 | Free Fantasy RPG Pirate Boss Character Pack | https://craftpix.net/freebies/free-fantasy-rpg-pirate-boss-character-pack/ | 114848 | Boss characters (`assets/mobs/pirate_leader.png`, `squidman.png`, `pirate_zombie.png`) |
-| Free Base 4-Direction Female Character Pixel Art | https://craftpix.net/freebies/free-base-4-direction-female-character-pixel-art/ | 116565 | Player character walk cycle (`assets/characters/hero_{down,left,right,up}_{0..5}.png`) |
+| Free Base 4-Direction Female Character Pixel Art | https://craftpix.net/freebies/free-base-4-direction-female-character-pixel-art/ | 69845 | Player character walk cycle (`assets/characters/hero_{down,left,right,up}_{0..5}.png`) |
 
 Source preview images: `img.craftpix.net` promotional artwork (not original pack assets).

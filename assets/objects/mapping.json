@@ -988,5 +988,133 @@
     "source_path": "tiles/town/tile_0075.png",
     "source_sheet": "ct_town",
     "tile_size": "16x16"
+  },
+  "mv_wh_small_a": {
+    "file": "objects/mv_wh_small_a.png",
+    "note": "CraftPix medieval village building (wh_small_a) — cropped from pack preview art bld2.png",
+    "source_pack": "Free Fantasy Medieval Village Buildings Asset Pack (CraftPix, royalty-free freebie)",
+    "source_path": "_raw/bld2.png",
+    "source_sheet": "CraftPix pack preview artwork",
+    "tile_size": "38x56"
+  },
+  "mv_wh_small_b": {
+    "file": "objects/mv_wh_small_b.png",
+    "note": "CraftPix medieval village building (wh_small_b) — cropped from pack preview art bld2.png",
+    "source_pack": "Free Fantasy Medieval Village Buildings Asset Pack (CraftPix, royalty-free freebie)",
+    "source_path": "_raw/bld2.png",
+    "source_sheet": "CraftPix pack preview artwork",
+    "tile_size": "41x60"
+  },
+  "mv_wh_med": {
+    "file": "objects/mv_wh_med.png",
+    "note": "CraftPix medieval village building (wh_med) — cropped from pack preview art bld2.png",
+    "source_pack": "Free Fantasy Medieval Village Buildings Asset Pack (CraftPix, royalty-free freebie)",
+    "source_path": "_raw/bld2.png",
+    "source_sheet": "CraftPix pack preview artwork",
+    "tile_size": "49x76"
+  },
+  "mv_wh_large": {
+    "file": "objects/mv_wh_large.png",
+    "note": "CraftPix medieval village building (wh_large) — cropped from pack preview art bld2.png",
+    "source_pack": "Free Fantasy Medieval Village Buildings Asset Pack (CraftPix, royalty-free freebie)",
+    "source_path": "_raw/bld2.png",
+    "source_sheet": "CraftPix pack preview artwork",
+    "tile_size": "87x92"
+  },
+  "mv_bh_small_a": {
+    "file": "objects/mv_bh_small_a.png",
+    "note": "CraftPix medieval village building (bh_small_a) — cropped from pack preview art bld2.png",
+    "source_pack": "Free Fantasy Medieval Village Buildings Asset Pack (CraftPix, royalty-free freebie)",
+    "source_path": "_raw/bld2.png",
+    "source_sheet": "CraftPix pack preview artwork",
+    "tile_size": "38x56"
+  },
+  "mv_bh_small_b": {
+    "file": "objects/mv_bh_small_b.png",
+    "note": "CraftPix medieval village building (bh_small_b) — cropped from pack preview art bld2.png",
+    "source_pack": "Free Fantasy Medieval Village Buildings Asset Pack (CraftPix, royalty-free freebie)",
+    "source_path": "_raw/bld2.png",
+    "source_sheet": "CraftPix pack preview artwork",
+    "tile_size": "42x60"
+  },
+  "mv_bh_med": {
+    "file": "objects/mv_bh_med.png",
+    "note": "CraftPix medieval village building (bh_med) — cropped from pack preview art bld2.png",
+    "source_pack": "Free Fantasy Medieval Village Buildings Asset Pack (CraftPix, royalty-free freebie)",
+    "source_path": "_raw/bld2.png",
+    "source_sheet": "CraftPix pack preview artwork",
+    "tile_size": "50x76"
+  },
+  "mv_bh_large": {
+    "file": "objects/mv_bh_large.png",
+    "note": "CraftPix medieval village building (bh_large) — cropped from pack preview art bld2.png",
+    "source_pack": "Free Fantasy Medieval Village Buildings Asset Pack (CraftPix, royalty-free freebie)",
+    "source_path": "_raw/bld2.png",
+    "source_sheet": "CraftPix pack preview artwork",
+    "tile_size": "90x92"
+  },
+  "mv_ww_small_a": {
+    "file": "objects/mv_ww_small_a.png",
+    "note": "CraftPix medieval village building (ww_small_a) — cropped from pack preview art bld2.png",
+    "source_pack": "Free Fantasy Medieval Village Buildings Asset Pack (CraftPix, royalty-free freebie)",
+    "source_path": "_raw/bld2.png",
+    "source_sheet": "CraftPix pack preview artwork",
+    "tile_size": "39x58"
+  },
+  "mv_ww_small_b": {
+    "file": "objects/mv_ww_small_b.png",
+    "note": "CraftPix medieval village building (ww_small_b) — cropped from pack preview art bld2.png",
+    "source_pack": "Free Fantasy Medieval Village Buildings Asset Pack (CraftPix, royalty-free freebie)",
+    "source_path": "_raw/bld2.png",
+    "source_sheet": "CraftPix pack preview artwork",
+    "tile_size": "40x62"
+  },
+  "mv_ww_med": {
+    "file": "objects/mv_ww_med.png",
+    "note": "CraftPix medieval village building (ww_med) — cropped from pack preview art bld2.png",
+    "source_pack": "Free Fantasy Medieval Village Buildings Asset Pack (CraftPix, royalty-free freebie)",
+    "source_path": "_raw/bld2.png",
+    "source_sheet": "CraftPix pack preview artwork",
+    "tile_size": "70x80"
+  },
+  "mv_ww_large": {
+    "file": "objects/mv_ww_large.png",
+    "note": "CraftPix medieval village building (ww_large) — cropped from pack preview art bld2.png",
+    "source_pack": "Free Fantasy Medieval Village Buildings Asset Pack (CraftPix, royalty-free freebie)",
+    "source_path": "_raw/bld2.png",
+    "source_sheet": "CraftPix pack preview artwork",
+    "tile_size": "91x96"
+  },
+  "mv_bw_small_a": {
+    "file": "objects/mv_bw_small_a.png",
+    "note": "CraftPix medieval village building (bw_small_a) — cropped from pack preview art bld2.png",
+    "source_pack": "Free Fantasy Medieval Village Buildings Asset Pack (CraftPix, royalty-free freebie)",
+    "source_path": "_raw/bld2.png",
+    "source_sheet": "CraftPix pack preview artwork",
+    "tile_size": "42x58"
+  },
+  "mv_bw_small_b": {
+    "file": "objects/mv_bw_small_b.png",
+    "note": "CraftPix medieval village building (bw_small_b) — cropped from pack preview art bld2.png",
+    "source_pack": "Free Fantasy Medieval Village Buildings Asset Pack (CraftPix, royalty-free freebie)",
+    "source_path": "_raw/bld2.png",
+    "source_sheet": "CraftPix pack preview artwork",
+    "tile_size": "45x62"
+  },
+  "mv_bw_med": {
+    "file": "objects/mv_bw_med.png",
+    "note": "CraftPix medieval village building (bw_med) — cropped from pack preview art bld2.png",
+    "source_pack": "Free Fantasy Medieval Village Buildings Asset Pack (CraftPix, royalty-free freebie)",
+    "source_path": "_raw/bld2.png",
+    "source_sheet": "CraftPix pack preview artwork",
+    "tile_size": "71x80"
+  },
+  "mv_bw_large": {
+    "file": "objects/mv_bw_large.png",
+    "note": "CraftPix medieval village building (bw_large) — cropped from pack preview art bld2.png",
+    "source_pack": "Free Fantasy Medieval Village Buildings Asset Pack (CraftPix, royalty-free freebie)",
+    "source_path": "_raw/bld2.png",
+    "source_sheet": "CraftPix pack preview artwork",
+    "tile_size": "91x96"
   }
 }
