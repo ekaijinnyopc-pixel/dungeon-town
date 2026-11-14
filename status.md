@@ -1,14 +1,19 @@
 # status.md — Dungeon Town / wire Kenney CC0 sprites
 
 ## งานที่กำลังทำ (active)
-- **งานที่ 5: เปลี่ยนธีม asset ตามที่พี่เอสั่ง (CraftPix)** — เริ่ม 2026-11-10 02:00
-  1. บ้าน/ร้าน → `Free Fantasy Medieval Village Buildings Asset Pack` (id 116565)
-  2. ตัวละคร Boss → `Free Fantasy RPG Pirate Boss Character Pack` (id 114848)
-  3. ตัวละครหลัก → `Free Base 4-Direction Female Character Pixel Art` (id 69845)
-  - ทั้ง 3 ชุด **ฟรีจริง** (Free Download — royalty free usage in unlimited projects)
-  - ⚠️ หน้า download ขอ "Just sign in for download" → เครื่องนี้ไม่มี credential
-    → ดึงภาพ preview จริงของ pack จาก `img.craftpix.net` มา crop เป็นสไปรต์
-  - ไฟล์ preview ที่ดึงได้: bld1/bld2.png, pir.png..pir6.png, fem.jpg..fem4.jpg (1800x1200)
+- **ไม่มีงานค้าง** — งานที่ 1-5 เสร็จหมดและ deploy แล้ว (commit ล่าสุด `07e79cd`)
+
+## ✅ งานที่ 5 (เสร็จแล้ว — commit `07e79cd`) เปลี่ยนธีม asset เป็น CraftPix
+1. **อาคาร** → `Free Fantasy Medieval Village Buildings Asset Pack` (id **116565**) — 16 ไฟล์ `objects/mv_*.png` ใช้กับอาคารทั้ง 5 หลังใน `js/world.js`
+2. **Boss** → `Free Fantasy RPG Pirate Boss Character Pack` (id 114848) — `mobs/pirate_leader.png`, `squidman.png`, `pirate_zombie.png` (เกิดกลางคืนที่ `world.BOSS_SPOTS`)
+3. **ตัวเล่นหญิง** → `Free Base 4-Direction Female Character Pixel Art` (id **69845**) — `characters/hero_{down,up,left,right}_{0..5}.png` (4 ทิศ × 6 เฟรม)
+- crop จากภาพ preview `img.craftpix.net` (ดาวน์โหลด pack ต้นฉบับต้องมีบัญชี CraftPix) — เครื่องมือ `tools/craftpix-{assets,buildings,hero}.py`
+- wiring: `Art.building` ใช้ `b.sprite` · `Art.mob` โหลด `mobs/<type>.png` · `Art.player` เลือก `hero_*` เมื่อ `opts.female`
+- เอกสาร: `assets/CREDITS.md` (แก้ Product ID ที่สลับกัน) · `assets/MANIFEST.md` หัวข้อ 7 · `mapping.json` ทั้ง 3 ไฟล์
+- เครื่องมือทดสอบใหม่: `tools/verify-craftpix.js` (อาคาร 5/5 · Boss 3/3 · ฮีโร่ 24/24 · fallback · JS error 0)
+- ผลทดสอบ: verify-craftpix 11/0 · verify-live 34/0 · sprites 11/0 · sprite-render 10/0 · sprite-fallback 5/0
+  · refine 128/0 · party 57/0 · market 58/0 · phase3 29/0 · mouse 19/0 · touch 73/0 · viewports 32/0 · smoke 81/0
+- deploy success (run 43632104582) · live verify: index 34/0, dist 34/0, craftpix 11/0
 
 ## ✅ งานที่ 4 (เสร็จแล้ว — commit `63fe42d`) รวมธีมสี Tiny Town ทั้งเกม
 - พื้น/หิน/พุ่ม/ป้ายร้าน/มลน้ำ → ชุด Tiny Town เดียวกัน (แก้ปัญหา 3 ชุดสีปนกัน)
