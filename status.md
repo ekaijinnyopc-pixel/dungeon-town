@@ -1,7 +1,13 @@
 # status.md — Dungeon Town / wire Kenney CC0 sprites
 
 ## งานที่กำลังทำ (active)
-- **ไม่มีงานค้าง** — งานที่ 1-5 เสร็จหมดและ deploy แล้ว (commit ล่าสุด `07e79cd`)
+- **ไม่มีงานค้าง** — งานที่ 1-5 เสร็จหมดและ deploy แล้ว (commit ล่าสุด `6489dd0`)
+
+## ✅ แก้ workflow deploy ที่พัง (2026-11-16 10:05 GMT+8) — commit `6489dd0`
+- push commit `5e89832` (status.md งานที่ 5) → run `43789728711` **failure**: `actions/upload-pages-artifact@v3` ไม่สร้าง artifact → `deploy-pages@v4` ตอบ `No artifacts named "github-pages" were found`
+- แก้ `.github/workflows/pages.yml`: `upload-pages-artifact@v3` → **v4**
+- push แล้ว → run `43789803447` **success** (20s)
+- live verify: index 200 · dist 200 · `tools/verify-live.js` บน live URL **34/0** · JS error 0
 
 ## ✅ งานที่ 5 (เสร็จแล้ว — commit `07e79cd`) เปลี่ยนธีม asset เป็น CraftPix
 1. **อาคาร** → `Free Fantasy Medieval Village Buildings Asset Pack` (id **116565**) — 16 ไฟล์ `objects/mv_*.png` ใช้กับอาคารทั้ง 5 หลังใน `js/world.js`
