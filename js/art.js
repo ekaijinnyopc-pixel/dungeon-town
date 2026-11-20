@@ -656,8 +656,12 @@
     /* ---------- สไปรต์ตัวหญิง CraftPix 4 ทิศ (มี walk cycle 6 เฟรม/ทิศ) ----------
        เลือกไฟล์ตามทิศ + ตามจังหวะเดิน; ถ้าโหลดไม่ได้ -> fallback ไป shape-art เดิม */
     var HERO_DIR = { down: 'down', up: 'up', left: 'left', right: 'right' };
-    var useHero = !!opts.female;
-    var heroPrefix = (useHero && HERO_DIR[dir]) ? 'characters/hero_' + HERO_DIR[dir] + '_' : null;
+    var isMale = !!opts.male;
+    /* เดาเพิ่มจากสไปรต์ที่ผู้เล่นเลือก เผื่อข้อมูล net ไม่ได้ส่ง flag มา */
+    if (!isMale && opts.sprite && /(^|[\/])hero_m_/.test(String(opts.sprite))) isMale = true;
+    var useHero = !!opts.female || isMale;
+    var heroSet = isMale ? 'hero_m_' : 'hero_';
+    var heroPrefix = (useHero && HERO_DIR[dir]) ? 'characters/' + heroSet + HERO_DIR[dir] + '_' : null;
     if (heroPrefix) {
       var hFreq = running ? 11 : 7.5;
       var hFrame = moving ? (Math.floor(t * hFreq) % 6) : 0;
@@ -667,6 +671,13 @@
       ctx.translate(sx, sy);
       ctx.scale(z, z);
       if (hurt > 0) ctx.globalAlpha = 0.55;
+      /* เงาสัมผัสใต้เท้า (contact shadow) ให้ตัวละครเกาะพื้นชัด — วาดก่อนสไปรต์ */
+      ctx.save();
+      ctx.fillStyle = 'rgba(8,12,10,0.34)';
+      ctx.beginPath();
+      ctx.ellipse(0, -1.5, 6.2, 2.4, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
       var heroDrew = drawSprite(ctx, hKey, 0, 0, false, null, 0);
       if (heroDrew) {
         var hw = weaponKind(opts.weapon);

@@ -344,7 +344,7 @@
 
   /* ---------- ตัวละครที่ผู้เล่นเลือกได้ ---------- */
   DT.CHARACTERS = [
-    { id: 'hero',    name: 'ฮีโร่',          sprite: 'characters/player_down.png' },
+    { id: 'hero',    name: 'ฮีโร่',          sprite: 'characters/hero_m_down_0.png', male: true },
     { id: 'heroine', name: 'ผู้กล้าหญิง',   sprite: 'characters/hero_down_0.png', female: true },
     { id: 'trav_a',  name: 'นักเดินทาง A',   sprite: 'characters/alt_down_6.png' },
     { id: 'trav_b',  name: 'นักเดินทาง B',   sprite: 'characters/alt_down_7.png' },

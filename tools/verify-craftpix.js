@@ -160,6 +160,50 @@ function ok(c, m) { if (c) { pass++; console.log('  ✅ ' + m); } else { fail++;
   })()`);
   ok(typeof drawn === 'string' && drawn.trim() === '', 'Art.player (female=true) วาดได้ครบ 24 เฟรม' + (drawn && drawn.trim() ? ' — ผิด: ' + drawn : ''));
 
+  /* ---------- 3b) ตัวเล่นชาย CraftPix 4 ทิศ ---------- */
+  console.log('\n== ตัวเล่นชาย CraftPix (Free Base 4-Direction Male) ==');
+  const maleLoaded = await ev(`(function(){
+    var dirs=['down','up','left','right'], miss=[], n=0;
+    for(var i=0;i<dirs.length;i++)
+      for(var f=0;f<6;f++){
+        var k='characters/hero_m_'+dirs[i]+'_'+f+'.png';
+        if(DT.Sprites.get(k)) n++; else miss.push(k);
+      }
+    return n+'/24'+(miss.length?(' ขาด:'+miss.join(',')):'');
+  })()`);
+  ok(/^24\/24/.test(maleLoaded), 'สไปรต์ฮีโร่ชาย 4 ทิศ × 6 เฟรม โหลดได้ครบ (' + maleLoaded + ')');
+
+  const drawnM = await ev(`(function(){
+    var c=document.createElement('canvas'); c.width=200; c.height=200;
+    var x=c.getContext('2d');
+    var dirs=['down','up','left','right'], bad=[];
+    for(var i=0;i<dirs.length;i++){
+      for(var f=0;f<6;f++){
+        if(!DT.Sprites.get('characters/hero_m_'+dirs[i]+'_'+f+'.png')){bad.push('no-img');continue;}
+        x.clearRect(0,0,200,200);
+        try{ DT.Art.player(x,100,150,1,{prof:'knight',dir:dirs[i],male:true,moving:true,t:f/6,seed:1,weapon:null}); }
+        catch(e){ bad.push(dirs[i]+'_'+f+':err'); continue; }
+        var d=x.getImageData(0,0,200,200).data, hit=0;
+        for(var p=3;p<d.length;p+=4) if(d[p]>8) hit++;
+        if(hit<40) bad.push(dirs[i]+'_'+f+':blank('+hit+')');
+      }
+    }
+    return bad.join(' ');
+  })()`);
+  ok(typeof drawnM === 'string' && drawnM.trim() === '', 'Art.player (male=true) วาดได้ครบ 24 เฟรม' + (drawnM && drawnM.trim() ? ' — ผิด: ' + drawnM : ''));
+
+  /* เดาทิศจากสไปรต์ได้ด้วย (เผื่อข้อมูลเน็ตไม่ได้ส่ง flag) */
+  const maleGuess = await ev(`(function(){
+    var c=document.createElement('canvas'); c.width=120; c.height=120;
+    var x=c.getContext('2d');
+    x.clearRect(0,0,120,120);
+    DT.Art.player(x,60,90,1,{prof:'knight',dir:'down',sprite:'characters/hero_m_down_0.png',moving:false,t:0,seed:1,weapon:null});
+    var d=x.getImageData(0,0,120,120).data, hit=0;
+    for(var p=3;p<d.length;p+=4) if(d[p]>8) hit++;
+    return hit;
+  })()`);
+  ok(Number(maleGuess) > 40, 'Art.player เดาชุดชายจาก sprite ได้ (' + maleGuess + ' px)');
+
   /* ---------- 4) fallback ยังทำงาน ---------- */
   console.log('\n== fallback (สไปรต์โหลดไม่ได้ -> ยังวาดได้ ไม่จอดำ) ==');
   ok(await ev("!!(typeof DT.Art.tree === 'function' && typeof DT.Art.building === 'function')"),

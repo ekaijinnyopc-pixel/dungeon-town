@@ -90,7 +90,8 @@ mapping.json แต่ละรายการมี: `file`, `source_pack`, `so
 ## 3. `characters/` — ตัวละคร 4 ทิศ
 
 **30 PNG** + `characters.json` — 6 ไฟล์หลักจาก `sheets/roguelikeChar_transparent.png` (grid origin = x6, y9, cell 16×16)
-และ 24 ไฟล์ `hero_{down,left,right,up}_{0..5}.png` จาก CraftPix (ดูหัวข้อ 7)
+และ 48 ไฟล์ `hero_{down,left,right,up}_{0..5}.png` (หญิง 24) + `hero_m_{down,left,right,up}_{0..5}.png` (ชาย 24)
+จาก CraftPix (ดูหัวข้อ 7)
 
 | ไฟล์ | ทิศ | ต้นทาง | หมายเหตุ |
 |---|---|---|---|
@@ -193,13 +194,15 @@ cd dungeon-town && python3 tools/make_objects.py
 ## 7. CraftPix Freebies — ธีมอาคาร / Boss / ตัวละครหลัก (งานที่ 5)
 
 ดาวน์โหลดจาก `img.craftpix.net` (ภาพ preview ของ pack) แล้ว crop ให้เป็น PNG โปร่งใส
-เครื่องมือ: `tools/craftpix-assets.py`, `tools/craftpix-buildings.py`, `tools/craftpix-hero.py`
+เครื่องมือ: `tools/craftpix-assets.py`, `tools/craftpix-buildings.py`, `tools/craftpix-hero.py`,
+`tools/craftpix-hero-male.py`, `tools/add-outline.py`
 
 | Pack | Product ID | ไฟล์ที่ได้ | ใช้ทำอะไร |
 |---|---|---|---|
 | Free Fantasy Medieval Village Buildings Asset Pack | 116565 | `objects/mv_*.png` (16 ไฟล์: wh/bh/ww/bw × small_a/small_b/med/large) | อาคารทุกหลังในเมือง (5 หลังใน `js/world.js`) |
 | Free Fantasy RPG Pirate Boss Character Pack | 114848 | `mobs/pirate_leader.png`, `mobs/squidman.png`, `mobs/pirate_zombie.png` | Boss 3 ตัว (เกิดกลางคืน, `world.BOSS_SPOTS`) |
 | Free Base 4-Direction Female Character Pixel Art | 69845 | `characters/hero_{down,left,right,up}_{0..5}.png` (24 ไฟล์) | ตัวเล่นฝ่ายหญิง 4 ทิศ + walk cycle 6 เฟรม/ทิศ |
+| Free Base 4-Direction Male Character Pixel Art | 69846 | `characters/hero_m_{down,left,right,up}_{0..5}.png` (24 ไฟล์) | ตัวเล่นฝ่ายชาย 4 ทิศ + walk cycle 6 เฟรม/ทิศ |
 
 ### Wiring
 
@@ -210,6 +213,13 @@ cd dungeon-town && python3 tools/make_objects.py
 - **ตัวเล่นหญิง** — `Art.player` เมื่อ `opts.female === true` เลือก `characters/hero_<dir>_<frame>.png`
   (dir = down/up/left/right, frame 0–5 ตามจังหวะเดิน; เดินเร็ว 11 fps / เดิน 7.5 fps)
   ถ้าโหลดไม่ได้ → fallback เป็นสไปรต์ `player_*.png` เดิม
+- **ตัวเล่นชาย** — `Art.player` เมื่อ `opts.male === true` เลือก `characters/hero_m_<dir>_<frame>.png`
+  (เดาเพิ่มจากพาธสไปรต์ `/hero_m_/` ในกรณีที่ข้อมูลเน็ตไม่ได้ส่ง flag มา)
+- **ความละเอียดสไปรต์ชาย** — เก็บ native 44×62 (ไม่ย่อตอน crop) แล้วค่อยย่อตอนวาด
+  ผ่าน `S.SPEC` (`sc: 0.5484`) เพื่อให้รายละเอียดหัว/ใบหน้าไม่หายและสัดส่วนตัวไม่เพี้ยน
+- **เส้นขอบ (outline)** — `tools/add-outline.py` เพิ่มเส้นขอบสีเข้มรอบตัวละคร
+  (4-neighbour 1 พิกเซล สำหรับสไปรต์หญิง, 2 พิกเซลสำหรับสไปรต์ชาย native)
+  เพื่อให้ตัวผู้เล่นเด่นจากพื้น tile; มี contact shadow ใต้เท้าใน `Art.player`
 
 ### กฎ
 

@@ -1,7 +1,31 @@
 # status.md — Dungeon Town / wire Kenney CC0 sprites
 
 ## งานที่กำลังทำ (active)
-- **ไม่มีงานค้าง** — งานที่ 1-5 เสร็จหมดและ deploy แล้ว (commit ล่าสุด `6489dd0`)
+- **งานที่ 6: ตัวผู้เล่นชาย CraftPix + ปรับคุณภาพสไปรต์** — เสร็จโค้ด/เทสต์/ภาพแล้ว รอ commit + deploy
+
+## ✅ งานที่ 6 (เสร็จแล้ว — รอ commit) ตัวผู้เล่นชาย + ยกคุณภาพสไปรต์
+- **สไปรต์ชาย** → `Free Base 4-Direction Male Character Pixel Art` (CraftPix id **69846**)
+  24 ไฟล์ `characters/hero_m_{down,left,right,up}_{0..5}.png` (4 ทิศ × walk cycle 6 เฟรม)
+- **แก้ที่ต้นเหตุเรื่องความละเอียด** — เดิม crop แล้วย่อจาก ~52px → 34px ทำให้รายละเอียดหาย/หัวดูใหญ่เกิน
+  → เปลี่ยนเป็นเก็บ **native 44×62** แล้วค่อยย่อตอนวาดผ่าน `S.SPEC` (`sc: 0.5484`)
+- **baseline เดียวกันทั้งแถว** — ใช้ค่า `base = max(y1)` ของเฟรมที่สมบูรณ์ในแถวนั้น
+  แก้เฟรม `up` ที่เดิมถูกตัดหัว/ขาด (ตอนนั้นสูง 26/43px แทนที่จะ ~55px)
+- **เส้นขอบ (outline)** — `tools/add-outline.py` ใช้ 4-neighbour dilation (เส้นต่อเนื่อง ไม่มีจุดหลุด)
+  หญิง 1px · ชาย 2px (native ใหญ่กว่า) สี `rgba(26,18,32)`
+- **contact shadow** — วาด ellipse ใต้เท้าใน `Art.player` ก่อนสไปรต์
+- **แก้บั๊กการเดาชุดสไปรต์** — เดิมใช้ `indexOf('hero_m_') === 0` ซึ่งไม่ตรงกับ path จริง `characters/hero_m_...`
+  → เปลี่ยนเป็น regex `/(^|[\/])hero_m_/`
+- **wiring** — `opts.male` ส่งผ่าน `js/game.js` → `js/render.js` → `Art.player` · ตัวเลือก `ฮีโร่ (ชาย)` ใน `index.html`
+  · ค่าเริ่มต้น `js/config.js` เป็น `characters/hero_m_down_0.png` (`male: true`)
+- **เอกสาร** — `assets/CREDITS.md` เพิ่มแถว Male pack + หมายเหตุการประมวลผลภาพ
+  · `assets/MANIFEST.md` อัปเดตหัวข้อ 3/7 (รวม native-res + outline + wiring ชาย)
+- **เครื่องมือ** — `tools/craftpix-hero-male.py` (ปรับ crop/baseline), `tools/add-outline.py` (ใหม่)
+- **ผลทดสอบ (รวม 350 ผ่าน / 0 ล้มเหลว)**
+  verify-craftpix 14/0 · sprites 11/0 · sprite-render 10/0 · sprite-fallback 5/0
+  · refine 128/0 · party 57/0 · market 58/0 · phase3 29/0 · mouse 19/0 · input 19/0
+- **build** — `dist/dungeon-town.html` 880 KB · ฝัง 128 สไปรต์ (298 KB → 405 KB base64)
+- **ภาพ** — `dist/preview-town-desktop.png` (1280×800) + `preview-town-mobile.png` (390×844)
+  ตรวจด้วยตา: ตัวผู้เล่นอ่านออกเป็นคนชัดเจน สัดส่วนหัว/ตัวถูก เส้นขอบสะอาด เงาใต้เท้าชัด
 
 ## ✅ แก้ workflow deploy ที่พัง (2026-11-16 10:05 GMT+8) — commit `6489dd0`
 - push commit `5e89832` (status.md งานที่ 5) → run `43789728711` **failure**: `actions/upload-pages-artifact@v3` ไม่สร้าง artifact → `deploy-pages@v4` ตอบ `No artifacts named "github-pages" were found`

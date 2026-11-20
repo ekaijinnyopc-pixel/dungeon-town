@@ -77,6 +77,7 @@
       /* ข้อ 4: ตัวละครที่เลือกได้ (สไปรต์สำรอง) */
       this.local.sprite = opts.sprite || 'characters/hero_down_0.png';
       this.local.female = !!opts.female;
+      this.local.male = !!opts.male;
       this.local.equipBest();
 
       DT.Net.boot();
@@ -127,6 +128,7 @@
         peer.prof = m.prof || peer.prof;
         peer.sprite = m.sprite || peer.sprite;
         peer.female = !!m.female;
+        peer.male = !!m.male;
         peer.alive = m.alive !== false;
         peer.name = m.name || peer.name;
       };
@@ -1170,7 +1172,7 @@
         DT.Net.send({
           t: 'state', x: round2(L.x), y: round2(L.y), name: L.name,
           prof: L.prof, hp: Math.round(L.hp), alive: L.alive,
-          sprite: L.sprite, female: !!L.female
+          sprite: L.sprite, female: !!L.female, male: !!L.male
         });
       }
     },
@@ -1305,7 +1307,7 @@
         DT.Net.send({
           t: 'state', x: round2(L.x), y: round2(L.y), name: L.name,
           prof: L.prof, hp: Math.round(L.hp), alive: L.alive, inside: this.room.def.name,
-          sprite: L.sprite, female: !!L.female
+          sprite: L.sprite, female: !!L.female, male: !!L.male
         });
       }
     },

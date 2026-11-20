@@ -461,6 +461,8 @@
         hurt: pl.hurtFlash, swing: pl.swing, weapon: Art.toolIcon(pl.weapon),
         dir: pl.dir || 'down',
         female: !!pl.female,
+        male: !!pl.male,
+        sprite: pl.sprite,
         seed: pl.x * 0.7 + pl.y * 1.3
       });
 

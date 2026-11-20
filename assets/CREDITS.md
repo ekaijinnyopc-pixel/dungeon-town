@@ -55,5 +55,11 @@ The original pack files require a free CraftPix account to download.
 | Free Fantasy Medieval Village Buildings Asset Pack | https://craftpix.net/freebies/free-fantasy-medieval-village-buildings-asset-pack/ | 116565 | Town buildings & shop (`assets/objects/mv_*.png`) |
 | Free Fantasy RPG Pirate Boss Character Pack | https://craftpix.net/freebies/free-fantasy-rpg-pirate-boss-character-pack/ | 114848 | Boss characters (`assets/mobs/pirate_leader.png`, `squidman.png`, `pirate_zombie.png`) |
 | Free Base 4-Direction Female Character Pixel Art | https://craftpix.net/freebies/free-base-4-direction-female-character-pixel-art/ | 69845 | Player character walk cycle (`assets/characters/hero_{down,left,right,up}_{0..5}.png`) |
+| Free Base 4-Direction Male Character Pixel Art | https://craftpix.net/freebies/free-base-4-direction-male-character-pixel-art/ | 69846 | Player character (male) walk cycle (`assets/characters/hero_m_{down,left,right,up}_{0..5}.png`) |
 
 Source preview images: `img.craftpix.net` promotional artwork (not original pack assets).
+
+**หมายเหตุการประมวลผลภาพ:** สไปรต์ตัวผู้เล่น (ทั้งหญิงและชาย) ถูกครอปจากภาพตัวอย่าง
+โดย `tools/craftpix-hero.py` / `tools/craftpix-hero-male.py` — ลบพื้นหลัง ตัดขอบโปร่งใส
+และเพิ่มเส้นขอบสีเข้มด้วย `tools/add-outline.py` (การดัดแปลงเชิงภาพ ไม่เปลี่ยนแนวคิดงานศิลป์)
+ชุดชายเก็บความละเอียดต้นฉบับ (44x62) แล้วค่อยย่อตอนวาดในเกม เพื่อไม่ให้รายละเอียดหาย
