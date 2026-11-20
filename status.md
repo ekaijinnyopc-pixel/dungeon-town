@@ -1,9 +1,9 @@
 # status.md — Dungeon Town / wire Kenney CC0 sprites
 
 ## งานที่กำลังทำ (active)
-- **งานที่ 6: ตัวผู้เล่นชาย CraftPix + ปรับคุณภาพสไปรต์** — เสร็จโค้ด/เทสต์/ภาพแล้ว รอ commit + deploy
+- **ไม่มีงานค้าง** — งานที่ 6 เสร็จและ deploy แล้ว (commit `6a17749`, run `44804111014`)
 
-## ✅ งานที่ 6 (เสร็จแล้ว — รอ commit) ตัวผู้เล่นชาย + ยกคุณภาพสไปรต์
+## ✅ งานที่ 6 (เสร็จแล้ว — commit `6a17749`) ตัวผู้เล่นชาย + ยกคุณภาพสไปรต์
 - **สไปรต์ชาย** → `Free Base 4-Direction Male Character Pixel Art` (CraftPix id **69846**)
   24 ไฟล์ `characters/hero_m_{down,left,right,up}_{0..5}.png` (4 ทิศ × walk cycle 6 เฟรม)
 - **แก้ที่ต้นเหตุเรื่องความละเอียด** — เดิม crop แล้วย่อจาก ~52px → 34px ทำให้รายละเอียดหาย/หัวดูใหญ่เกิน
@@ -26,6 +26,9 @@
 - **build** — `dist/dungeon-town.html` 880 KB · ฝัง 128 สไปรต์ (298 KB → 405 KB base64)
 - **ภาพ** — `dist/preview-town-desktop.png` (1280×800) + `preview-town-mobile.png` (390×844)
   ตรวจด้วยตา: ตัวผู้เล่นอ่านออกเป็นคนชัดเจน สัดส่วนหัว/ตัวถูก เส้นขอบสะอาด เงาใต้เท้าชัด
+- **Deploy** — push `6a17749` → run `44804111014` **success** (18s)
+  live verify: index **34/0** · dist **34/0** · craftpix **14/0** · JS error 0
+  ลิงก์: https://ekaijinnyopc-pixel.github.io/dungeon-town/index.html
 
 ## ✅ แก้ workflow deploy ที่พัง (2026-11-16 10:05 GMT+8) — commit `6489dd0`
 - push commit `5e89832` (status.md งานที่ 5) → run `43789728711` **failure**: `actions/upload-pages-artifact@v3` ไม่สร้าง artifact → `deploy-pages@v4` ตอบ `No artifacts named "github-pages" were found`
