@@ -126,3 +126,40 @@
 - cache + `ctx.imageSmoothingEnabled = false`
 - lazy load + fallback shape ทันทีเมื่อโหลดไม่ได้ (ห้ามจอดำ/เกมพัง)
 - คง API เดิมของ `DT.Art`
+
+---
+
+## งานที่ 7: ตัวผู้เล่นหญิง CraftPix + NPC chibi (22 พ.ย. 2026, 19:30)
+
+### ทำอะไร
+- **ตัวผู้เล่นหญิง CraftPix** (`assets/_raw/fem2.jpg` → `assets/characters/hero_{down,left,right,up}_{0..5}.png`)
+  - 24 เฟรม walk cycle 4 ทิศ (6 เฟรม/ทิศ) เก็บ native 44x62 ย่อตอนวาด `sc: 0.5484`
+  - เพิ่ม outline หนา 2px + contact shadow (เท่าชุดชาย)
+  - สคริปต์ครอป: `tools/craftpix-hero-female.py`
+- **NPC chibi CraftPix** — Forest Ranger + Forest Guardian (6 ตัว) ใช้แทน NPC เมืองเดิม
+  - `npc_ranger_hood / leaf / antler`, `npc_guard_tree / stone / hood`
+  - สคริปต์: `tools/craftpix-chibi-npc.py` (flood-fill ลบพื้นหลัง + เก็บก้อนใหญ่สุด + ย่อสูง 72px)
+  - เป็นภาพ vector-style chibi (ไม่ใช่ pixel art) → วาดเป็น NPC ยืนนิ่ง + bob เบา และปิด tint ให้คงสีต้นฉบับ
+  - NPC เพิ่มเป็น 6 ตัว (เดิม 3 ในเมือง + ผู้พิทักษ์ป่า 3 ตัวฝั่งป่าเหนือ)
+- `js/sprites.js`: spec หญิงเปลี่ยนเป็น 44x62/sc 0.5484 + เพิ่ม spec NPC chibi 6 รายการ
+- `js/art.js` + `js/render.js`: รองรับ `tint: null` (ไม่ย้อมสี)
+- `js/config.js`: ผูก NPC 6 ตัวกับสไปรต์ chibi
+- `assets/CREDITS.md`: เพิ่มเครดิต CraftPix Forest Ranger / Forest Guardian
+
+### ผลทดสอบ
+- `node test/smoke.js` → 81 ผ่าน / 0 ล้มเหลว (แก้ assertion NPC 3 → 6)
+- `node tools/smoke-game.js` → 32 ผ่าน / 0 ล้มเหลว (แก้ assertion NPC 3 → 6)
+- `node tools/test-sprites.js` → 11 ผ่าน / 0 ล้มเหลว (134 สไปรต์โหลดครบ, failed 0)
+- `node tools/test-sprite-render.js` → 10 ผ่าน / 0 ล้มเหลว
+- `node tools/build-single.js` → single-file สำเร็จ (1033 KB)
+- `node tools/verify-live.js https://ekaijinnyopc-pixel.github.io/dungeon-town/` → 34 ผ่าน / 0 ล้มเหลว · JS error 0
+- `tools/shot-live.js` → ภาพจริงเดสก์ท็อป + มือถือ ตรวจด้วยตาแล้ว (NPC ตัวละครเห็นชัด)
+
+### Deploy
+- commit `9772c2d` push แล้ว · run `45017365568` success
+- live: https://ekaijinnyopc-pixel.github.io/dungeon-town/
+- single: https://ekaijinnyopc-pixel.github.io/dungeon-town/dist/dungeon-town.html
+
+### รอพี่เอ
+- ลองเลือกตัวละคร "ผู้กล้าหญิง" แล้วเดิน 4 ทิศดูว่าชอบไหม / ใหญ่เกินไปไหม
+- ดูผู้พิทักษ์ป่า 3 ตัวฝั่งตีนเหนือว่าขนาดเข้ากับฉากไหม
