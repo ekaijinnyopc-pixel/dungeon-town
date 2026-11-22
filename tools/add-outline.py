@@ -45,7 +45,9 @@ def main():
     for t in targets:
         im = Image.open(t)
         # สไปรต์ native 44x62 ใช้ outline หนากว่า 1 พิกเซลเพื่อให้ยังเห็นหลังย่อ
-        rad = 2 if os.path.basename(t).startswith('hero_m_') else radius
+        b = os.path.basename(t)
+        # สไปรต์ native 44x62 (ชาย+หญิง) ต้องใช้ outline หนา 2 px
+        rad = 2 if (b.startswith('hero_m_') or (b.startswith('hero_') and b[5:6] in 'dlru')) else radius
         add_outline(im, rad).save(t)
         n += 1
     print('outline applied:', n, 'files (radius=%d)' % radius)

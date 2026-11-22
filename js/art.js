@@ -1275,8 +1275,9 @@
     ctx.translate(sx, sy);
     ctx.scale(z, z);
     var bob = Math.sin(t * 2.4 + (opts.seed || 0)) * 0.6;
+    /* tint: null = ไม่ย้อมสี (สไปรต์ CraftPix สีต้นฉบับ) */
     var drew = drawSprite(ctx, key, 0, bob, false,
-      opts.tint || '#8fa05a', 0.30);
+      (opts.tint === null ? null : (opts.tint || '#8fa05a')), 0.30);
     ctx.restore();
     if (drew) return true;
     /* fallback: ใช้ Art.player แบบ shape */

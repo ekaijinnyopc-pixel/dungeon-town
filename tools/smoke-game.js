@@ -266,7 +266,7 @@ if (!wsUrl) {
   ok(await evaluate("DT.Game.local.coins") > c2, 'รับรางวัลแล้วเหรียญเพิ่ม');
 
   console.log('\n== Phase 2: NPC + กองไฟ ==');
-  ok(await evaluate("DT.Game.world.npcs.length") === 3, 'มี NPC 3 คน');
+  ok(await evaluate("DT.Game.world.npcs.length") === 6, 'มี NPC 6 คน (รวมผู้พิทักษ์ป่า)');
   const npcPos = await evaluate("JSON.stringify(DT.Game.world.npcs[0])");
   await evaluate("(function(){var n=DT.Game.world.npcs[0];DT.Game.local.x=n.x;DT.Game.local.y=n.y+0.5;})()");
   await evaluate("window.dispatchEvent(new KeyboardEvent('keydown',{key:'f',bubbles:true}));window.dispatchEvent(new KeyboardEvent('keyup',{key:'f',bubbles:true}));");

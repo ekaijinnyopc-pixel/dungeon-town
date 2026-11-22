@@ -317,15 +317,27 @@
 
   /* ---------- NPC ในเมือง ---------- */
   DT.NPCS = [
+    /* NPC เมือง = ตัวละคร chibi CraftPix (Forest Ranger / Forest Guardian)
+       สไปรต์เป็นภาพ vector-style จึงไม่ย้อมสี (tint: null) เพื่อให้สีต้นฉบับ */
     { id: 'merchant', name: 'พ่อค้าเมือง', icon: '🧑‍🌾', x: 29.5, y: 21.5, prof: 'merchant',
-      sprite: 'characters/alt_down_6.png',
+      sprite: 'characters/npc_ranger_hood.png', tint: null,
       greeting: 'ยินดีต้อนรับนักเดินทาง! สินค้ามีขายนะ' },
     { id: 'blacksmith', name: 'ตาลึง', icon: '👨‍🔧', x: 20.5, y: 20.5, prof: 'blacksmith',
-      sprite: 'characters/alt_down_7.png',
+      sprite: 'characters/npc_ranger_antler.png', tint: null,
       greeting: 'ต้องการให้ตีอะไร? แต่งเครื่องดีๆ ได้ที่นี่' },
     { id: 'guide', name: 'ผู้กำกับเมือง', icon: '🧙', x: 24.5, y: 27.5, prof: 'guide',
-      sprite: 'characters/alt_down_10.png',
-      greeting: 'รับใช้! มีเควสต์ให้ทำตลอดเวลา' }
+      sprite: 'characters/npc_ranger_leaf.png', tint: null,
+      greeting: 'รับใช้! มีเควสต์ให้ทำตลอดเวลา' },
+    /* ผู้พิทักษ์ป่า (Forest Guardian) — ยืนเฝ้าป่าเหนือ */
+    { id: 'guard_tree', name: 'ผู้พิทักษ์ต้นไม้', icon: '🌳', x: 8.5, y: 36.5, prof: 'guide',
+      sprite: 'characters/npc_guard_tree.png', tint: null,
+      greeting: 'ข้าพเจ้าเฝ้าป่านี้มานานแล้ว...' },
+    { id: 'guard_stone', name: 'ผู้พิทักษ์หิน', icon: '🪨', x: 13.5, y: 41.5, prof: 'guide',
+      sprite: 'characters/npc_guard_stone.png', tint: null,
+      greeting: 'ผู้พิทักษ์หิน... ผมแข็งแต่ใจอ่อน' },
+    { id: 'guard_hood', name: 'ผู้พิทักษ์ผ้า', icon: '🧥', x: 18.5, y: 44.5, prof: 'guide',
+      sprite: 'characters/npc_guard_hood.png', tint: null,
+      greeting: 'ระวังทางนะผู้เดินทาง...' }
   ];
 
   /* ---------- เควสต์ ---------- */

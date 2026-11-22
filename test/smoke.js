@@ -185,7 +185,7 @@ ok(qp.completeQuest('q_slime') === false, 'รับซ้ำไม่ได้'
 
 section('Phase 2: NPC + กองไฟ + เมืองปลอดภัย');
 const w2 = DT.World.create();
-ok(w2.npcs.length === 3, 'มี NPC ' + w2.npcs.length + ' คนในเมือง');
+ok(w2.npcs.length === 6, 'มี NPC ' + w2.npcs.length + ' คนในเมือง (รวมผู้พิทักษ์ป่า)');
 ok(w2.npcs.every(n => typeof n.x === 'number'), 'NPC มีพิกัด');
 const camper = DT.Player('c', 'ค่าย', 'hunter', true);
 DT.inv.add(camper.inv, 'campfire_kit', 1);

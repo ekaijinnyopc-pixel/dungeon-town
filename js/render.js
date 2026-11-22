@@ -508,7 +508,7 @@
       Art.npc(ctx, p.sx, p.sy, z, {
         sprite: n.sprite,
         prof: n.prof,
-        tint: n.tint || '#9aa66a',
+        tint: (n.tint === null ? null : (n.tint || '#9aa66a')),
         t: this.t + n.x,
         seed: n.x,
         dir: n.dir || 'down'

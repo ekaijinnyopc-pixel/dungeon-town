@@ -56,6 +56,8 @@ The original pack files require a free CraftPix account to download.
 | Free Fantasy RPG Pirate Boss Character Pack | https://craftpix.net/freebies/free-fantasy-rpg-pirate-boss-character-pack/ | 114848 | Boss characters (`assets/mobs/pirate_leader.png`, `squidman.png`, `pirate_zombie.png`) |
 | Free Base 4-Direction Female Character Pixel Art | https://craftpix.net/freebies/free-base-4-direction-female-character-pixel-art/ | 69845 | Player character walk cycle (`assets/characters/hero_{down,left,right,up}_{0..5}.png`) |
 | Free Base 4-Direction Male Character Pixel Art | https://craftpix.net/freebies/free-base-4-direction-male-character-pixel-art/ | 69846 | Player character (male) walk cycle (`assets/characters/hero_m_{down,left,right,up}_{0..5}.png`) |
+| Forest Ranger (chibi preview) | https://craftpix.net/freebies/ | — | Town NPC (`assets/characters/npc_ranger_{hood,leaf,antler}.png`) |
+| Forest Guardian (chibi preview) | https://craftpix.net/freebies/ | — | Forest guardians NPC (`assets/characters/npc_guard_{tree,stone,hood}.png`) |
 
 Source preview images: `img.craftpix.net` promotional artwork (not original pack assets).
 
@@ -63,3 +65,8 @@ Source preview images: `img.craftpix.net` promotional artwork (not original pack
 โดย `tools/craftpix-hero.py` / `tools/craftpix-hero-male.py` — ลบพื้นหลัง ตัดขอบโปร่งใส
 และเพิ่มเส้นขอบสีเข้มด้วย `tools/add-outline.py` (การดัดแปลงเชิงภาพ ไม่เปลี่ยนแนวคิดงานศิลป์)
 ชุดชายเก็บความละเอียดต้นฉบับ (44x62) แล้วค่อยย่อตอนวาดในเกม เพื่อไม่ให้รายละเอียดหาย
+ชุดหญิงทำแบบเดียวกัน (native 44x62, ย่อ sc 0.5484 ตอนวาด) ด้วย `tools/craftpix-hero-female.py`
+
+**NPC chibi (Forest Ranger / Forest Guardian):** ครอปด้วย `tools/craftpix-chibi-npc.py`
+ลบพื้นหลังด้วย flood fill, เก็บเฉพาะก้อนที่ใหญ่ที่สุด แล้วย่อให้สูง 72px
+เป็นภาพ vector-style chibi (ไม่ใช่ pixel art) จึงวาดเป็น NPC ยืนนิ่ง + bob เบา และปิด tint เพื่อคงสีต้นฉบับ
