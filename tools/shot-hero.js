@@ -48,7 +48,7 @@ async function shot(W, H, out, actions) {
   })()`).then(v=>console.log('goBtn', v));
   await sleep(2500);
   const info = await evalJs(`(function(){
-    var g=window.DT&&DT.game;
+    var g=window.DT&&DT.Game;
     var L=g&&g.local;
     return JSON.stringify({ sprite: L&&L.sprite, female: L&&L.female, male: L&&L.male, x: L&&L.x, y: L&&L.y, loaded: DT&&DT.Sprites&&DT.Sprites.stats });
   })()`);
@@ -59,19 +59,23 @@ async function shot(W, H, out, actions) {
   fs.writeFileSync(out, Buffer.from(cap.data, 'base64'));
   // ครอปบริเวณตัวผู้เล่นเพื่อดูรายละเอียด
   const box = await evalJs(`(function(){
-    var g=window.DT&&DT.game, L=g&&g.local;
+    var g=window.DT&&DT.Game, L=g&&g.local;
     if(!L) return null;
-    var cam=g.cam||{x:0,y:0};
-    return JSON.stringify({ lx:L.x, ly:L.y, camx:cam.x, camy:cam.y, tpx:DT.TILE_PX, keys:Object.keys(g).slice(0,40).join(',') });
+    var cam=(DT&&DT.Render&&DT.Render.cam)||{x:0,y:0};
+    return JSON.stringify({ lx:L.x, ly:L.y, camx:cam.x, camy:cam.y, tpx:DT.TILE_PX });
   })()`);
   if (box) {
     console.log('box', box);
     try {
       const b=JSON.parse(box);
       const scr = await evalJs(`(function(){
-        var g=window.DT&&DT.game, R=DT&&DT.Render;
-        var inst=(g&&g.render)||(R&&R.instance)||(R&&R.current);
-        if(inst&&inst.toScreen){ var p=inst.toScreen(${b.lx},${b.ly}); return JSON.stringify(p); }
+        var R=DT&&DT.Render;
+        if(R&&R.toScreen){
+          var p=R.toScreen(${b.lx},${b.ly});
+          /* toScreen คืนพิกเซลใน canvas — ต้องบวก offset ของ canvas ในหน้าเพื่อ crop หน้าจอ */
+          var c=document.getElementById('game'), r=c&&c.getBoundingClientRect();
+          return JSON.stringify({sx:p.sx+(r?r.left:0), sy:p.sy+(r?r.top:0), cw:r?r.width:0, ch:r?r.height:0});
+        }
         return 'null';
       })()`);
       console.log('scr', scr);
