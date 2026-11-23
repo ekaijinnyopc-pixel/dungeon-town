@@ -21,7 +21,7 @@
 - **ผลวัดจริงบน canvas** (`tools/test-hero-metrics.js` ใหม่) — **ฐานเท้าตรงกัน 0px**
   ทุกทิศ/ทุกแอนิเมชัน (ไม่เกิด frame jitter) · ความสูง walk/idle 30–34px (ต่างกันตามท่ายกแขน)
   · เฟรมโจมตี 28–31px (ทรงตัวต่ำลงตอนทุบ) · อาวุธสูงเท่ากันทุกทิศ (30px)
-  · fallback shape-art ยังวาดได้ (488 พิกเซล)
+  · fallback shape-art ยังวาดได้ (372 พิกเซล — ค่าเดิม 488 เป็นตัวเลขผิด จากการเรียก `Art.player` ผิด signature ในเทสต์ ดูหัวข้อ 4)
 - ตัวเลือก `ฮีโร่ (นักรบ)` เป็นค่าเริ่มต้น · `DT.CHARACTERS` → `characters/hero_down_0.png`
 - เครื่องมือ: `tools/extract-oga-hero.py`, `tools/normalize-oga-hero.py`, `tools/test-hero-metrics.js`, `tools/shot-hero.js`
 
@@ -46,9 +46,11 @@
 
 ### Deploy
 - commit `672fea5` push แล้ว → run `45116481659` **success**
+- commit `9fe81e7` (เอกสาร) → run `45116585121` fail จาก artifact ชั่วคราวของ GitHub → `gh run rerun` → **success**
+- commit `e50d8a2` (แก้เทสต์) → run `45117007582` **success**
 - live verify: `tools/verify-live.js` **34/0** · single-file test ผ่าน **11/0**
 - ยืนยันบน live จริง: สไปรต์โหลด **218/218 (failed 0)** · OGA hero walk **32/32**
-  · DCSS mobs **16/16** · ตัวผู้เล่นวาดได้ 488 พิกเซล · JS error 0
+  · DCSS mobs **16/16** · JS error 0
 - live: https://ekaijinnyopc-pixel.github.io/dungeon-town/
 - single: https://ekaijinnyopc-pixel.github.io/dungeon-town/dist/dungeon-town.html
 
@@ -56,6 +58,17 @@
 - `assets/_raw/` ถูก `.gitignore` — ไฟล์ต้นทาง (DCSS ZIP, OGA PNG) ไม่ถูก commit
   แต่มี URL ดาวน์โหลดครบใน `assets/MANIFEST.md` หัวข้อ 8
 - ชุด OGA ตั้ง `data-female="1"` เพื่อบังคับเลือกชุด `hero_` — ตัวเลือก `hero`/`heroine` ใช้สไปรต์ชุดเดียวกัน (ถูกต้อง)
+
+### 4) แก้บั๊กในเทสต์เอง — `Art.player` signature ผิด (commit `e50d8a2`)
+- **อาการ**: `tools/test-hero-metrics.js` เรียก `Art.player(x, 60, 100, o, 0, 0)`
+  แต่ signature จริงคือ `Art.player(ctx, sx, sy, z, opts)` → `opts` ไปตกที่ `z`
+  → ทุกการวัดได้ **fallback shape-art** ไม่ใช่สไปรต์ OGA (เลข 488 พิกเซล = ค่า fallback)
+- **หลักฐาน**: เทียบ silhouette (alpha mask) IoU ระหว่างภาพที่เกมวาดจริง กับสไปรต์ OGA
+  และกับ fallback — หลังแก้ได้ **IoU กับ OGA = 1.00 ทุกทิศ** (fallback ได้แค่ 0.56–0.58)
+  → ยืนยันว่าตัวผู้เล่นบนจอคือสไปรต์ OGA จริง ไม่ใช่รูปทรง
+- ยืนยันซ้ำบน live จริงหลัง deploy: IoU กับ OGA **1.00** ทั้ง 4 ทิศ · fallback 0.56–0.58
+- หลังแก้ hero-metrics ผ่าน **7/0** เหมือนเดิม แต่วัดค่าที่ถูกต้องแล้ว
+- **ข้อควรระวัง**: เทสต์ที่เรียก `Art.player` ต้องใส่ `z` เป็นอาร์กิวเมนต์ที่ 4 เสมอ
 
 
 ## ✅ งานที่ 6 (เสร็จแล้ว — commit `6a17749`) ตัวผู้เล่นชาย + ยกคุณภาพสไปรต์
