@@ -150,7 +150,7 @@ function ok(c, m) { if (c) { pass++; console.log('  ✅ ' + m); } else { fail++;
       var x=c.getContext('2d');
       var o={ female:true, dir:dir, moving:false, swing:0, weapon:weapon, prof:'miner' };
       if(!DT.Art || !DT.Art.player) return {err:'no Art.player'};
-      DT.Art.player(x, 60, 100, o, 0, 0);
+      DT.Art.player(x, 60, 100, 1, o);
       var d=x.getImageData(0,0,120,120).data;
       var minx=999,miny=999,maxx=-1,maxy=-1;
       for(var y=0;y<120;y++)for(var xx=0;xx<120;xx++){
@@ -175,7 +175,7 @@ function ok(c, m) { if (c) { pass++; console.log('  ✅ ' + m); } else { fail++;
   const fb = JSON.parse(await ev(`(function(){
     var c=document.createElement('canvas'); c.width=120; c.height=120;
     var x=c.getContext('2d');
-    DT.Art.player(x,60,100,{female:false,sprite:'characters/nope_missing.png',dir:'down',moving:false,swing:0,weapon:'sword',prof:'miner'},0,0);
+    DT.Art.player(x, 60, 100, 1, {female:false,sprite:'characters/nope_missing.png',dir:'down',moving:false,swing:0,weapon:'sword',prof:'miner'});
     var d=x.getImageData(0,0,120,120).data; var n=0;
     for(var i=3;i<d.length;i+=4) if(d[i]>0) n++;
     return JSON.stringify({px:n});
