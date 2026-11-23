@@ -47,6 +47,20 @@ async function shot(W, H, out, actions) {
     return go? 'clicked' : 'nogo';
   })()`).then(v=>console.log('goBtn', v));
   await sleep(2500);
+  /* รอให้ preload สไปรต์เสร็จจริง — ตัวเลขตอน 2.5 วินาทียังโหลดไม่ครบ (เคยได้ 186/218)
+     poll ทุก 250ms จนกว่า loaded == จำนวน key ใน SPEC (หรือ timeout 20 วินาที) */
+  const pre = await evalJs(`(async function(){
+    var S=DT&&DT.Sprites; if(!S) return 'no sprites';
+    var total=Object.keys(S.SPEC||{}).length;
+    for(var i=0;i<80;i++){
+      var st=S.stats||{loaded:0,failed:0};
+      if(st.loaded>=total) return JSON.stringify({loaded:st.loaded,failed:st.failed,total:total,waited:Math.round(i*250)});
+      await new Promise(function(r){setTimeout(r,250);});
+    }
+    var st=S.stats||{loaded:0,failed:0};
+    return JSON.stringify({loaded:st.loaded,failed:st.failed,total:total,timeout:true});
+  })()`);
+  console.log('preload', pre);
   const info = await evalJs(`(function(){
     var g=window.DT&&DT.Game;
     var L=g&&g.local;
