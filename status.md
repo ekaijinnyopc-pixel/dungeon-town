@@ -70,6 +70,14 @@
 - หลังแก้ hero-metrics ผ่าน **7/0** เหมือนเดิม แต่วัดค่าที่ถูกต้องแล้ว
 - **ข้อควรระวัง**: เทสต์ที่เรียก `Art.player` ต้องใส่ `z` เป็นอาร์กิวเมนต์ที่ 4 เสมอ
 
+### 5) แก้เครื่องมือถ่ายภาพ — `tools/shot-hero.js` (commit `3ecae3e`)
+- **อาการ**: ถ่ายภาพออกมาแต่ข้อมูลตัวละครว่าง และไม่มีไฟล์ zoom
+- **สาเหตุ**: เครื่องมืออ่าน `DT.game` (ตัว g เล็ก — ไม่มีอยู่จริง) แต่ instance จริงคือ **`DT.Game`**
+  และ `DT.Render` เป็น singleton object ไม่ใช่คลาส → ต้องเรียก `DT.Render.toScreen` ตรง ๆ
+- **เพิ่ม**: บวก offset ของ canvas (`getBoundingClientRect`) ให้ crop ตรงตัวผู้เล่นจริง
+- **ผล**: ข้อมูลตัวละครครบ (`sprite: characters/hero_down_0.png`, `female: true`, `x/y: 24.5`)
+  และได้ภาพ zoom 550×550 (crop 110×110 ที่ scale 5) ทั้งเดสก์ท็อปและมือถือ
+
 
 ## ✅ งานที่ 6 (เสร็จแล้ว — commit `6a17749`) ตัวผู้เล่นชาย + ยกคุณภาพสไปรต์
 - **สไปรต์ชาย** → `Free Base 4-Direction Male Character Pixel Art` (CraftPix id **69846**)
