@@ -44,6 +44,14 @@
 - `tools/build-single.js` → ฝัง **218 สไปรต์** (492 KB → 667 KB base64) ไฟล์ 1.2 MB
 - single-file test ผ่าน 11/0
 
+### Deploy
+- commit `672fea5` push แล้ว → run `45116481659` **success**
+- live verify: `tools/verify-live.js` **34/0** · single-file test ผ่าน **11/0**
+- ยืนยันบน live จริง: สไปรต์โหลด **218/218 (failed 0)** · OGA hero walk **32/32**
+  · DCSS mobs **16/16** · ตัวผู้เล่นวาดได้ 488 พิกเซล · JS error 0
+- live: https://ekaijinnyopc-pixel.github.io/dungeon-town/
+- single: https://ekaijinnyopc-pixel.github.io/dungeon-town/dist/dungeon-town.html
+
 ### หมายเหตุ
 - `assets/_raw/` ถูก `.gitignore` — ไฟล์ต้นทาง (DCSS ZIP, OGA PNG) ไม่ถูก commit
   แต่มี URL ดาวน์โหลดครบใน `assets/MANIFEST.md` หัวข้อ 8
