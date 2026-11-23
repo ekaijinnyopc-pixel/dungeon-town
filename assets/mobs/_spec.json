@@ -1,0 +1,152 @@
+{
+  "mobs/slime.png": {
+    "src": [
+      0,
+      0,
+      32,
+      22
+    ],
+    "sc": 1,
+    "dy": 0
+  },
+  "mobs/wolf.png": {
+    "src": [
+      0,
+      0,
+      31,
+      31
+    ],
+    "sc": 1,
+    "dy": 0
+  },
+  "mobs/goblin.png": {
+    "src": [
+      0,
+      0,
+      25,
+      26
+    ],
+    "sc": 1,
+    "dy": 0
+  },
+  "mobs/boar.png": {
+    "src": [
+      0,
+      0,
+      32,
+      28
+    ],
+    "sc": 1,
+    "dy": 0
+  },
+  "mobs/wraith.png": {
+    "src": [
+      0,
+      0,
+      30,
+      29
+    ],
+    "sc": 1,
+    "dy": 0
+  },
+  "mobs/bat.png": {
+    "src": [
+      0,
+      0,
+      32,
+      31
+    ],
+    "sc": 1,
+    "dy": 0
+  },
+  "mobs/imp.png": {
+    "src": [
+      0,
+      0,
+      20,
+      30
+    ],
+    "sc": 1,
+    "dy": 0
+  },
+  "mobs/ghoul.png": {
+    "src": [
+      0,
+      0,
+      30,
+      30
+    ],
+    "sc": 1,
+    "dy": 0
+  },
+  "mobs/skeleton.png": {
+    "src": [
+      0,
+      0,
+      23,
+      26
+    ],
+    "sc": 1,
+    "dy": 0
+  },
+  "mobs/mage.png": {
+    "src": [
+      0,
+      0,
+      21,
+      28
+    ],
+    "sc": 1,
+    "dy": 0
+  },
+  "mobs/knight.png": {
+    "src": [
+      0,
+      0,
+      26,
+      32
+    ],
+    "sc": 1,
+    "dy": 0
+  },
+  "mobs/dragon.png": {
+    "src": [
+      0,
+      0,
+      31,
+      32
+    ],
+    "sc": 1,
+    "dy": 0
+  },
+  "mobs/pirate_leader.png": {
+    "src": [
+      0,
+      0,
+      27,
+      32
+    ],
+    "sc": 1,
+    "dy": 0
+  },
+  "mobs/squidman.png": {
+    "src": [
+      0,
+      0,
+      31,
+      26
+    ],
+    "sc": 1,
+    "dy": 0
+  },
+  "mobs/pirate_zombie.png": {
+    "src": [
+      0,
+      0,
+      30,
+      32
+    ],
+    "sc": 1,
+    "dy": 0
+  }
+}

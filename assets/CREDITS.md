@@ -4,6 +4,15 @@
 
 ## CC0 (ไม่ต้องอ้างอิง แต่ใส่ไว้เพื่อความชัดเจน)
 
+- **Dungeon Crawl Stone Soup (DCSS)** — https://www.dungeon-crawl.org.uk/
+  - ใบอนุญาต: **CC0 1.0 (Public Domain Dedication)** — ยืนยันจาก `LICENSE.txt`
+    ในตัว ZIP ต้นทาง (`Dungeon Crawl Stone Soup Full/LICENSE.txt`)
+  - ใช้: มอนส์ทั้งหมด 15 ตัว (`assets/mobs/*.png`)
+    — slime, wolf, goblin, boar, wraith, bat, imp, ghoul, skeleton,
+    mage, knight, dragon, pirate_leader, squidman, pirate_zombie
+  - ที่มา: `monster/` ใน `dcss_full.zip` (ดูตารางแมปเต็มที่ `assets/mobs/mapping.json`)
+  - การประมวลผลภาพ: `tools/extract-dcss-mobs.py` — trim ขอบโปร่งใสให้เหลือเฉพาะตัวมอนส์
+    แล้วย่อมาตรฐานเดียวกับสไปรต์อื่นในเกม
 - **Kenney — Roguelike RPG Pack** — https://kenney.nl/assets/roguelike-rpg-pack
   - ใช้: `assets/tiles/ground/*` (tile พื้น: grass, path, stone, water, sand, dirt, field, floor, grass_flowers)
   - ที่มา: `Spritesheet/roguelikeSheet_transparent.png`
@@ -14,8 +23,8 @@
 
 - **Dawnlike — 16x16 Universal Roguelike tileset v1.81**
   - ผู้สร้าง: Thomas Harte (DawnHack / Dawnlike project)
-  - ใช้: `assets/mobs/wolf.png`, `assets/mobs/boar.png`, `assets/mobs/platino.png`
-  - ที่มา: `Characters/Quadraped0.png`, `Characters/Reptile0.png`
+  - ใช้: `assets/mobs/platino.png` (เฉพาะตัวนี้ที่ยังใช้อยู่)
+  - ที่มา: `Characters/Quadraped0.png`
   - เงื่อนไข: CC-BY 4.0 — ต้องไม่เอาความดีงานมาเป็นของตัวเอง
   - **เงื่อนไขพิเศษที่ต้องทำตาม (จาก README ของ Dawnlike):**
     1. ต้องอ้างอิง **DawnBringer** ผู้สร้างพาเลตต์สีของชุดนี้
@@ -23,19 +32,29 @@
     3. ถ้าใช้ชุดนี้ ต้องใช้ Platino sprite นั้นด้วย
   - ✅ **เกมนี้ทำตามครบ:** มี Platino เป็น easter egg ซ่อนอยู่ในป่า
     (แผนที่ช่อง x=7, y=41 — เดินเข้าป่าทางเหนือไปหาให้เจอ)
+  - ℹ️ เดิมชุดนี้ยังเป็นเจ้าของภาพมอนส์ `wolf`/`boar` ด้วย แต่**ถูกแทนที่ด้วย
+    ภาพจาก DCSS (CC0) แล้ว** — ดูหัวข้อ “CC0” ด้านบน
 
-## CC-BY 3.0 + OGA-BY 3.0 — ต้องอ้างอิง
+## CC-BY 4.0 — ต้องอ้างอิง
 
-- **10 Basic RPG Enemies**
-  - ผู้สร้าง: **redshrike** (OpenGameArt)
-  - ใช้: `assets/mobs/slime.png`, `assets/mobs/goblin.png`, `assets/mobs/ghoul.png`,
-    `assets/mobs/skeleton.png`, `assets/mobs/mage.png`, `assets/mobs/imp.png`,
-    `assets/mobs/knight.png`, `assets/mobs/bat.png`, `assets/mobs/dragon.png`,
-    `assets/mobs/wraith.png` (ทั้งหมด 10 ตัวจากชุดนี้)
-  - ที่มา: https://opengameart.org/content/10-basic-rpg-enemies (`rpgcritters2.png`)
-  - เงื่อนไข: CC-BY 3.0 + OGA-BY 3.0
-  - การครอป: ใช้ `tools/extract-ff-mobs.py` (crop จาก connected-component bbox แล้ว trim ขอบ)
-    — แต่ละตัวถูกตัดจากเซลล์ของตัวเอง ไม่มีเศษภาพจากเซลล์ข้างเคียงปนมา
+- **4 Direction Animated Warrior**
+  - ผู้สร้าง: **Calciumtrice** (OpenGameArt)
+  - หน้า: https://opengameart.org/content/4-direction-animated-warrior
+  - ใช้: ชุดตัวผู้เล่นหลัก (`assets/characters/hero_{down,left,right,up}_*.png`)
+    — walk 8 เฟรม, idle 12 เฟรม, attack 7 เฟรม ต่อทิศ รวม 108 ไฟล์
+  - ที่มา: `warrior.png` + `warrior_labelled_reference.png`
+  - เงื่อนไข: **Creative Commons Attribution 4.0 (CC-BY 4.0)**
+    — ต้องใส่เครดิตผู้สร้าง + ลิงก์ใบอนุญาต (ทำที่หัวข้อนี้แล้ว)
+  - การประมวลผลภาพ: `tools/extract-oga-hero.py` (ตัดเฟรมจาก labelled reference)
+    แล้ว `tools/normalize-oga-hero.py` (รวม canvas เป็นขนาดเดียวต่อทิศ ให้ฐานเท้าตรงกัน
+    → ไม่เกิด frame jitter) — เป็นการดัดแปลงเชิงภาพ ไม่เปลี่ยนแนวคิดงานศิลป์
+
+## CC-BY 3.0 + OGA-BY 3.0 — ไม่ได้ใช้แล้ว
+
+- **10 Basic RPG Enemies** (ผู้สร้าง **redshrike**, OGA) — ภาพมอนส์จากชุดนี้
+  (slime / goblin / ghoul / skeleton / mage / imp / knight / bat / dragon / wraith)
+  ถูก**แทนที่ด้วยภาพจาก DCSS (CC0)** ทั้งหมดแล้ว
+  → ชุดนี้ไม่มีไฟล์ที่ถูกใช้งานในเกมอีกต่อไป
 
 ---
 
@@ -44,6 +63,9 @@
 - สไปรต์ทั้งหมดโหลดแบบ lazy และมี **fallback แบบวาดด้วย Canvas**
   (ถ้าภาพโหลดไม่ได้ เกมยังเล่นได้ ไม่จอดำ)
 - รายละเอียดที่มาของแต่ละมอนส์อยู่ที่ `assets/mobs/mapping.json`
+- ไฟล์ต้นทางดิบ (ZIP ของ DCSS, PNG ของ OGA) เก็บไว้ใน `assets/_raw/`
+  ซึ่งถูก `.gitignore` ไว้ — ต้องดาวน์โหลดใหม่ถ้าจะรันเครื่องมือครั้งถัดไป
+  (ดูหัวข้อ “URL ดาวน์โหลด” ใน `assets/MANIFEST.md`)
 
 ## CraftPix Freebies (Royalty-free, unlimited projects)
 

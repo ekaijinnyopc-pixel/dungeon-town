@@ -1,154 +1,21 @@
 {
-  "_license": {
-    "FF": "10 Basic RPG Enemies by redshrike (OpenGameArt) — CC-BY 3.0 + OGA-BY 3.0",
-    "DawnLike": "Dawnlike 16x16 Universal Roguelike tileset v1.81 — CC-BY 4.0",
-    "note": "Attribution kept in assets/CREDITS.md and project README.",
-    "extract_tool": "tools/extract-ff-mobs.py (crop จาก rpgcritters2.png ด้วย connected-component bbox แล้ว trim ขอบ)",
-    "CraftPix": "CraftPix Free Fantasy RPG Pirate Boss Character Pack — royalty-free freebie, unlimited projects; pack preview artwork re-cropped (see assets/CREDITS.md)"
-  },
-  "slime": {
-    "file": "mobs/slime.png",
-    "note": "green slime (front view) — FF critter (col 1, row 4)",
-    "source_pack": "10 Basic RPG Enemies (redshrike, CC-BY 3.0 + OGA-BY 3.0)",
-    "source_file": "rpgcritters2.png cell (col 1, row 4) bbox (64,201,24x19)",
-    "size": "24x19",
-    "mode": "RGBA",
-    "trimmed": true
-  },
-  "goblin": {
-    "file": "mobs/goblin.png",
-    "note": "goblin warrior — FF critter (col 1, row 0)",
-    "source_pack": "10 Basic RPG Enemies (redshrike, CC-BY 3.0 + OGA-BY 3.0)",
-    "source_file": "rpgcritters2.png cell (col 1, row 0) bbox (56,9,26x31)",
-    "size": "26x31",
-    "mode": "RGBA",
-    "trimmed": true
-  },
-  "ghoul": {
-    "file": "mobs/ghoul.png",
-    "note": "ghoul / mutant — FF critter (col 0, row 0)",
-    "source_pack": "10 Basic RPG Enemies (redshrike, CC-BY 3.0 + OGA-BY 3.0)",
-    "source_file": "rpgcritters2.png cell (col 0, row 0) bbox (17,16,30x24)",
-    "size": "30x24",
-    "mode": "RGBA",
-    "trimmed": true
-  },
-  "skeleton": {
-    "file": "mobs/skeleton.png",
-    "note": "skeleton — FF critter (col 1, row 1)",
-    "source_pack": "10 Basic RPG Enemies (redshrike, CC-BY 3.0 + OGA-BY 3.0)",
-    "source_file": "rpgcritters2.png cell (col 1, row 1) bbox (55,51,28x45)",
-    "size": "28x45",
-    "mode": "RGBA",
-    "trimmed": true
-  },
-  "mage": {
-    "file": "mobs/mage.png",
-    "note": "mage (โค้ดหมวก + ไม้เท้า) — FF critter (col 1, row 2)",
-    "source_pack": "10 Basic RPG Enemies (redshrike, CC-BY 3.0 + OGA-BY 3.0)",
-    "source_file": "rpgcritters2.png cell (col 1, row 2) bbox (61,105,19x27)",
-    "size": "19x27",
-    "mode": "RGBA",
-    "trimmed": true
-  },
-  "imp": {
-    "file": "mobs/imp.png",
-    "note": "imp / devil — FF critter (col 0, row 2)",
-    "source_pack": "10 Basic RPG Enemies (redshrike, CC-BY 3.0 + OGA-BY 3.0)",
-    "source_file": "rpgcritters2.png cell (col 0, row 2) bbox (18,106,33x32)",
-    "size": "33x32",
-    "mode": "RGBA",
-    "trimmed": true
-  },
-  "knight": {
-    "file": "mobs/knight.png",
-    "note": "armored knight (ดาบยาว) — FF critter (col 1, row 3)",
-    "source_pack": "10 Basic RPG Enemies (redshrike, CC-BY 3.0 + OGA-BY 3.0)",
-    "source_file": "rpgcritters2.png cell (col 1, row 3) bbox (56,151,29x35)",
-    "size": "29x35",
-    "mode": "RGBA",
-    "trimmed": true
-  },
-  "bat": {
-    "file": "mobs/bat.png",
-    "note": "bat (ปีกกว้างแนวนอน) — FF critter (col 0, row 4)",
-    "source_pack": "10 Basic RPG Enemies (redshrike, CC-BY 3.0 + OGA-BY 3.0)",
-    "source_file": "rpgcritters2.png cell (col 0, row 4) bbox (15,197,41x22)",
-    "size": "41x22",
-    "mode": "RGBA",
-    "trimmed": true
-  },
-  "dragon": {
-    "file": "mobs/dragon.png",
-    "note": "dragon / winged — FF critter (col 0, row 1)",
-    "source_pack": "10 Basic RPG Enemies (redshrike, CC-BY 3.0 + OGA-BY 3.0)",
-    "source_file": "rpgcritters2.png cell (col 0, row 1) bbox (9,52,37x34)",
-    "size": "37x34",
-    "mode": "RGBA",
-    "trimmed": true
-  },
-  "wraith": {
-    "file": "mobs/wraith.png",
-    "note": "wraith / floating shade — FF critter (col 0, row 3)",
-    "source_pack": "10 Basic RPG Enemies (redshrike, CC-BY 3.0 + OGA-BY 3.0)",
-    "source_file": "rpgcritters2.png cell (col 0, row 3) bbox (17,153,32x33)",
-    "size": "32x33",
-    "mode": "RGBA",
-    "trimmed": true
-  },
-  "wolf": {
-    "file": "mobs/wolf.png",
-    "note": "dark canine — สัตว์ 4 ขาจริง",
-    "source_pack": "Dawnlike (CC-BY 4.0)",
-    "source_file": "Characters/Quadraped0.png cell (col 5, row 0)",
-    "size": "13x12",
-    "mode": "RGBA",
-    "trimmed": true
-  },
-  "boar": {
-    "file": "mobs/boar.png",
-    "note": "boar/pig — สัตว์ 4 ขาจริง",
-    "source_pack": "Dawnlike (CC-BY 4.0)",
-    "source_file": "Characters/Quadraped0.png cell (col 0, row 0)",
-    "size": "13x12",
-    "mode": "RGBA",
-    "trimmed": true
-  },
-  "platino": {
-    "file": "mobs/platino.png",
-    "note": "Platino — จิ้าจอกสีเทาอมฟ้า (easter egg ที่ซ่อนอยู่ในป่า)",
-    "source_pack": "Dawnlike (CC-BY 4.0)",
-    "source_file": "Characters/Reptile0.png cell (col 3, row 12)",
-    "size": "16x16",
-    "mode": "RGBA",
-    "trimmed": false,
-    "license_note": "license Dawnlike บังคับให้ต้องใช้ + ซ่อนตัวนี้ — เกมมี easter egg ซ่อนไว้ในป่า"
-  },
-  "pirate_leader": {
-    "file": "mobs/pirate_leader.png",
-    "note": "Boss 'ผู้นำโจรสลับ' — CraftPix pirate boss (cropped from pack preview art)",
-    "source_pack": "Free Fantasy RPG Pirate Boss Character Pack (CraftPix, royalty-free freebie)",
-    "source_file": "img.craftpix.net pack preview artwork (pir.*)",
-    "size": "42x60",
-    "mode": "RGBA",
-    "trimmed": true
-  },
-  "squidman": {
-    "file": "mobs/squidman.png",
-    "note": "Boss 'หัวหมึกยักษ์' — CraftPix pirate boss (cropped from pack preview art)",
-    "source_pack": "Free Fantasy RPG Pirate Boss Character Pack (CraftPix, royalty-free freebie)",
-    "source_file": "img.craftpix.net pack preview artwork (pir.*)",
-    "size": "40x64",
-    "mode": "RGBA",
-    "trimmed": true
-  },
-  "pirate_zombie": {
-    "file": "mobs/pirate_zombie.png",
-    "note": "Boss 'โจรสังขาร' — CraftPix pirate boss (cropped from pack preview art)",
-    "source_pack": "Free Fantasy RPG Pirate Boss Character Pack (CraftPix, royalty-free freebie)",
-    "source_file": "img.craftpix.net pack preview artwork (pir.*)",
-    "size": "39x60",
-    "mode": "RGBA",
-    "trimmed": true
+  "source": "Dungeon Crawl Stone Soup Full (DCSS)",
+  "license": "CC0 1.0",
+  "map": {
+    "slime": "monster/amorphous/jelly.png",
+    "wolf": "monster/animals/wolf.png",
+    "goblin": "monster/goblin_new.png",
+    "boar": "monster/animals/holy_swine.png",
+    "wraith": "monster/undead/wraith.png",
+    "bat": "monster/animals/bat.png",
+    "imp": "monster/demons/imp.png",
+    "ghoul": "monster/undead/ghoul.png",
+    "skeleton": "monster/undead/skeletons/skeleton_humanoid_small_new.png",
+    "mage": "monster/wizard.png",
+    "knight": "monster/death_knight.png",
+    "dragon": "monster/dragons/dragon.png",
+    "pirate_leader": "monster/orc_warlord.png",
+    "squidman": "monster/undead/zombies/zombie_octopode.png",
+    "pirate_zombie": "monster/undead/revenant.png"
   }
 }

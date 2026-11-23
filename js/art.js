@@ -664,9 +664,28 @@
     var heroPrefix = (useHero && HERO_DIR[dir]) ? 'characters/' + heroSet + HERO_DIR[dir] + '_' : null;
     if (heroPrefix) {
       var hFreq = running ? 11 : 7.5;
-      var hFrame = moving ? (Math.floor(t * hFreq) % 6) : 0;
-      if (hFrame < 0) hFrame = 0;
-      var hKey = heroPrefix + hFrame + '.png';
+      var hKey;
+      /* --- ชุด OGA '4 Direction Animated Warrior' (Calciumtrice, CC-BY 4.0) ---
+         มี idle 12 เฟรม / walk 8 เฟรม / attack 7 เฟรม ต่อทิศ
+         ใช้ idle เมื่อยืนนิ่ง, attack เมื่อโจมตี (swing>0), เดินใช้ walk
+         (ชุดชาย CraftPix มีแค่ walk 6 เฟรม/ทิศ) */
+      if (heroSet === 'hero_' && dir) {
+        if (swing > 0) {
+          var aFrame = Math.min(6, Math.floor((1 - swing) * 7));
+          if (aFrame < 0) aFrame = 0;
+          hKey = 'characters/hero_' + dir + '_atk_' + aFrame + '.png';
+        } else if (!moving) {
+          var iFrame = Math.floor(t * 4) % 12;
+          hKey = 'characters/hero_' + dir + '_idle_' + iFrame + '.png';
+        } else {
+          var wFrame = Math.floor(t * hFreq) % 8;
+          hKey = 'characters/hero_' + dir + '_' + wFrame + '.png';
+        }
+      } else {
+        var hFrame = moving ? (Math.floor(t * hFreq) % 6) : 0;
+        if (hFrame < 0) hFrame = 0;
+        hKey = heroPrefix + hFrame + '.png';
+      }
       ctx.save();
       ctx.translate(sx, sy);
       ctx.scale(z, z);
@@ -682,8 +701,10 @@
       if (heroDrew) {
         var hw = weaponKind(opts.weapon);
         if (hw) {
-          var hHandX = dir === 'left' ? -4.6 : 4.6;
-          var hHandY = -16;
+          /* ชุด OGA (สูง 34px) จุดยึดอาวุธต้องต่ำกว่าชุดเดิม ไม่งั้นอาวุธทับหน้าตัวละคร */
+          var hOga = (heroSet === 'hero_');
+          var hHandX = dir === 'left' ? (hOga ? -3.6 : -4.6) : (hOga ? 3.6 : 4.6);
+          var hHandY = hOga ? -12.5 : -16;
           ctx.save();
           ctx.translate(hHandX, hHandY);
           var hArm;

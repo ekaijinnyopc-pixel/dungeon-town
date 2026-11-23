@@ -1,7 +1,54 @@
 # status.md — Dungeon Town / wire Kenney CC0 sprites
 
 ## งานที่กำลังทำ (active)
-- **ไม่มีงานค้าง** — งานที่ 6 เสร็จและ deploy แล้ว (commit `6a17749`, run `44804111014`)
+- **ไม่มีงานค้าง** — งานที่ 8 เสร็จและ deploy แล้ว (ดูหัวข้อ “งานที่ 8” ล่างสุด)
+
+## ✅ งานที่ 8 (23 พ.ย. 2026) ตัวผู้เล่น OGA Warrior + มอนส์ DCSS 15 ชนิด
+### 1) ตัวผู้เล่น → OGA "4 Direction Animated Warrior" (Calciumtrice, **CC-BY 4.0**)
+- ตัดจาก `warrior_labelled_reference.png` (4000×4800) → **108 ไฟล์**
+  `hero_<dir>_<i>.png` (walk 8) · `hero_<dir>_idle_<i>.png` (idle 12) · `hero_<dir>_atk_<i>.png` (attack 7)
+  ครบ 4 ทิศ
+- **แก้บั๊ก canvas ไม่เท่ากัน** — เดิมแต่ละแอนิเมชันมี canvas ต่างกัน
+  (walk 54×105 / idle 60×105 / atk 57×100) → ตัวละครขยับกระตุกตอนสลับแอนิเมชัน
+  → เครื่องมือใหม่ `tools/normalize-oga-hero.py` รวม canvas เป็นขนาดเดียวต่อทิศ
+  + จัดฐานเท้าให้ตรงกัน + ย่อ LANCZOS เหลือสูง **34px** (ตามขนาดตัวผู้เล่นในเกม)
+  - down 19×34 · left 21×34 · right 20×34 · up 19×34
+- **แก้ `S.SPEC`** — เดิมใช้ขนาดเก่า `66×108`/`78×108` ทำให้ภาพถูกตัดขาด
+  → ซิงก์กับไฟล์จริงทุกเฟรม (`sc: 1`, `dy: 0`) · คืน key ชาย `hero_m_*` ครบ 24 รายการ
+  · รวม **218 keys** (HEAD เดิม 134)
+- **แก้ `js/art.js`** — walk ใช้ **8** เฟรม (เดิม `% 6`), idle **12** เฟรม, attack **7** เฟรม
+  + ย้ายจุดยึดอาวุธให้ไม่ทับใบหน้า (X ±3.6, Y −12.5)
+- **ผลวัดจริงบน canvas** (`tools/test-hero-metrics.js` ใหม่) — **ฐานเท้าตรงกัน 0px**
+  ทุกทิศ/ทุกแอนิเมชัน (ไม่เกิด frame jitter) · ความสูง walk/idle 30–34px (ต่างกันตามท่ายกแขน)
+  · เฟรมโจมตี 28–31px (ทรงตัวต่ำลงตอนทุบ) · อาวุธสูงเท่ากันทุกทิศ (30px)
+  · fallback shape-art ยังวาดได้ (488 พิกเซล)
+- ตัวเลือก `ฮีโร่ (นักรบ)` เป็นค่าเริ่มต้น · `DT.CHARACTERS` → `characters/hero_down_0.png`
+- เครื่องมือ: `tools/extract-oga-hero.py`, `tools/normalize-oga-hero.py`, `tools/test-hero-metrics.js`, `tools/shot-hero.js`
+
+### 2) มอนส์ → **DCSS** (Dungeon Crawl Stone Soup, **CC0 1.0**) 15 ชนิด
+- ยืนยัน license จาก `Dungeon Crawl Stone Soup Full/LICENSE.txt` ใน ZIP (ไม่ต้องใช้ `unzip`)
+- แทนที่มอนส์ชุดเดิม (redshrike CC-BY 3.0 / Dawnlike) ครบ 15 ตัว
+  slime wolf goblin boar wraith bat imp ghoul skeleton mage knight dragon
+  pirate_leader squidman pirate_zombie — แผนที่ใน `assets/mobs/mapping.json`
+- `assets/mobs/platino.png` (Dawnlike CC-BY 4.0) ยังใช้เป็น easter egg + เงื่อนไข “ต้องมี Platino” ยังครบ
+
+### 3) เอกสาร license
+- `assets/CREDITS.md` — เพิ่ม DCSS (CC0) · OGA Warrior (CC-BY 4.0 + ลิงก์ใบอนุญาต)
+  · Dawnlike แก้เหลือ platino เท่านั้น · redshrike ทำเครื่องหมายว่าไม่ได้ใช้แล้ว
+- `assets/MANIFEST.md` — หัวข้อ 8 (DCSS + ตารางแมป + URL จริงจาก README ใน ZIP)
+  และหัวข้อ 9 (OGA + ตาราง canvas/เฟรม + wiring)
+
+### ผลทดสอบ
+- hero-metrics **7/0** · sprites 11/0 · sprite-render 9/**1** (tile หลังคา — บั๊กเดิมที่ HEAD ก็ fail)
+  · sprite-fallback 5/0 · input 19/0 · mouse 19/0 · touch 73/0 · viewports 32/0
+- `tools/build-single.js` → ฝัง **218 สไปรต์** (492 KB → 667 KB base64) ไฟล์ 1.2 MB
+- single-file test ผ่าน 11/0
+
+### หมายเหตุ
+- `assets/_raw/` ถูก `.gitignore` — ไฟล์ต้นทาง (DCSS ZIP, OGA PNG) ไม่ถูก commit
+  แต่มี URL ดาวน์โหลดครบใน `assets/MANIFEST.md` หัวข้อ 8
+- ชุด OGA ตั้ง `data-female="1"` เพื่อบังคับเลือกชุด `hero_` — ตัวเลือก `hero`/`heroine` ใช้สไปรต์ชุดเดียวกัน (ถูกต้อง)
+
 
 ## ✅ งานที่ 6 (เสร็จแล้ว — commit `6a17749`) ตัวผู้เล่นชาย + ยกคุณภาพสไปรต์
 - **สไปรต์ชาย** → `Free Base 4-Direction Male Character Pixel Art` (CraftPix id **69846**)

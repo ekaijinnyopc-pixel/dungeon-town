@@ -91,13 +91,13 @@
         <span class="cp-hint">เลือกได้ตอนเข้าเกม แล้วเปลี่ยนได้ภายหลัง</span>
       </div>
       <div class="cp-grid" id="charGrid">
-        <button class="cp-item sel" data-char="characters/hero_m_down_0.png" data-male="1">
+        <button class="cp-item sel" data-char="characters/hero_down_0.png" data-female="1">
+          <span class="cp-name">ฮีโร่ (นักรบ)</span>
+          <img src="assets/characters/hero_down_0.png" alt="ฮีโร่ (นักรบ)">
+        </button>
+        <button class="cp-item" data-char="characters/hero_m_down_0.png" data-male="1">
           <span class="cp-name">ฮีโร่ (ชาย)</span>
           <img src="assets/characters/hero_m_down_0.png" alt="ฮีโร่ชาย">
-        </button>
-        <button class="cp-item" data-char="characters/hero_down_0.png" data-female="1">
-          <span class="cp-name">ผู้กล้าหญิง</span>
-          <img src="assets/characters/hero_down_0.png" alt="ผู้กล้าหญิง">
         </button>
         <button class="cp-item" data-char="characters/player_down.png">
           <span class="cp-name">ฮีโร่เดิม</span>
@@ -237,9 +237,9 @@
   mark('miner');
 
   /* ---------- ข้อ 4: เลือกตัวละคร ---------- */
-  var chosenChar = 'characters/hero_m_down_0.png';
-  var chosenFemale = false;
-  var chosenMale = true;
+  var chosenChar = 'characters/hero_down_0.png';
+  var chosenFemale = true;
+  var chosenMale = false;
   var charItems = document.querySelectorAll('.cp-item');
   for (var ci = 0; ci < charItems.length; ci++) {
     (function (btn) {

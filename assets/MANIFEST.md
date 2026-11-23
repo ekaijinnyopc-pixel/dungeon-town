@@ -187,7 +187,8 @@ cd dungeon-town && python3 tools/make_objects.py
 
 ชุดหลักเป็น **Kenney CC0 1.0** — ไฟล์ license ต้นฉบับอยู่ใน `licenses/`
 ถ้าจะเผยแพร่เกม ควรใส่เครดิต "Art by Kenney (kenney.nl) — CC0" ในหน้า About/Credits
-ชุด CC-BY (Dawnlike / 10 Basic RPG Enemies) และชุด CraftPix ดูรายละเอียดที่ `assets/CREDITS.md`
+ชุด CC-BY (Dawnlike / OGA 4 Direction Animated Warrior) และชุด CraftPix ดูรายละเอียดที่ `assets/CREDITS.md`
+ชุด **DCSS (CC0 1.0)** ใช้เป็นภาพมอนส์ 15 ตัว — ดูหัวข้อ 8
 
 ---
 
@@ -200,8 +201,8 @@ cd dungeon-town && python3 tools/make_objects.py
 | Pack | Product ID | ไฟล์ที่ได้ | ใช้ทำอะไร |
 |---|---|---|---|
 | Free Fantasy Medieval Village Buildings Asset Pack | 116565 | `objects/mv_*.png` (16 ไฟล์: wh/bh/ww/bw × small_a/small_b/med/large) | อาคารทุกหลังในเมือง (5 หลังใน `js/world.js`) |
-| Free Fantasy RPG Pirate Boss Character Pack | 114848 | `mobs/pirate_leader.png`, `mobs/squidman.png`, `mobs/pirate_zombie.png` | Boss 3 ตัว (เกิดกลางคืน, `world.BOSS_SPOTS`) |
-| Free Base 4-Direction Female Character Pixel Art | 69845 | `characters/hero_{down,left,right,up}_{0..5}.png` (24 ไฟล์) | ตัวเล่นฝ่ายหญิง 4 ทิศ + walk cycle 6 เฟรม/ทิศ |
+| Free Fantasy RPG Pirate Boss Character Pack | 114848 | *(ถูกแทนที่ด้วย DCSS — ดูหัวข้อ 8)* | — |
+| Free Base 4-Direction Female Character Pixel Art | 69845 | *(ถูกแทนที่ด้วย OGA Warrior — ดูหัวข้อ 9)* | — |
 | Free Base 4-Direction Male Character Pixel Art | 69846 | `characters/hero_m_{down,left,right,up}_{0..5}.png` (24 ไฟล์) | ตัวเล่นฝ่ายชาย 4 ทิศ + walk cycle 6 เฟรม/ทิศ |
 
 ### Wiring
@@ -210,8 +211,9 @@ cd dungeon-town && python3 tools/make_objects.py
   ยึดกลางล่าง; ถ้าโหลดไม่ได้ → fallback เป็น shape-art เดิม (ไม่จอดำ)
   ป้าย/อานของตลาดยังใช้ `objects/tiny_shop_sign.png` + `objects/tiny_awning.png` (Tiny Town)
 - **Boss** — `Art.mob` โหลด `mobs/<type>.png` ก่อนเสมอ (`pirate_leader`, `squidman`, `pirate_zombie` มีใน `S.SPEC`)
-- **ตัวเล่นหญิง** — `Art.player` เมื่อ `opts.female === true` เลือก `characters/hero_<dir>_<frame>.png`
-  (dir = down/up/left/right, frame 0–5 ตามจังหวะเดิน; เดินเร็ว 11 fps / เดิน 7.5 fps)
+- **ตัวเล่นฝ่ายหญิง** — ใช้ชุด **OGA Warrior** (หัวข้อ 9) แทนแล้ว:
+  `Art.player` เมื่อ `opts.female === true` เลือก `characters/hero_<dir>_<frame>.png`
+  (dir = down/up/left/right, frame 0–7 ตามจังหวะเดิน; เดินเร็ว 11 fps / เดิน 7.5 fps)
   ถ้าโหลดไม่ได้ → fallback เป็นสไปรต์ `player_*.png` เดิม
 - **ตัวเล่นชาย** — `Art.player` เมื่อ `opts.male === true` เลือก `characters/hero_m_<dir>_<frame>.png`
   (เดาเพิ่มจากพาธสไปรต์ `/hero_m_/` ในกรณีที่ข้อมูลเน็ตไม่ได้ส่ง flag มา)
@@ -226,3 +228,78 @@ cd dungeon-town && python3 tools/make_objects.py
 - PNG โหลดจาก `assets/` แบบ relative (ได้ทั้งโฟลเดอร์และ single-file build)
 - ทุกสไปรต์มี fallback shape-art ทันทีเมื่อโหลดไม่ได้
 - ถ้าโหลด pack ต้นฉบับได้ภายหลัง (ต้องมีบัญชี CraftPix) ให้ crop ใหม่ด้วยสคริปต์เดิมแล้วอัปเดต `mapping.json`
+
+---
+
+## 8. DCSS — มอนส์ 15 ตัว (CC0 1.0)
+
+ที่มา: `assets/_raw/dcss_full.zip` → `Dungeon Crawl Stone Soup Full/monster/*`
+ใบอนุญาต: **CC0 1.0** — ยืนยันจาก `Dungeon Crawl Stone Soup Full/LICENSE.txt` ใน ZIP
+
+เครื่องมือ: `tools/extract-dcss-mobs.py` (trim ขอบโปร่งใส → `assets/mobs/`)
+แผนที่ชื่อไฟล์ต้นทาง ↔ ไฟล์ในเกม: `assets/mobs/mapping.json`
+สเปกขนาดจริง: `assets/mobs/_spec.json`
+
+| ในเกม | ไฟล์ต้นทางใน DCSS |
+|---|---|
+| `slime` | `monster/amorphous/jelly.png` |
+| `wolf` | `monster/animals/wolf.png` |
+| `goblin` | `monster/goblin_new.png` |
+| `boar` | `monster/animals/holy_swine.png` |
+| `wraith` | `monster/undead/wraith.png` |
+| `bat` | `monster/animals/bat.png` |
+| `imp` | `monster/demons/imp.png` |
+| `ghoul` | `monster/undead/ghoul.png` |
+| `skeleton` | `monster/undead/skeletons/skeleton_humanoid_small_new.png` |
+| `mage` | `monster/wizard.png` |
+| `knight` | `monster/death_knight.png` |
+| `dragon` | `monster/dragons/dragon.png` |
+| `pirate_leader` | `monster/orc_warlord.png` |
+| `squidman` | `monster/undead/zombies/zombie_octopode.png` |
+| `pirate_zombie` | `monster/undead/revenant.png` |
+
+**Wiring:** `Art.mob` โหลด `mobs/<type>.png` ก่อนเสมอ — ทั้ง 15 key อยู่ใน `S.SPEC`
+ถ้าโหลดไม่ได้ → fallback shape-art เดิม (ไม่จอดำ)
+`assets/mobs/platino.png` (Dawnlike, CC-BY 4.0) ยังใช้เป็น easter egg
+
+### URL ดาวน์โหลด
+
+| ไฟล์ | URL |
+|---|---|
+| DCSS tiles (releases, ไฟล์ `dcss_full.zip`) | `https://github.com/crawl/tiles/tree/master/releases` |
+| DCSS tiles (OGA) | `https://opengameart.org/content/dungeon-crawl-32x32-tiles` |
+| DCSS tiles (OGA supplemental) | `https://opengameart.org/content/dungeon-crawl-32x32-tiles-supplemental` |
+| OGA warrior sheet | `https://opengameart.org/sites/default/files/warrior.png` |
+| OGA labelled reference | `https://opengameart.org/sites/default/files/warrior_labelled_reference.png` |
+| OGA readme | `https://opengameart.org/sites/default/files/warrior_readme.txt` |
+
+> โฟลเดอร์ `assets/_raw/` ถูก `.gitignore` ไว้ (ไฟล์ต้นทางใหญ่) — ถ้าจะรันเครื่องมือครั้งถัดไป
+> ให้ดาวน์โหลดตาม URL ด้านบนใส่ `assets/_raw/` ก่อน
+
+---
+
+## 9. OGA "4 Direction Animated Warrior" — ตัวผู้เล่นหลัก (CC-BY 4.0)
+
+ผู้สร้าง: **Calciumtrice** — https://opengameart.org/content/4-direction-animated-warrior
+ใบอนุญาต: **Creative Commons Attribution 4.0 (CC-BY 4.0)** → ต้องใส่เครดิตผู้สร้าง + ลิงก์ใบอนุญาต
+
+เครื่องมือ 2 ขั้น:
+1. `tools/extract-oga-hero.py` — ตัดเฟรมจาก `warrior_labelled_reference.png` (4000×4800)
+   → `assets/characters/hero_{dir}[_idle|_atk]_{i}.png` รวม **108 ไฟล์**
+2. `tools/normalize-oga-hero.py` — รวม canvas เป็นขนาดเดียวต่อทิศ + จัดฐานเท้าให้ตรงกัน
+   → ย่อด้วย LANCZOS เหลือสูง 34px (ตามขนาดตัวผู้เล่นในเกม)
+   → สเปกขนาดจริง: `assets/characters/oga_hero_spec.json`
+
+| ทิศ | canvas | walk | idle | attack |
+|---|---|---|---|---|
+| down | 19×34 | 8 | 12 | 7 |
+| left | 21×34 | 8 | 12 | 7 |
+| right | 20×34 | 8 | 12 | 7 |
+| up | 19×34 | 8 | 12 | 7 |
+
+**Wiring (`js/art.js` `Art.player`):**
+- เดิน → `characters/hero_<dir>_<0..7>.png` (7.5 fps / เดินเร็ว 11 fps)
+- ยืนนิ่ง → `characters/hero_<dir>_idle_<0..11>.png` (4 fps)
+- โจมตี (`swing > 0`) → `characters/hero_<dir>_atk_<0..6>.png`
+- ทิศชาย (`opts.male`) → ยังใช้ CraftPix `hero_m_*` (walk 6 เฟรม) เดิม
+- ถ้าโหลดไม่ได้ → fallback เป็น shape-art เดิม (ไม่จอดำ)
