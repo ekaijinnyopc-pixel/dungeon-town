@@ -1,7 +1,7 @@
 # status.md — Dungeon Town / wire Kenney CC0 sprites
 
 ## งานที่กำลังทำ (active)
-- **งานที่ 9 — ขยายสเกลต้นไม้ + ตัวผู้เล่น OGA** (กำลัง commit/deploy — ดูหัวข้อ “งานที่ 9” ล่างสุด)
+- **ไม่มีงานค้าง** — งานที่ 9 เสร็จและ deploy แล้ว (ดูหัวข้อ “งานที่ 9” ล่างสุด)
 
 ## ✅ งานที่ 9 (25 พ.ย. 2026) ขยายสเกล: ต้นไม้ใหญ่ขึ้น + ตัวผู้เล่น OGA 44px
 ### เป้าหมาย
@@ -45,9 +45,17 @@
 - ลบ `tools/_tmp_extract.py` (เป็นสำเนาของ `extract-oga-hero.py` ต่างแค่ quote style)
 - เก็บ `tools/measure-scale.js` ไว้เป็นเครื่องมือวัดสเกลถาวร
 
+### Deploy
+- commit `bbd1b81` push แล้ว → run `45496591684` **success** (19s)
+- live verify: index **34/0** · dist **34/0** · hero-metrics **7/0** · JS error 0
+- วัดสเกลบน live ยืนยัน: ต้นไม้ 48×48/39×48/45×45/39×45 ขอบล่าง 124–126 · OGA สูง 44px ทุกเฟรม
+- live: https://ekaijinnyopc-pixel.github.io/dungeon-town/
+- single: https://ekaijinnyopc-pixel.github.io/dungeon-town/dist/dungeon-town.html
+
 ### รอพี่เอ
 - ชุด CraftPix ชาย (`hero_m_*` สูง ~34px) / NPC chibi (~36px) / `alt_*` ยังเล็กกว่าตัวผู้เล่น OGA 44px
   → ขอความเห็นว่าจะขยายตามด้วยไหม
+- ลองเดินดูบนอุปกรณ์จริงว่าขนาดต้นไม้/ตัวละครใหญ่พอดีไหม
 
 ## ✅ งานที่ 8 (23 พ.ย. 2026) ตัวผู้เล่น OGA Warrior + มอนส์ DCSS 15 ชนิด
 ### 1) ตัวผู้เล่น → OGA "4 Direction Animated Warrior" (Calciumtrice, **CC-BY 4.0**)
