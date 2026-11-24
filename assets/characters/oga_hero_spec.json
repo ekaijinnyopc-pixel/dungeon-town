@@ -1,434 +1,434 @@
 {
  "hero_down_0.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_down_1.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_down_2.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_down_3.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_down_4.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_down_5.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_down_6.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_down_7.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_down_atk_0.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_down_atk_1.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_down_atk_2.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_down_atk_3.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_down_atk_4.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_down_atk_5.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_down_atk_6.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_down_idle_0.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_down_idle_1.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_down_idle_10.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_down_idle_11.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_down_idle_2.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_down_idle_3.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_down_idle_4.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_down_idle_5.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_down_idle_6.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_down_idle_7.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_down_idle_8.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_down_idle_9.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_left_0.png": [
-  21,
-  34
+  28,
+  44
  ],
  "hero_left_1.png": [
-  21,
-  34
+  28,
+  44
  ],
  "hero_left_2.png": [
-  21,
-  34
+  28,
+  44
  ],
  "hero_left_3.png": [
-  21,
-  34
+  28,
+  44
  ],
  "hero_left_4.png": [
-  21,
-  34
+  28,
+  44
  ],
  "hero_left_5.png": [
-  21,
-  34
+  28,
+  44
  ],
  "hero_left_6.png": [
-  21,
-  34
+  28,
+  44
  ],
  "hero_left_7.png": [
-  21,
-  34
+  28,
+  44
  ],
  "hero_left_atk_0.png": [
-  21,
-  34
+  28,
+  44
  ],
  "hero_left_atk_1.png": [
-  21,
-  34
+  28,
+  44
  ],
  "hero_left_atk_2.png": [
-  21,
-  34
+  28,
+  44
  ],
  "hero_left_atk_3.png": [
-  21,
-  34
+  28,
+  44
  ],
  "hero_left_atk_4.png": [
-  21,
-  34
+  28,
+  44
  ],
  "hero_left_atk_5.png": [
-  21,
-  34
+  28,
+  44
  ],
  "hero_left_atk_6.png": [
-  21,
-  34
+  28,
+  44
  ],
  "hero_left_idle_0.png": [
-  21,
-  34
+  28,
+  44
  ],
  "hero_left_idle_1.png": [
-  21,
-  34
+  28,
+  44
  ],
  "hero_left_idle_10.png": [
-  21,
-  34
+  28,
+  44
  ],
  "hero_left_idle_11.png": [
-  21,
-  34
+  28,
+  44
  ],
  "hero_left_idle_2.png": [
-  21,
-  34
+  28,
+  44
  ],
  "hero_left_idle_3.png": [
-  21,
-  34
+  28,
+  44
  ],
  "hero_left_idle_4.png": [
-  21,
-  34
+  28,
+  44
  ],
  "hero_left_idle_5.png": [
-  21,
-  34
+  28,
+  44
  ],
  "hero_left_idle_6.png": [
-  21,
-  34
+  28,
+  44
  ],
  "hero_left_idle_7.png": [
-  21,
-  34
+  28,
+  44
  ],
  "hero_left_idle_8.png": [
-  21,
-  34
+  28,
+  44
  ],
  "hero_left_idle_9.png": [
-  21,
-  34
+  28,
+  44
  ],
  "hero_right_0.png": [
-  20,
-  34
+  26,
+  44
  ],
  "hero_right_1.png": [
-  20,
-  34
+  26,
+  44
  ],
  "hero_right_2.png": [
-  20,
-  34
+  26,
+  44
  ],
  "hero_right_3.png": [
-  20,
-  34
+  26,
+  44
  ],
  "hero_right_4.png": [
-  20,
-  34
+  26,
+  44
  ],
  "hero_right_5.png": [
-  20,
-  34
+  26,
+  44
  ],
  "hero_right_6.png": [
-  20,
-  34
+  26,
+  44
  ],
  "hero_right_7.png": [
-  20,
-  34
+  26,
+  44
  ],
  "hero_right_atk_0.png": [
-  20,
-  34
+  26,
+  44
  ],
  "hero_right_atk_1.png": [
-  20,
-  34
+  26,
+  44
  ],
  "hero_right_atk_2.png": [
-  20,
-  34
+  26,
+  44
  ],
  "hero_right_atk_3.png": [
-  20,
-  34
+  26,
+  44
  ],
  "hero_right_atk_4.png": [
-  20,
-  34
+  26,
+  44
  ],
  "hero_right_atk_5.png": [
-  20,
-  34
+  26,
+  44
  ],
  "hero_right_atk_6.png": [
-  20,
-  34
+  26,
+  44
  ],
  "hero_right_idle_0.png": [
-  20,
-  34
+  26,
+  44
  ],
  "hero_right_idle_1.png": [
-  20,
-  34
+  26,
+  44
  ],
  "hero_right_idle_10.png": [
-  20,
-  34
+  26,
+  44
  ],
  "hero_right_idle_11.png": [
-  20,
-  34
+  26,
+  44
  ],
  "hero_right_idle_2.png": [
-  20,
-  34
+  26,
+  44
  ],
  "hero_right_idle_3.png": [
-  20,
-  34
+  26,
+  44
  ],
  "hero_right_idle_4.png": [
-  20,
-  34
+  26,
+  44
  ],
  "hero_right_idle_5.png": [
-  20,
-  34
+  26,
+  44
  ],
  "hero_right_idle_6.png": [
-  20,
-  34
+  26,
+  44
  ],
  "hero_right_idle_7.png": [
-  20,
-  34
+  26,
+  44
  ],
  "hero_right_idle_8.png": [
-  20,
-  34
+  26,
+  44
  ],
  "hero_right_idle_9.png": [
-  20,
-  34
+  26,
+  44
  ],
  "hero_up_0.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_up_1.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_up_2.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_up_3.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_up_4.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_up_5.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_up_6.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_up_7.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_up_atk_0.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_up_atk_1.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_up_atk_2.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_up_atk_3.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_up_atk_4.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_up_atk_5.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_up_atk_6.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_up_idle_0.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_up_idle_1.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_up_idle_10.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_up_idle_11.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_up_idle_2.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_up_idle_3.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_up_idle_4.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_up_idle_5.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_up_idle_6.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_up_idle_7.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_up_idle_8.png": [
-  19,
-  34
+  25,
+  44
  ],
  "hero_up_idle_9.png": [
-  19,
-  34
+  25,
+  44
  ]
 }

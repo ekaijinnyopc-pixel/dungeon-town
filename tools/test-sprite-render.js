@@ -108,6 +108,22 @@ if (!wsUrl) { console.log('❌ เชื่อม CDP ไม่ได้'); proc
   await ev("document.getElementById('go').click()");
   await waitGameStart(ev);
 
+  /* รอให้ preload สไปรต์เสร็จจริง — ภาพหลังคา/ผนังเป็นชิ้นสุดท้ายที่โหลด
+     ถ้ายังไม่ครบจะได้ tile หลังคา 0 พิกเซล */
+  const pre = await ev(`(async function(){
+    var S=DT&&DT.Sprites; if(!S) return "no sprites";
+    var total=Object.keys(S.SPEC||{}).length;
+    for(var i=0;i<80;i++){
+      var st=S.stats||{loaded:0,failed:0};
+      if(st.loaded>=total) return JSON.stringify({loaded:st.loaded,failed:st.failed,total:total});
+      await new Promise(function(r){setTimeout(r,250);});
+    }
+    var st=S.stats||{loaded:0,failed:0};
+    return JSON.stringify({loaded:st.loaded,failed:st.failed,total:total,timeout:true});
+  })()`);
+  console.log("  preload", pre);
+
+
   console.log('== วาด Art.* บน canvas จริง (เทียบพิกเซลก่อน/หลัง) ==');
   /* ตรวจว่า Art.player/tree/rock/bush วาด "ภาพจริง" โดยเทียบกับการวาดแบบ fallback
      โดยเทียบสีเฉลี่ยในพื้นที่ที่วาด (ทั้งสองแบบต้องต่างกัน และแบบสไปรต์ต้องมี alpha โปร่งใส) */

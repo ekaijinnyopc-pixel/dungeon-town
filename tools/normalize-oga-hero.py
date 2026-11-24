@@ -35,7 +35,7 @@ OUT = os.path.join(ROOT, 'assets', 'characters')
 DIRS = ['down', 'left', 'right', 'up']
 
 # on-screen height of the player sprite (px, before the world zoom)
-TARGET_H = 34
+TARGET_H = 44
 ANIMS = [
     ('walk', 'hero_{d}_{i}.png'),
     ('idle', 'hero_{d}_idle_{i}.png'),

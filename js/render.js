@@ -449,7 +449,7 @@
         ctx.fillText('💀', p.sx, p.sy - 10 * z);
         ctx.font = (10 * z) + 'px sans-serif';
         ctx.fillStyle = '#fff';
-        ctx.fillText('กลับใน ' + Math.ceil(pl.respawnT) + 's', p.sx, p.sy - 24 * z);
+        ctx.fillText('กลับใน ' + Math.ceil(pl.respawnT) + 's', p.sx, p.sy - 34 * z);
         return;
       }
 
@@ -470,22 +470,22 @@
       ctx.font = (11 * z) + 'px sans-serif';
       ctx.textAlign = 'center';
       ctx.fillStyle = 'rgba(0,0,0,0.55)';
-      ctx.fillText(pl.name + ' ' + info.icon, p.sx + 1, p.sy - 34 * z + 1);
+      ctx.fillText(pl.name + ' ' + info.icon, p.sx + 1, p.sy - 44 * z + 1);
       ctx.fillStyle = isLocal ? '#fff6d8' : '#cfe8ff';
-      ctx.fillText(pl.name + ' ' + info.icon, p.sx, p.sy - 34 * z);
+      ctx.fillText(pl.name + ' ' + info.icon, p.sx, p.sy - 44 * z);
 
       /* hp bar */
       ctx.fillStyle = 'rgba(0,0,0,0.55)';
-      ctx.fillRect(p.sx - 16 * z, p.sy - 42 * z, 32 * z, 4.5 * z);
+      ctx.fillRect(p.sx - 16 * z, p.sy - 52 * z, 32 * z, 4.5 * z);
       ctx.fillStyle = pl.hp > 40 ? '#6fe06f' : '#ff6b6b';
-      ctx.fillRect(p.sx - 16 * z, p.sy - 42 * z, 32 * z * Math.max(0, pl.hp / pl.maxHp), 4.5 * z);
+      ctx.fillRect(p.sx - 16 * z, p.sy - 52 * z, 32 * z * Math.max(0, pl.hp / pl.maxHp), 4.5 * z);
 
       /* แถบเก็บของ */
       if (pl.gatherT > 0 && pl.gatherTarget) {
         ctx.fillStyle = 'rgba(0,0,0,0.55)';
-        ctx.fillRect(p.sx - 16 * z, p.sy - 49 * z, 32 * z, 4.5 * z);
+        ctx.fillRect(p.sx - 16 * z, p.sy - 59 * z, 32 * z, 4.5 * z);
         ctx.fillStyle = '#ffd166';
-        ctx.fillRect(p.sx - 16 * z, p.sy - 49 * z, 32 * z * (DT.Game.progress || 0), 4.5 * z);
+        ctx.fillRect(p.sx - 16 * z, p.sy - 59 * z, 32 * z * (DT.Game.progress || 0), 4.5 * z);
       }
 
       /* บอทแชท */
@@ -493,9 +493,9 @@
         ctx.font = (11 * z) + 'px sans-serif';
         var tw = ctx.measureText(pl.chat).width;
         ctx.fillStyle = 'rgba(0,0,0,0.72)';
-        ctx.fillRect(p.sx - tw / 2 - 5 * z, p.sy - 66 * z, tw + 10 * z, 17 * z);
+        ctx.fillRect(p.sx - tw / 2 - 5 * z, p.sy - 76 * z, tw + 10 * z, 17 * z);
         ctx.fillStyle = '#fff';
-        ctx.fillText(pl.chat, p.sx, p.sy - 53 * z);
+        ctx.fillText(pl.chat, p.sx, p.sy - 63 * z);
       }
     },
 
@@ -519,17 +519,17 @@
       var label = n.icon + ' ' + n.name;
       var tw = ctx.measureText(label).width;
       ctx.fillStyle = 'rgba(20,14,6,0.78)';
-      ctx.fillRect(p.sx - tw / 2 - 6 * z, p.sy - 36 * z, tw + 12 * z, 16 * z);
+      ctx.fillRect(p.sx - tw / 2 - 6 * z, p.sy - 46 * z, tw + 12 * z, 16 * z);
       ctx.fillStyle = '#f2d98a';
-      ctx.fillText(label, p.sx, p.sy - 24 * z);
+      ctx.fillText(label, p.sx, p.sy - 34 * z);
 
       if (n.bubble > 0) {
         ctx.font = (10 * z) + 'px sans-serif';
         var bw = ctx.measureText(n.greeting).width;
         ctx.fillStyle = 'rgba(0,0,0,0.72)';
-        ctx.fillRect(p.sx - bw / 2 - 6 * z, p.sy - 54 * z, bw + 12 * z, 16 * z);
+        ctx.fillRect(p.sx - bw / 2 - 6 * z, p.sy - 64 * z, bw + 12 * z, 16 * z);
         ctx.fillStyle = '#fff';
-        ctx.fillText(n.greeting, p.sx, p.sy - 42 * z);
+        ctx.fillText(n.greeting, p.sx, p.sy - 52 * z);
       }
     },
 

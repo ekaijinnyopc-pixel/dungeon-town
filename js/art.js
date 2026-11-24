@@ -694,17 +694,17 @@
       ctx.save();
       ctx.fillStyle = 'rgba(8,12,10,0.34)';
       ctx.beginPath();
-      ctx.ellipse(0, -1.5, 6.2, 2.4, 0, 0, Math.PI * 2);
+      ctx.ellipse(0, -1.9, 8.0, 3.1, 0, 0, Math.PI * 2);
       ctx.fill();
       ctx.restore();
       var heroDrew = drawSprite(ctx, hKey, 0, 0, false, null, 0);
       if (heroDrew) {
         var hw = weaponKind(opts.weapon);
         if (hw) {
-          /* ชุด OGA (สูง 34px) จุดยึดอาวุธต้องต่ำกว่าชุดเดิม ไม่งั้นอาวุธทับหน้าตัวละคร */
+          /* ชุด OGA (สูง 44px) จุดยึดอาวุธต้องต่ำกว่าชุดเดิม ไม่งั้นอาวุธทับหน้าตัวละคร */
           var hOga = (heroSet === 'hero_');
-          var hHandX = dir === 'left' ? (hOga ? -3.6 : -4.6) : (hOga ? 3.6 : 4.6);
-          var hHandY = hOga ? -12.5 : -16;
+          var hHandX = dir === 'left' ? (hOga ? -4.7 : -4.6) : (hOga ? 4.7 : 4.6);
+          var hHandY = hOga ? -16.2 : -16;
           ctx.save();
           ctx.translate(hHandX, hHandY);
           var hArm;
@@ -774,9 +774,9 @@
     var armR = moving ? Math.sin(step) * (running ? 0.55 : 0.30) : 0;
 
     /* สูง/ต่ำของไหล่/หัว */
-    var headY = -23 + bob;
-    var bodyTop = -17.5 + bob;
-    var hr = 5.6;
+    var headY = -29.8 + bob;
+    var bodyTop = -22.6 + bob;
+    var hr = 7.25;
 
     ctx.save();
     if (hurt > 0) ctx.globalAlpha = 0.55;
@@ -801,29 +801,29 @@
     else if (waving) backArm = 0.1;
     else backArm += armL;
     ctx.save();
-    ctx.translate(-4.6, bodyTop + 1.5);
+    ctx.translate(-6.0, bodyTop + 1.9);
     ctx.rotate(-backArm);
     ctx.fillStyle = st.trim;
-    ctx.fillRect(-1.4, 0, 2.8, 8);
-    circle(ctx, 0, 8.2, 2.0, st.skin);
+    ctx.fillRect(-1.8, 0, 3.6, 10.3);
+    circle(ctx, 0, 10.6, 2.6, st.skin);
     ctx.restore();
 
     /* ---------- ตัว (เสื้อ) ---------- */
     ctx.fillStyle = st.body;
-    rrect(ctx, -6, bodyTop, 12, 11.5, 2.4);
+    rrect(ctx, -7.8, bodyTop, 15.5, 14.9, 3.1);
     ctx.fill();
     /* ไฮไลต์ด้านซ้าย */
     ctx.fillStyle = mix(st.body, '#ffffff', 0.18);
-    rrect(ctx, -6, bodyTop, 4.4, 11.5, 2.2);
+    rrect(ctx, -7.8, bodyTop, 5.7, 14.9, 2.8);
     ctx.fill();
     /* แถบเข็มขัด */
     ctx.fillStyle = st.trim;
-    ctx.fillRect(-6, bodyTop + 7.4, 12, 2.4);
+    ctx.fillRect(-7.8, bodyTop + 9.6, 15.5, 3.1);
     ctx.fillStyle = mix(st.trim, '#000000', 0.25);
-    ctx.fillRect(-1, bodyTop + 7.4, 2, 2.4);
+    ctx.fillRect(-1.3, bodyTop + 9.6, 2.6, 3.1);
     /* ปกเสื้อ (คอ) */
     ctx.fillStyle = mix(st.body, '#000000', 0.12);
-    ctx.fillRect(-2.4, bodyTop, 4.8, 1.6);
+    ctx.fillRect(-3.1, bodyTop, 6.2, 2.1);
 
     /* ---------- แขนหน้า (ถือเครื่องมือ) ---------- */
     var frontArm, openHand = false;
@@ -836,17 +836,17 @@
       frontArm = 0.14 + armR;
     }
     ctx.save();
-    ctx.translate(4.6, bodyTop + 1.5);
+    ctx.translate(6.0, bodyTop + 1.9);
     ctx.rotate(frontArm);
     ctx.fillStyle = st.body;
-    ctx.fillRect(-1.4, 0, 2.8, 8.2);
+    ctx.fillRect(-1.8, 0, 3.6, 10.6);
     if (openHand) {
-      circle(ctx, 0, 8.4, 2.4, st.skin);
+      circle(ctx, 0, 10.9, 3.1, st.skin);
       ctx.strokeStyle = 'rgba(255,255,255,0.55)';
       ctx.lineWidth = 1;
-      ctx.beginPath(); ctx.arc(0, 8.4, 3.9, -0.85, 0.85); ctx.stroke();
+      ctx.beginPath(); ctx.arc(0, 10.9, 5.05, -0.85, 0.85); ctx.stroke();
     } else {
-      circle(ctx, 0, 7.8, 2.1, st.skin);
+      circle(ctx, 0, 10.1, 2.7, st.skin);
     }
     var wkind = weaponKind(opts.weapon);
     if (wkind) drawWeapon(ctx, wkind, swing);

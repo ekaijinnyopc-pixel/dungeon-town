@@ -1,7 +1,53 @@
 # status.md — Dungeon Town / wire Kenney CC0 sprites
 
 ## งานที่กำลังทำ (active)
-- **ไม่มีงานค้าง** — งานที่ 8 เสร็จและ deploy แล้ว (ดูหัวข้อ “งานที่ 8” ล่างสุด)
+- **งานที่ 9 — ขยายสเกลต้นไม้ + ตัวผู้เล่น OGA** (กำลัง commit/deploy — ดูหัวข้อ “งานที่ 9” ล่างสุด)
+
+## ✅ งานที่ 9 (25 พ.ย. 2026) ขยายสเกล: ต้นไม้ใหญ่ขึ้น + ตัวผู้เล่น OGA 44px
+### เป้าหมาย
+- **ต้นไม้**: `sc: 2 → 3` (จาก ~32px เป็น 48px) ทั้ง 4 variant
+- **ตัวผู้เล่น OGA**: สูง `34 → 44px` (ขยายจาก raw ต้นทาง เพื่อรักษาความคมพิกเซล ไม่ upscale ที่ runtime)
+- ไม่เปลี่ยนชุดอาร์ต — คงการสัมผัสพื้น จุดยึดอาวุธ/มือ/เงา/label และ fallback ให้สอดคล้อง
+
+### สิ่งที่แก้
+- `tools/normalize-oga-hero.py` — `TARGET_H` 34 → 44 · regenerate OGA 108 เฟรม
+  (down 25×44 · left 28×44 · right 26×44 · up 25×44) + เขียน `assets/characters/oga_hero_spec.json` ใหม่
+- `js/sprites.js` — crop canvas OGA ทั้ง 108 เฟรมตามทิศ · ต้นไม้ทั้ง 4 variant `sc: 2 → 3` (คง `dy` เดิม)
+- `js/art.js` — contact shadow `ellipse(0, -1.5, 6.2, 2.4)` → `ellipse(0, -1.9, 8.0, 3.1)`
+  · จุดยึดอาวุธ OGA `hHandY` −12.5 → −16.2, `hHandX` ±3.6 → ±4.7
+  · fallback shape-art ขยาย (`headY` −29.8, `bodyTop` −22.6, `hr` 7.25 และลำ/แขน/มือคูณ 1.29)
+- `js/render.js` — label/ชื่อ/HP bar/progress bar/chat bubble/NPC label ยกตามตัวละครที่สูงขึ้น (ยก 10px)
+- `tools/test-hero-metrics.js` — assertion ความสูง 34 → 44, ความกว้างสูงสุด 24 → 30
+- `tools/measure-scale.js` (ใหม่) — เครื่องมือวัดสเกลจากภาพจริงบน canvas (ใช้ตัดสิน baseline/ผลลัพธ์)
+
+### ผลวัดจริงบน canvas (`tools/measure-scale.js`, anchor y=120)
+- ต้นไม้: `tree_green_large` 48×48 ขอบล่าง 124 · `tree_green` 39×48 ขอบล่าง 126
+  · `tree_gold_round` 45×45 ขอบล่าง 124 · `tree_autumn` 39×45 ขอบล่าง 124
+  → **ขอบล่างเท่าเดิมทุก variant = ยืนพื้นเดิมไม่ลอย/ไม่จม**
+- ตัวผู้เล่น OGA: สูง 39–43px จริง, ขอบล่าง 119 ทุกทิศ (ฐานเท้าตรงกัน 0px)
+
+### แก้เคสเทสต์ `tile หลังคา` (พังมาก่อนหน้านี้ที่ clean HEAD — ไม่ใช่ regression)
+- **อาการ**: `tile หลังคาวาดได้ (0 พิกเซล)`
+- **สาเหตุจริง**: race condition — ทันทีที่เกมเริ่ม `loaded=180/218` ภาพหลังคา/ผนังยังไม่โหลด
+  → `S.tile()` คืน `drew:false` → 0 พิกเซล (probe: รอ preload ครบ `218/218` → ได้ **3024 พิกเซล**)
+- **แก้**: `tools/test-sprite-render.js` รอ preload ครบก่อน probe (poll 250ms จน `loaded >= total`, timeout 20s)
+  แบบเดียวกับ `tools/shot-hero.js` ที่แก้ไว้ก่อนหน้า
+- ผล: sprite-render **10/0** (จาก 9/1)
+
+### ผลทดสอบ (ทั้งหมดผ่าน 0 ล้มเหลว)
+- hero-metrics **7/0** · sprites **11/0** · sprite-render **10/0** · sprite-fallback **5/0**
+- input **19/0** · mouse **19/0** · phase3 **29/0** · touch **73/0** · viewports **32/0**
+- refine **128/0** · party **57/0** · market **58/0** · craftpix **14/0**
+- smoke-game **32/0** · test/smoke **81/0**
+- single-file build: ฝัง 218 สไปรต์ (560 KB → 758 KB base64) ไฟล์ 1243 KB · single-file test **11/0**
+
+### หมายเหตุ
+- ลบ `tools/_tmp_extract.py` (เป็นสำเนาของ `extract-oga-hero.py` ต่างแค่ quote style)
+- เก็บ `tools/measure-scale.js` ไว้เป็นเครื่องมือวัดสเกลถาวร
+
+### รอพี่เอ
+- ชุด CraftPix ชาย (`hero_m_*` สูง ~34px) / NPC chibi (~36px) / `alt_*` ยังเล็กกว่าตัวผู้เล่น OGA 44px
+  → ขอความเห็นว่าจะขยายตามด้วยไหม
 
 ## ✅ งานที่ 8 (23 พ.ย. 2026) ตัวผู้เล่น OGA Warrior + มอนส์ DCSS 15 ชนิด
 ### 1) ตัวผู้เล่น → OGA "4 Direction Animated Warrior" (Calciumtrice, **CC-BY 4.0**)

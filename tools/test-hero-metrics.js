@@ -83,7 +83,7 @@ function ok(c, m) { if (c) { pass++; console.log('  ✅ ' + m); } else { fail++;
     return JSON.stringify(out);
   })()`));
   const heights = Object.values(sizes).filter(Boolean).map(v => v[1]);
-  ok(heights.every(h => h === 34), 'ทุกเฟรมสูง 34px (' + JSON.stringify(sizes) + ')');
+  ok(heights.every(h => h === 44), 'ทุกเฟรมสูง 44px (' + JSON.stringify(sizes) + ')');
 
   /* 2) bbox จริงของตัวละครที่วาด (baseline ตรงกัน) */
   console.log('\n== ฐานเท้าตรงกันข้ามทิศ/แอนิเมชัน (กัน frame jitter) ==');
@@ -140,7 +140,7 @@ function ok(c, m) { if (c) { pass++; console.log('  ✅ ' + m); } else { fail++;
   ok(Math.max(...atkHs) <= Math.max(...walkIdleHs),
     'เฟรมโจมตีไม่สูงกว่า walk/idle (' + Math.min(...atkHs) + '-' + Math.max(...atkHs) + 'px, ทรงตัวต่ำลงตอนทุบ)');
   const ws = Object.values(realBoxes).map(v => v.w);
-  ok(Math.max(...ws) <= 24, 'ความกว้างไม่เกิน 24px (' + Math.min(...ws) + '-' + Math.max(...ws) + 'px)');
+  ok(Math.max(...ws) <= 30, 'ความกว้างไม่เกิน 30px (' + Math.min(...ws) + '-' + Math.max(...ws) + 'px)');
 
   /* 3) อาวุธไม่ทับใบหน้า */
   console.log('\n== อาวุธไม่ทับใบหน้า ==');
